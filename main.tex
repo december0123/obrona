@@ -1,7 +1,15 @@
 \documentclass[12pt]{article}
 
-\usepackage{polski}
-\usepackage[utf8]{inputenc}
+\usepackage{ifxetex}
+
+\ifxetex
+  \usepackage{fontspec}
+\else
+  \usepackage{polski}
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{lmodern}
+\fi
 \usepackage{hyperref}
 
 \begin{document}
