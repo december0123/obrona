@@ -1,0 +1,151 @@
+\sloppy\section{K2 -- Arytmetyka stało- i zmiennoprzecinkowa}
+
+Każda informacja w komputerze może zostać przedstawiona za pomocą podstawowych jednostek -- bitów. W przypadku liczb, można je reprezentować za pomocą typów \{stało-,zmienno-\}przecinkowych. Różnią się cechami takimi jak:
+\begin{itemize}
+\item sposób zapisu,
+\item zakres wartości,
+\item precyzja operacji.
+\end{itemize}
+
+Typy stałoprzecinkowe posiadają wiele reprezentacji. 
+
+\subsection{Naturalny kod binarny (NBC)}
+Jest to system pozycyjny o podstawie 2. Liczby zapisane w tej reprezentacji nie posiadają znaku, nie można za jego pomocą zapisać ułamków. Wartość liczby można zaprezentować za pomocą wzoru (liczba \textit{n-bitowa}):
+\begin{equation}
+x = \sum_{i=0}^{n-1}2^{i} \times x_{i}
+\end{equation}
+Na przykład:
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|} \hline
+DEC	&	BIN (NKB)	\\ \hline
+0	&	00	\\ \hline
+1	&	01	\\ \hline
+2	&	10	\\ \hline
+3	&	11	\\ \hline
+\end{tabular}
+\end{table}
+
+\subsection{Kod uzupełnieniowy U2}
+W celu reprezentacji liczby całkowitej potrzebne jest zdefiniowanie znaku liczby. Wartość liczb zapisuje się podobnie jak w wypadku NKB, jednak znak liczby jest określony przez bit najbardziej znaczący (0 -- liczba dodatnia, 1 -- liczba ujemna) (liczba \textit{n-bitowa}):
+\begin{equation}
+x = (-1)^{n-1}+\sum_{i=0}^{n-2}2^{i} \times x_{i}
+\end{equation}
+
+W dwójkowym systemie uzupełnieniowym porządek kodów arytmetycznych jest zachowany w całym zakresie. $\{0, x_{n-2},\ldots,x_{1},x_{0}\}$ reprezentuje dodatnią liczbę $x$, a $\{1, x_{n-2},\ldots,x_{1},x_{0}\}$ to zapis liczby \textbf{większej o $x$ od najmniejszej liczby $-2^{n-1}$}.
+
+Podobnie jak dla NKB, nie jest możliwe zastosowanie tutaj zapisu ułamków.
+
+\subsection{Typ stałoprzecinkowy}
+Reprezentacja ta jest podobna do kodu uzupełnieniowego, jednakże można tutaj określić pozycję przecinka. Dla liczb o podstawie $\beta$ oraz ustalonej liczbie pozycji części ułamkowej - $r$, wartość każdej liczby jest podana z dokładnością $\beta^{-r}$. Można ją przedstawić za pomocą iloczynu liczby całkowitej, wtedy zapis wygląda następująco:
+\begin{equation}
+\{x_{m},x_{m-1},\ldots,x_{1},x_{0},\ldots,x_{-r}\}
+\end{equation}
+
+Podczas operacji z liczbami stałoprzecinkowymi można otrzymać przeniesienie w wypadku operacji dodawania lub mnożenia.
+
+\subsection{Inne systemy stałoprzecinkowe}
+\begin{itemize}
+\item system obciążony,
+\begin{itemize}
+\item[+] unikatowa reprezentacja zera,
+\item[+] zgodność uporządkowania liczb i ich reprezentacji,
+\item[-] wymagana korekcja wyników działań arytmetycznych,
+\item[-] problematyczne przy dzieleniu i mnożeniu.
+\end{itemize}
+\item system ze znakowaną cyfrą.
+\end{itemize}
+
+\subsection{Typ zmiennoprzecinkowy}
+
+Liczba zmiennoprzecinkowa jest reprezentowana przez 4 liczby ($S$, $\beta$, $M$, $E$):
+\begin{itemize}
+\item $S$ - znak,
+\item $\beta$ - podstawa,
+\item $E$ - wykładnik,
+\item $M$ - mantysa.
+\end{itemize}
+\begin{equation}
+x = (-1)^{S} \times \beta^{E} \times M
+\end{equation}
+
+W przypadku liczb zmiennoprzecinkowych ważna jest kolejność działań!
+
+Liczby zmiennoprzecinkowe zawierają zarezerwowane wartości dla liczb specjalnych.
+
+Standard IEEE754 wymaga, aby liczby były znormalizowane (oprócz wartości specjalnych). Standard wymaga również, aby wykładnik był w zakresie $1 <= |M| < 2$. Dzięki temu można ukryć najwyższy bit (mantysa jest postaci $1.bbb\ldots bb$).
+
+Jeśli liczba jest ujemna, to jej pierwszy bit (znaku) przyjmuje wartość 1, w wypadku dodatniej 0. Kolejne bity przypadają na wykładnik w kodzie +N ($N = 2^{k-1}-1$), następnie mantysa. Mantysa nigdy nie będzie równa 0. Przyjęto, że zero oprócz bitu znaku zawiera same zera (tak więc mamy tu zero dodatnie i ujemne). $\pm\infty$ -- wszystkie bity wykładnika wynoszą 1, mantysa 0. Dla nie-liczb wykładnik również przyjmie same jedynki, natomiast mantysę $\ne$ 0.
+
+Liczby zdenormalizowane posiadają w wykładniku same zera, natomiast mantysa jest postaci $0.bbb\ldots bb$.
+
+\begin{table}[H]
+\caption{Liczba zmiennoprzecinkowa pojedynczej precyzji (32 bity)}
+\footnotesize
+\addtolength{\tabcolsep}{-4.75pt}
+\begin{tabular}{ccccccccccccccccccccccccccccccccc}
+\rotatebox[origin=c]{90}{Bit}                     &                        &                        &                        &                        &                        &                        &                         &                        &                        &                        &                        &                        &                        &                        &                         &                        &                        &                        & & & & & & & & & & & & & &           \\
+\multicolumn{1}{|l}{31} &                        &                        &                        &                        &                        &                        & \multicolumn{1}{l|}{24} & 23                     &                        &                        &                        &                        &                        &                        & \multicolumn{1}{l|}{16} & 15                     &                        &                        & & & & & \multicolumn{1}{l|}{8} & 7 & & & & & & & & \multicolumn{1}{c|}{0}              \\ \hline
+\multicolumn{1}{|c|}{\cellcolor{red!75}S} & \multicolumn{1}{c|}{\cellcolor{yellow!75}E} & \multicolumn{1}{c|}{\cellcolor{yellow!75}E} & \multicolumn{1}{c|}{\cellcolor{yellow!75}E} & \multicolumn{1}{c|}{\cellcolor{yellow!75}E} & \multicolumn{1}{c|}{\cellcolor{yellow!75}E} & \multicolumn{1}{c|}{\cellcolor{yellow!75}E} & \multicolumn{1}{c|}{\cellcolor{yellow!75}E}  & \multicolumn{1}{c|}{\cellcolor{yellow!75}E} & \multicolumn{1}{c|}{\cellcolor{green!75}M} & \multicolumn{1}{c|}{\cellcolor{green!75}M} & \multicolumn{1}{c|}{\cellcolor{green!75}M} & \multicolumn{1}{c|}{\cellcolor{green!75}M} & \multicolumn{1}{c|}{\cellcolor{green!75}M} & \multicolumn{1}{c|}{\cellcolor{green!75}M} & \multicolumn{1}{c|}{\cellcolor{green!75}M}  & \multicolumn{1}{c|}{\cellcolor{green!75}M} & \multicolumn{1}{c|}{\cellcolor{green!75}M} & \multicolumn{1}{c|}{\cellcolor{green!75}M} & \multicolumn{1}{c|}{\cellcolor{green!75}M} & \multicolumn{1}{c|}{\cellcolor{green!75}M} & \multicolumn{1}{c|}{\cellcolor{green!75}M} & \multicolumn{1}{c|}{\cellcolor{green!75}M} & \multicolumn{1}{c|}{\cellcolor{green!75}M} & \multicolumn{1}{c|}{\cellcolor{green!75}M} & \multicolumn{1}{c|}{\cellcolor{green!75}M} & \multicolumn{1}{c|}{\cellcolor{green!75}M} & \multicolumn{1}{c|}{\cellcolor{green!75}M} & \multicolumn{1}{c|}{\cellcolor{green!75}M} & \multicolumn{1}{c|}{\cellcolor{green!75}M} & \multicolumn{1}{c|}{\cellcolor{green!75}M} & \multicolumn{1}{c|}{\cellcolor{green!75}M} & \multicolumn{1}{c|}{\cellcolor{green!75}M} \\ \hline
+\rotatebox[origin=c]{90}{Znak~}                        & \rotatebox[origin=c]{90}{Wykładnik~}                       &                        &                        &                        &                        &                        &                         & \rotatebox[origin=c]{90}{Mantysa~}                       &                        &                        &                        &                        &                        &                        &                         &                        &                        &                        &                       
+\end{tabular}
+\normalsize
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Liczby w standardzie IEEE754}
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Znak} & \textbf{Wykładnik} & \textbf{Mantysa} & \textbf{Wartość} \\ \hline
+0 & $00\cdots00$ & $00\cdots00$ & $+0$ \\ \hline
+0 & $00\cdots00$ & \begin{tabular}[c]{@{}c@{}}$00\cdots01$\\$\vdots$\\$11\cdots11$\end{tabular} & \begin{tabular}[c]{@{}c@{}}Dodatnia zdenormalizowana\\($0.f\times 2^{-N+1}$)\end{tabular} \\ \hline
+0 & \begin{tabular}[c]{@{}c@{}}$00\cdots00$\\$\vdots$\\$11\cdots10$\end{tabular} & XX$\cdots$XX & \begin{tabular}[c]{@{}c@{}}Dodatnia znormalizowana\\($1.f\times 2^{E-N}$)\end{tabular} \\ \hline
+0 & $11\cdots11$ & $00\cdots00$ & $+\infty$ \\ \hline
+0 & $11\cdots11$ & \begin{tabular}[c]{@{}c@{}}$00\cdots01$\\$\vdots$\\$01\cdots11$\end{tabular} & SNaN \\ \hline
+0 & $11\cdots11$ & 1X$\cdots$XX & QNaN \\ \hline
+1 & $00\cdots00$ & $00\cdots00$ & $-0$ \\ \hline
+1 & $00\cdots00$ & \begin{tabular}[c]{@{}c@{}}$00\cdots01$\\$\vdots$\\$11\cdots11$\end{tabular} & \begin{tabular}[c]{@{}c@{}}Ujemna zdenormalizowana\\($-0.f\times 2^{-N+1}$)\end{tabular} \\ \hline
+1 & \begin{tabular}[c]{@{}c@{}}$00\cdots00$\\$\vdots$\\$11\cdots10$\end{tabular} & XX$\cdots$XX & \begin{tabular}[c]{@{}c@{}}Ujemna znormalizowana\\($-1.f\times 2^{E-N}$)\end{tabular} \\ \hline
+1 & $11\cdots11$ & $00\cdots00$ & $-\infty$ \\ \hline
+1 & $11\cdots11$ & \begin{tabular}[c]{@{}c@{}}$00\cdots01$\\$\vdots$\\$01\cdots11$\end{tabular} & SNaN \\ \hline
+1 & $11\cdots11$ & 1X$\cdots$XX & QNaN \\ \hline
+\end{tabular}
+\end{table}
+Wartości wykładnika dla liczb zdenormalizowanych oraz znormalizowanych posiadają N -- które jest obciążeniem wykładnika.
+
+\begin{table}[H]
+\centering
+\caption{Specjalne operacje arytmetyczne}
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Operacja} & \textbf{Wynik} \\ \hline
+$\frac{n}{\pm\infty}$ & 0  \\ \hline
+$\pm\infty\times\pm\infty$ & $\pm\infty$  \\ \hline
+$\frac{\pm X}{0}$ & $\pm\infty$  \\ \hline
+$X\times\pm\infty$ & $\pm\infty$  \\ \hline
+\begin{tabular}[c]{@{}c@{}}$\infty+\infty$\\$\infty- -\infty$\end{tabular} & $+\infty$  \\ \hline
+\begin{tabular}[c]{@{}c@{}}$-\infty-\infty$\\$-\infty+ -\infty$\end{tabular} & $-\infty$  \\ \hline
+\begin{tabular}[c]{@{}c@{}}$\infty-\infty$\\$-\infty+ \infty$\end{tabular} & NaN \\ \hline
+$\frac{\pm 0}{\pm 0}$ & NaN \\ \hline
+$\frac{\pm\infty}{\pm\infty}$ & NaN \\ \hline
+$\infty\pm 0$ & NaN \\ \hline
+\end{tabular}
+\end{table}
+
+Standard wyróżnia następujące precyzje:
+\begin{itemize}
+\item połowicza (16 bit),
+\item pojedyncza (32 bit),
+\item podwójna (64 bit),
+\item podwójna rozszerzona (80 bit).
+\end{itemize}
+
+Standard również wyróżnia wyjątki:
+\begin{itemize}
+\item invalid operation --- niewłaściwa operacja,
+\item division by zero --- dzielenie przez zero,
+\item overflow --- nadmiar -- liczba jest za duża,
+\item underflow --- niedomiar -- utrata precyzji przy liczbach bliskich zero,
+\item inexact --- niedokładność -- podczas operacji zaokrąglania.
+\end{itemize}
