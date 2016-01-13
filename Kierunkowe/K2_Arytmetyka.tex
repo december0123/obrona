@@ -37,7 +37,7 @@ W dwójkowym systemie uzupełnieniowym porządek kodów arytmetycznych jest zach
 Podobnie jak dla NKB, nie jest możliwe zastosowanie tutaj zapisu ułamków.
 
 \subsection{Typ stałoprzecinkowy}
-Reprezentacja ta jest podobna do kodu uzupełnieniowego, jednakże można tutaj określić pozycję przecinka. Dla liczb o podstawie $\beta$ oraz ustalonej liczbie pozycji części ułamkowej - $r$, wartość każdej liczby jest podana z dokładnością $\beta^{-r}$. Można ją przedstawić za pomocą iloczynu liczby całkowitej, wtedy zapis wygląda następująco:
+Reprezentacja ta jest podobna do kodu uzupełnieniowego, jednakże można tutaj określić pozycję przecinka. Dla liczb o podstawie $\beta$ oraz ustalonej liczbie pozycji części ułamkowej -- $r$, wartość każdej liczby jest podana z dokładnością $\beta^{-r}$. Można ją przedstawić za pomocą iloczynu liczby całkowitej, wtedy zapis wygląda następująco:
 \begin{equation}
 \{x_{m},x_{m-1},\ldots,x_{1},x_{0},\ldots,x_{-r}\}
 \end{equation}
@@ -60,10 +60,10 @@ Podczas operacji z liczbami stałoprzecinkowymi można otrzymać przeniesienie w
 
 Liczba zmiennoprzecinkowa jest reprezentowana przez 4 liczby ($S$, $\beta$, $M$, $E$):
 \begin{itemize}
-\item $S$ - znak,
-\item $\beta$ - podstawa,
-\item $E$ - wykładnik,
-\item $M$ - mantysa.
+\item $S$ -- znak,
+\item $\beta$ -- podstawa,
+\item $E$ -- wykładnik,
+\item $M$ -- mantysa.
 \end{itemize}
 \begin{equation}
 x = (-1)^{S} \times \beta^{E} \times M
@@ -75,7 +75,7 @@ Liczby zmiennoprzecinkowe zawierają zarezerwowane wartości dla liczb specjalny
 
 Standard IEEE754 wymaga, aby liczby były znormalizowane (oprócz wartości specjalnych). Standard wymaga również, aby wykładnik był w zakresie $1 <= |M| < 2$. Dzięki temu można ukryć najwyższy bit (mantysa jest postaci $1.bbb\ldots bb$).
 
-Jeśli liczba jest ujemna, to jej pierwszy bit (znaku) przyjmuje wartość 1, w wypadku dodatniej 0. Kolejne bity przypadają na wykładnik w kodzie +N ($N = 2^{k-1}-1$), następnie mantysa. Mantysa nigdy nie będzie równa 0. Przyjęto, że zero oprócz bitu znaku zawiera same zera (tak więc mamy tu zero dodatnie i ujemne). $\pm\infty$ -- wszystkie bity wykładnika wynoszą 1, mantysa 0. Dla nie-liczb wykładnik również przyjmie same jedynki, natomiast mantysę $\ne$ 0.
+Jeśli liczba jest ujemna, to jej pierwszy bit (znaku) przyjmuje wartość 1, w wypadku dodatniej 0. Kolejne bity przypadają na wykładnik w kodzie +N ($N = 2^{k-1}-1$), kolejnymi bitami jest mantysa. Nigdy nie będzie ona równa 0. Przyjęto, że zero oprócz bitu znaku zawiera same zera (tak więc mamy tu zero dodatnie i ujemne). $\pm\infty$ -- wszystkie bity wykładnika wynoszą 1, mantysa 0. Dla nie-liczb wykładnik również przyjmie same jedynki, natomiast mantysę $\ne$ 0.
 
 Liczby zdenormalizowane posiadają w wykładniku same zera, natomiast mantysa jest postaci $0.bbb\ldots bb$.
 
@@ -87,7 +87,7 @@ Liczby zdenormalizowane posiadają w wykładniku same zera, natomiast mantysa je
 \rotatebox[origin=c]{90}{Bit}                     &                        &                        &                        &                        &                        &                        &                         &                        &                        &                        &                        &                        &                        &                        &                         &                        &                        &                        & & & & & & & & & & & & & &           \\
 \multicolumn{1}{|l}{31} &                        &                        &                        &                        &                        &                        & \multicolumn{1}{l|}{24} & 23                     &                        &                        &                        &                        &                        &                        & \multicolumn{1}{l|}{16} & 15                     &                        &                        & & & & & \multicolumn{1}{l|}{8} & 7 & & & & & & & & \multicolumn{1}{c|}{0}              \\ \hline
 \multicolumn{1}{|c|}{\cellcolor{red!75}S} & \multicolumn{1}{c|}{\cellcolor{yellow!75}E} & \multicolumn{1}{c|}{\cellcolor{yellow!75}E} & \multicolumn{1}{c|}{\cellcolor{yellow!75}E} & \multicolumn{1}{c|}{\cellcolor{yellow!75}E} & \multicolumn{1}{c|}{\cellcolor{yellow!75}E} & \multicolumn{1}{c|}{\cellcolor{yellow!75}E} & \multicolumn{1}{c|}{\cellcolor{yellow!75}E}  & \multicolumn{1}{c|}{\cellcolor{yellow!75}E} & \multicolumn{1}{c|}{\cellcolor{green!75}M} & \multicolumn{1}{c|}{\cellcolor{green!75}M} & \multicolumn{1}{c|}{\cellcolor{green!75}M} & \multicolumn{1}{c|}{\cellcolor{green!75}M} & \multicolumn{1}{c|}{\cellcolor{green!75}M} & \multicolumn{1}{c|}{\cellcolor{green!75}M} & \multicolumn{1}{c|}{\cellcolor{green!75}M}  & \multicolumn{1}{c|}{\cellcolor{green!75}M} & \multicolumn{1}{c|}{\cellcolor{green!75}M} & \multicolumn{1}{c|}{\cellcolor{green!75}M} & \multicolumn{1}{c|}{\cellcolor{green!75}M} & \multicolumn{1}{c|}{\cellcolor{green!75}M} & \multicolumn{1}{c|}{\cellcolor{green!75}M} & \multicolumn{1}{c|}{\cellcolor{green!75}M} & \multicolumn{1}{c|}{\cellcolor{green!75}M} & \multicolumn{1}{c|}{\cellcolor{green!75}M} & \multicolumn{1}{c|}{\cellcolor{green!75}M} & \multicolumn{1}{c|}{\cellcolor{green!75}M} & \multicolumn{1}{c|}{\cellcolor{green!75}M} & \multicolumn{1}{c|}{\cellcolor{green!75}M} & \multicolumn{1}{c|}{\cellcolor{green!75}M} & \multicolumn{1}{c|}{\cellcolor{green!75}M} & \multicolumn{1}{c|}{\cellcolor{green!75}M} & \multicolumn{1}{c|}{\cellcolor{green!75}M} \\ \hline
-\rotatebox[origin=c]{90}{Znak~}                        & \rotatebox[origin=c]{90}{Wykładnik~}                       &                        &                        &                        &                        &                        &                         & \rotatebox[origin=c]{90}{Mantysa~}                       &                        &                        &                        &                        &                        &                        &                         &                        &                        &                        &                       
+\rotatebox[origin=c]{90}{Znak~}                        & \rotatebox[origin=c]{90}{Wykładnik~}                       &                        &                        &                        &                        &                        &                         &                        & \rotatebox[origin=c]{90}{Mantysa~}                       &                        &                        &                        &                        &                        &                         &                        &                        &                        &                       
 \end{tabular}
 \normalsize
 \end{table}
@@ -112,7 +112,7 @@ Liczby zdenormalizowane posiadają w wykładniku same zera, natomiast mantysa je
 1 & $11\cdots11$ & 1X$\cdots$XX & QNaN \\ \hline
 \end{tabular}
 \end{table}
-Wartości wykładnika dla liczb zdenormalizowanych oraz znormalizowanych posiadają N -- które jest obciążeniem wykładnika.
+N -- obciążenie wykładnika, X -- dowolna wartość.
 
 \begin{table}[H]
 \centering
