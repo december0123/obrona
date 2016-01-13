@@ -100,13 +100,13 @@ Liczby zdenormalizowane posiadają w wykładniku same zera, natomiast mantysa je
 \textbf{Znak} & \textbf{Wykładnik} & \textbf{Mantysa} & \textbf{Wartość} \\ \hline
 0 & $00\cdots00$ & $00\cdots00$ & $+0$ \\ \hline
 0 & $00\cdots00$ & \begin{tabular}[c]{@{}c@{}}$00\cdots01$\\$\vdots$\\$11\cdots11$\end{tabular} & \begin{tabular}[c]{@{}c@{}}Dodatnia zdenormalizowana\\($0.f\times 2^{-N+1}$)\end{tabular} \\ \hline
-0 & \begin{tabular}[c]{@{}c@{}}$00\cdots00$\\$\vdots$\\$11\cdots10$\end{tabular} & XX$\cdots$XX & \begin{tabular}[c]{@{}c@{}}Dodatnia znormalizowana\\($1.f\times 2^{E-N}$)\end{tabular} \\ \hline
+0 & \begin{tabular}[c]{@{}c@{}}$00\cdots01$\\$\vdots$\\$11\cdots10$\end{tabular} & XX$\cdots$XX & \begin{tabular}[c]{@{}c@{}}Dodatnia znormalizowana\\($1.f\times 2^{E-N}$)\end{tabular} \\ \hline
 0 & $11\cdots11$ & $00\cdots00$ & $+\infty$ \\ \hline
 0 & $11\cdots11$ & \begin{tabular}[c]{@{}c@{}}$00\cdots01$\\$\vdots$\\$01\cdots11$\end{tabular} & SNaN \\ \hline
 0 & $11\cdots11$ & 1X$\cdots$XX & QNaN \\ \hline
 1 & $00\cdots00$ & $00\cdots00$ & $-0$ \\ \hline
 1 & $00\cdots00$ & \begin{tabular}[c]{@{}c@{}}$00\cdots01$\\$\vdots$\\$11\cdots11$\end{tabular} & \begin{tabular}[c]{@{}c@{}}Ujemna zdenormalizowana\\($-0.f\times 2^{-N+1}$)\end{tabular} \\ \hline
-1 & \begin{tabular}[c]{@{}c@{}}$00\cdots00$\\$\vdots$\\$11\cdots10$\end{tabular} & XX$\cdots$XX & \begin{tabular}[c]{@{}c@{}}Ujemna znormalizowana\\($-1.f\times 2^{E-N}$)\end{tabular} \\ \hline
+1 & \begin{tabular}[c]{@{}c@{}}$00\cdots01$\\$\vdots$\\$11\cdots10$\end{tabular} & XX$\cdots$XX & \begin{tabular}[c]{@{}c@{}}Ujemna znormalizowana\\($-1.f\times 2^{E-N}$)\end{tabular} \\ \hline
 1 & $11\cdots11$ & $00\cdots00$ & $-\infty$ \\ \hline
 1 & $11\cdots11$ & \begin{tabular}[c]{@{}c@{}}$00\cdots01$\\$\vdots$\\$01\cdots11$\end{tabular} & SNaN \\ \hline
 1 & $11\cdots11$ & 1X$\cdots$XX & QNaN \\ \hline
