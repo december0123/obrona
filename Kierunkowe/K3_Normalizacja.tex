@@ -30,27 +30,71 @@ Czy poniższa tabela spełnia warunki 1NF?
 
 \begin{table}[H]
 \centering
-\begin{tabular}{|l|l|l|l}
-\cline{1-3}
-Klient         & Towar          & Ilość    &  \\ \cline{1-3}
-Adam Adamowicz & Lalka barbie   & 1        &  \\ \cline{1-3}
-Anna Annowska  & Piła maszynowa & Dużo     &  \\ \cline{1-3}
-Anna Annowska  & Wino grzane    & 5 litrów &  \\ \cline{1-3}
+\caption{Transakcje - przed normalizacją}
+\begin{tabular}{|l|l|l}
+\cline{1-2}
+Klient         & Towar          & \\ \cline{1-2}
+Adam Adamowicz & Lalka barbie   & \\ \cline{1-2}
+Anna Annowska  & Lalka barbie, Wino grzane &  \\ \cline{1-2}
 \end{tabular}
 \end{table}
 
 Widzimy, że tabela nie jest w 1NF, ponieważ kolumna \textit{Klient} zawiera dane, które da się rozbić na dwie mniejsze kolumny -- imię oraz nazwisko klienta.
-Brakuje jej również unikalnego identyfikatora wierszy.
-Kolejnym problemem są dane różnego rodzaju w kolumnie \textit{Ilość.} 
+Brakuje również unikalnego identyfikatora wierszy.
+Widzimy też, że w kolumnie \textit{Towar} pojawia się wiele wartości, co jest błędem.
 
 Tabela po sprowadzeniu do 1NF wygląda następująco:
 \begin{table}[H]
 \centering
-\begin{tabular}{|l|l|l|l|l|l}
-\cline{1-5}
-Id & Imię & Nazwisko  & Towar          & Ilość &  \\ \cline{1-5}
-1  & Adam & Adamowicz & Lalka barbie   & 1     &  \\ \cline{1-5}
-2  & Anna & Annowska  & Piła maszynowa & 50    &  \\ \cline{1-5}
-3  & Anna & Annowska  & Wino grzane    & 5     &  \\ \cline{1-5}
+\caption{Transakcje - 1NF}
+\begin{tabular}{|l|l|l|l|l}
+\cline{1-4}
+Id & Imię & Nazwisko  & Towar          & \\ \cline{1-4}
+1  & Adam & Adamowicz & Lalka barbie   & \\ \cline{1-4}
+2  & Anna & Annowska  & Lalka barbie   & \\ \cline{1-4}
+3  & Anna & Annowska  & Wino grzane    & \\ \cline{1-4}
+\end{tabular}
+\end{table}
+
+\subsection*{2NF}
+	Druga postać normalna jeszcze bardziej zagłębia się w usuwanie redundancji:
+\begin{enumerate}
+	\item{Spełnia warunki 1NF.}
+	\item{Powiązane i powtarzające się dane zostały przeniesione do osobnej tabeli.}
+\end{enumerate}
+
+Po modyfikacjach otrzymujemy:
+
+\begin{table}[H]
+\centering
+\caption{Klienci - 2NF}
+\begin{tabular}{|l|l|l|ll}
+\cline{1-3}
+Id & Imię & Nazwisko  &  &  \\ \cline{1-3}
+1  & Adam & Adamowski &  &  \\ \cline{1-3}
+2  & Anna & Annowska  &  &  \\ \cline{1-3}
+\end{tabular}
+\end{table}
+
+\begin{table}[]
+\centering
+\caption{Towary - 2NF}
+\begin{tabular}{|l|l|ll}
+\cline{1-2}
+Id & Nazwa        &  &  \\ \cline{1-2}
+1  & Lalka barbie &  &  \\ \cline{1-2}
+2  & Wino grzane  &  &  \\ \cline{1-2}
+\end{tabular}
+\end{table}
+
+\begin{table}[]
+\centering
+\caption{Transakcje - 2NF}
+\begin{tabular}{|l|l|l|l}
+\cline{1-3}
+Id & Id\_klienta & Id\_towaru &  \\ \cline{1-3}
+1  & 1           & 1          &  \\ \cline{1-3}
+2  & 2           & 1          &  \\ \cline{1-3}
+3  & 2           & 2          &  \\ \cline{1-3}
 \end{tabular}
 \end{table}
