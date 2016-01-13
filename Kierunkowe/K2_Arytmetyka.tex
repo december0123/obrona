@@ -149,3 +149,17 @@ Standard również wyróżnia wyjątki:
 \item underflow --- niedomiar -- utrata precyzji przy liczbach bliskich zero,
 \item inexact --- niedokładność -- podczas operacji zaokrąglania.
 \end{itemize}
+
+\subsection{Podsumowanie}
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+\multicolumn{1}{|c|}{\textbf{Cecha}}                          & \multicolumn{1}{c|}{\textbf{L. stałoprzecinkowe}}                                               & \multicolumn{1}{c|}{\textbf{L.zmiennoprzecinkowe}}                                                             \\ \hline
+Reprezentacja                                                 & \begin{tabular}[c]{@{}l@{}}Tak jak w systemie \\ pozycyjnym lub \\ uzupełnieniowym\end{tabular} & \begin{tabular}[c]{@{}l@{}}Reprezentacja przez:\\ znak, wykładnik, mantysę\end{tabular}                        \\ \hline
+Dokładność                                                    & \begin{tabular}[c]{@{}l@{}}Mały zakres, \\ dokładne wyniki\end{tabular}                         & \begin{tabular}[c]{@{}l@{}}Duży zakres, możliwe \\ zaokrąglenia, utrata precyzji\end{tabular}                  \\ \hline
+\begin{tabular}[c]{@{}l@{}}Obsługa \\ błędów\end{tabular}     & \begin{tabular}[c]{@{}l@{}}Może wystąpić \\ przepełnienie\end{tabular}                          & \begin{tabular}[c]{@{}l@{}}Zaokrąglenia, błędne operacje, \\ przepełnienie, niedomiar\end{tabular}             \\ \hline
+\begin{tabular}[c]{@{}l@{}}Wartości \\ specjalne\end{tabular} & \multicolumn{1}{c|}{---}                                                                        & \begin{tabular}[c]{@{}l@{}}+0, -0, $+\infty$, $-\infty$,\\ QNaN, SNaN, liczby \\ zdenormalizowane\end{tabular} \\ \hline
+Arytmetyka                                                    & \begin{tabular}[c]{@{}l@{}}Wszystkie twierdzenia \\ prawdziwe\end{tabular}                      & \begin{tabular}[c]{@{}l@{}}Kolejność działań \\ wpływa na wynik\end{tabular}                                   \\ \hline
+\end{tabular}
+\end{table}
