@@ -1,0 +1,54 @@
+\section{K1 - Paradygmat programowania obiektowego}
+
+Programowanie obiektowe stanowi podejście do implementacji algorytmów, które opiera się na wykorzystaniu tak zwanych \textbf{obiektów} -- tworów łączących dane oraz zachowania -- komunikujących się ze sobą w celu wykonania pewnych zadań.
+
+Paradygmat ten ma stanowić ułatwienie w pisaniu i utrzymywaniu kodu, który może być używany wielokrotnie w różnych projektach.
+
+Pojęciami, na których się skupię będą:
+\begin{itemize}
+	\item Klasa
+	\item Abstrakcja
+	\item Enkapsulacja
+	\item Dziedziczenie
+	\item Polimorfizm
+\end{itemize}
+
+\textbf{Klasa} stanowi pewien zbiór cech i zachowań danego obiektu, który jest jej instancją.
+
+Przykładem może być klasa \textit{Pies,} która zawiera cechy takie jak oczy, pysk oraz umiejętność szczekania.
+
+\textbf{Abstrakcja,} czyli poziom ogólności, pozwala nam na upraszczanie problemu poprzez zredukowanie właściwości do jedynie tych kluczowych dla algorytmu.
+
+Dla przykładu - możemy mówić o \textit{Bazie danych} jako o fragmencie kodu, który będzie stanowił interfejs do komunikacji z pewną bazą danych, jednak nie ma to dla nas większego znaczenia w jaki sposób to będzie realizowane.
+
+Przekładając to na banalny przykład z życia codziennego -- kierowca nie musi przechodzić szczegółowych szkoleń za każdym razem, gdy zmienia samochód.
+Wystarczy mu jedynie podstawowa wiedza o jego działaniu, a takie rzeczy jak znajomość budowy silnika nie są mu potrzebne.
+
+\textbf{Enkapsulacja,} inaczej hermetyzacja, polega na celowym ukrywaniu wnętrza obiektów.
+
+Problem pojawia się, gdy udostępnimy wersję klasy, która ma pewne pola publiczne.
+Jeśli użytkownicy zaczną z tych pól korzystać, to aktualizacja może spowodować poważne problemy.
+
+Enkapsulacja pomaga ustrzec nas przed niepożądanym korzystaniem z mechanizmów wewnątrz tworzonej przez nas klasy, a na użytek świata zewnętrznego pozwala nam wystawić tylko zdefiniowany przez nas interfejs.
+
+Powracając do przykładu z samochodem -- kierowca powinien otwierać okno za pomocą guzika lub korbki, a nie poprzez wybijanie szyby.
+
+\textbf{Dziedziczenie} jest narzędziem, które dzięki odpowiednio zaprojektowanej relacji \textbf{klasa bazowa - klasa pochodna} pozwala na rozszerzanie funkcjonalności bez duplikowania kodu.
+
+W odniesieniu do samochodów -- możemy dostać wersję podstawową jakiegoś pojazdu, a następnie ją rozszerzyć o stylowe neony, naklejki z ogniem i spoilery.
+
+\textbf{Polimorfizm} pozwala nam na wyabstrahowanie pewnych zachowań od konkretnych typów danych. Dzięki niemu możemy wybrać zachowanie w zależności od kontekstu.
+
+Dla odmiany rozpatrzmy przykład, w którym klasą \textbf{bazową} będzie \textbf{Zwierze,} a klasami pochodnymi będą \textbf{Pies} oraz \textbf{Ryba.}
+
+Klasa bazowa ma zadeklarowaną metodę (funkcję, którą możemy wywołać na rzecz obiektu) o nazwie \textit{dajGlos.}
+
+Klasy pochodne mogą tę funkcję zdefiniować po swojemu i w ten sposób po wywołaniu metody \textit{dajGlos} na obiekcie klasy \textit{Pies} usłyszymy szczekanie, a po wywołaniu metody na obiekcie klasy \textit{Ryba} usłyszymy tylko ciche bulgotanie, któremu towarzyszyć będzie bezgłośne osądzanie naszych wyborów życiowych.
+
+Polimorfizm można podzielić na \textbf{statyczny --} decyzja o użytym typie zostaje podjęta już na etapie kompilacji -- oraz \textbf{dynamiczny --} wybór zostaje podjęty w czasie wykonywania programu.
+
+Oczywiście języki różnie podchodzą do omówionych pojęć.
+Przykładem może być Python, w którym pojęcie enkapsulacji praktycznie nie istnieje -- wszystko jest dostępne dla wszystkich.
+
+Innym przykładem może być podejście do dziedziczenia wielokrotnego, które jest dostępne w C++, a w Javie już nie.
+
