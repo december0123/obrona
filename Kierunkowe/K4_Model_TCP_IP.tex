@@ -1,0 +1,56 @@
+\sloppy\section{K4 -- Model warstwowy TCP/IP}
+Model TCP/IP jest modelem warstwowej struktury protokołów komunikacyjnych. Dzięki niemu dokonywana jest współpraca między różnym rodzajem sprzętu, technologii sieciowych oraz oprogramowania. Funkcje sieci komputerowych są podzielone na grupy, które są realizowane na różnych warstwach.
+
+Podział na warstwy umożliwia oferowanie usług warstwom wyższym warstw niższych, przy zachowaniu izolacji między warstwą wyższą, a sposobem realizacji usług. Przez to nawiązanie połączenia między np. serwerami pocztowymi (pracują na tej samej warstwie) na dwóch komputerach w rzeczywistości odbywa się przez wykorzystanie warstw niższych.
+
+W latach osiemdziesiątych stworzono model ISO/OSI. Został zaprojektowany jako ,,otwarty'' model -- opublikowany za darmo, bez restrykcji patentowych bądź ograniczeń rozpowszechniania. Aktualnie model ten jest traktowany jako wzorzec dla protokołów komunikacyjnych. Posiada on siedem warstw:
+\begin{table}[H]
+\centering
+\begin{tabular}{c|c|} \hhline{~-}
+7 & \cellcolor{blue!20}aplikacji    \\ \hhline{~-}
+6 & \cellcolor{blue!20}prezentacji  \\ \hhline{~-}
+5 & \cellcolor{blue!20}sesji        \\ \hhline{~-}
+4 & \cellcolor{red!20}transportowa \\ \hhline{~-}
+3 & \cellcolor{green!20}sieciowa     \\ \hhline{~-}
+2 & \cellcolor{yellow!20}łącza danych \\ \hhline{~-}
+1 & \cellcolor{yellow!20}fizyczna     \\ \hhline{~-}
+\end{tabular}
+\end{table}
+
+\textbf{Warstwa fizyczna} zapewnia przekaz bitów między stacjami połączonymi fizycznym medium (kable miedziane, światłowody, łącza radiowe).
+
+\textbf{Warstwa łącza danych} umieszcza dane w ramkach, które zawierają ciągi kontrolne. Warstwa ta również sprawdza jakość przekazywanych informacji, próbuje naprawić ewentualne błędy.
+
+\textbf{Warstwa sieciowa} jest odpowiedzialna za ustalenie drogi do docelowego urządzenia. Jednostką danych w tej warstwie są pakiety. Występuje tutaj segmentacja danych.
+
+\textbf{Warstwa transportowa} ma nadzór nad połączeniem (inicjacja, zrywanie) między dwoma stacjami. Warstwa ta jest również odpowiedzialna za podział danych na bloki, kontrolę poprawności transmisji, rozpoznawanie duplikatów oraz sprawdzanie poprawności adresowania.
+
+\textbf{Warstwa sesji} synchronizuje przesył danych, wznawia go po przerwaniu połączenia.
+
+\textbf{Warstwa prezentacji} przekształca dane użytkowników do postaci standardowej, używanej w sieci (np. zamiana Little Endian na Big Endian). Innymi cechami tej warstwy jest kompresja oraz szyfrowanie danych.
+
+\textbf{Warstwa aplikacji} zapewnia obsługę użytkowników w dostępie do usług (transmisja plików, zdalny terminal, poczta, etc.).
+
+Model TCP/IP jest podobnym modelem do OSI/ISO. Obecnie jest wykorzystywany jako struktura Internetu. W porównaniu do modelu OSI posiada mniej warstw, analogiczne warstwy zostały zaznaczone identycznym kolorem, jak w poprzedniej tabeli.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{c|c|} \hhline{~-}
+\multirow{3}{*}{4} & \cellcolor{blue!20}    \\ \hhline{~~}
+~ & \cellcolor{blue!20}  \\ \hhline{~~}
+~ & \multirow{-3}{*}{\cellcolor{blue!20}aplikacji}  \\ \hhline{~-}
+3 & \cellcolor{red!20}transportowa \\ \hhline{~-}
+2 & \cellcolor{green!20}Internetu     \\ \hhline{~-}
+\multirow{2}{*}{1} & \cellcolor{yellow!20}~ \\ \hhline{~~}
+~ & \multirow{-2}{*}{\cellcolor{yellow!20}dostępu do sieci}     \\ \hhline{~-}
+\end{tabular}
+\end{table}
+
+\textbf{Warstwa dostępu do sieci} może zawierać protokoły dynamicznego przydzielania adresów IP. Protokoły działające w tej warstwie: Ethernet, WiFi.
+
+\textbf{Warstwa Internetu} przetwarza dane posiadające adresy IP. Protokół działający w tej warstwie: IP.
+
+\textbf{Warstwa transportowa} wykorzystuje protokoły TCP oraz UDP. Przesyłanie danych do odpowiednich aplikacji odbywa się za pomocą portów określonych dla każdego połączenia.
+
+\textbf{Warstwa aplikacji} wykorzystuje różne protokoły (HTTP, XMPP, FTP, IRC, SSH, etc.).
+
