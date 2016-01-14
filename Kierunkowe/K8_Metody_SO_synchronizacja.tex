@@ -1,0 +1,35 @@
+\sloppy\section{K8 -- Mechanizmy systemu operacyjnego wspomagające synchronizację procesów.}
+
+Zarządzanie procesami to ważne zadanie systemu operacyjnego. \textbf{Program} to statyczny obiekt, zbiór instrukcji dla procesora, przechowywany w postaci pliku. \textbf{Proces} natomiast to wykonujący się program. Każdy proces wymaga przydziału zasobów (czas procesora, pamięć, pliki) do wykonania swojego zadania. Obsługa procesów jest wykonywana przez jądro systemu operacyjnego.
+
+Problem synchronizacji procesów pojawia się przy procesach współbieżnych, które ze sobą współpracują. Przykłady, w których wymagana jest synchronizacja procesów to:
+\begin{itemize}
+\item problem sekcji krytycznej -- procesy współdzielą strukturę danych, a operacje na nich muszą być atomowe,
+\item problem czytelników i pisarzy -- synchronizacja dostępu do zasobów dla procesów dokonujących i niedokonujących w nich zmian,
+\item problem producenta i konsumenta -- wynik działania jednego procesu wpływa na działanie drugiego procesu -- przetwarzanie danych przez drugi proces może się odbyć jedynie, gdy zostanie dane zostaną przekazane przez pierwszy proces,
+\item problem ucztujących filozofów -- procesy korzystają ze wspólnych zasobów, które pobierają i zwalniają wg potrzeb.
+\end{itemize}
+
+\textbf{Sekcja krytyczna} to sekwencja operacji wykonywanych na zasobie (np. pamięci, pliku), który musi być wykonywany w trybie wyłącznym przez jeden proces. Poprawnym rozwiązaniem sekcji krytycznej jest:
+\begin{itemize}
+\item instrukcje w sekcji krytycznej nie mogą być przeplatane -- może w niej być wyłącznie jeden proces,
+\item nie można zakładać w jakiej kolejności i z jaką szybkością wykonają się dane procesy,
+\item proces nie może zatrzymać się w sekcji krytycznej,
+\item nie mogą występować zakleszczenia (jeden proces czeka na zwolnienie zasobów przez drugi, a drugi czeka na zwolnienie zasobów pierwszego, więc obydwa się zatrzymują),
+\item każdy proces musi wejść do sekcji krytycznej (nie może wystąpić zagłodzenie).
+\end{itemize}
+
+Istnieją przeróżne mechanizmy synchronizacji implementowane przez jądro.
+
+\textbf{Semafory} są typem danych, które służą do kontroli dostępu zasobów przez wiele procesów. Semafory są zmienną całkowitą, która przyjmuje wartości nieujemne (tj. $\ge 0$) lub dla semaforów binarnych -- wartości logiczne. Semafor ma wartość początkową nieujemną. Na semaforach można wykonywać dwie operacje -- zmniejszenie (zajęcie, podniesienie,) oraz zwiększenie (zwolnienie, opuszczenie). Synchronizacja polega na blokowaniu procesu w operacji zajęcia semafora do czasu, aż wartość nie zostanie zwiększona (np. przez inny proces, który zwolni semafor). Wyróżnia się rodzaje semaforów takie jak:
+\begin{itemize}
+\item binarne -- zmienna przyjmuje tylko wartości \textit{true} (semafor otwarty) lub \textit{false} (semafor zamknięty),
+\item zliczające -- zmienna przyjmuje wartości całkowite nieujemne, a aktualna wartość jest zwiększana/zmniejszana o 1 w wyniku zwolnienia/zajęcia semafora,
+\item uogólniony -- semafor zliczający, ale może zwiększać/zmniejszać wartość o dowolną liczbę (oczywiście, aby wartość wciąż była nieujemna).
+\end{itemize}
+
+\textbf{Muteksy} (\texttt{\textbf{mut}ual \textbf{ex}clusion} -- wzajemne wykluczanie) są szczególnym przypadkiem semaforów. Muteks może być zablokowany lub odblokowany. Muteksy mogą być zwalniane tylko i wyłącznie przez proces, który zajął dany muteks. Dzięki temu wyeliminowane jest zjawisko zakleszczenia oraz niespójności danych.
+
+\textbf{Spinlocki} -- podobne do semaforów, jednak oczekiwanie na zwolnienie blokady odbywa się na zasadzie aktywnego czekania, przez co zajmują czas procesora, może wystąpić zagłodzenie lub czekać w nieskończoność.
+
+\textbf{Monitory} są strukturalnym narzędziem synchronizacji wątków. Składają się ze zmiennych oraz procedur operujących na nich, zebrane w jeden moduł. Dostęp do zmiennych jest możliwy wyłącznie za pomocą procedur monitora, a w danej chwili tylko jeden proces może wywoływać procedury monitora. Gdy inny proces wywoła procedurę monitora, to będzie on zablokowany do chwili opuszczenia monitora przez pierwszy proces. Istnieje możliwość wstrzymania i wznowienia procedur monitora za pomocą zmiennych warunkowych. Na zmiennych warunkowych można wykonywać operacje \texttt{wait} (wstrzymanie procesu i umieszczenie go na końcu kolejki) oraz \texttt{signal} (odblokowanie jednego z oczekujących procesów). Procesy oczekujące na wejście do monitora zorganizowane są w kolejkę FIFO.
