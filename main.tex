@@ -1,4 +1,5 @@
-\documentclass[12pt]{article}
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
 
 \usepackage{ifxetex}
 
@@ -13,15 +14,62 @@
   \usepackage{lmodern}
   \usepackage[polish]{babel}
 \fi
+
+\usepackage{indentfirst}
+\usepackage{parskip}
 \usepackage{rotating}
 \usepackage[hidelinks]{hyperref}
 \usepackage[table]{xcolor}
 \usepackage{float}
 \usepackage{hhline}
 \usepackage{multirow}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{titlesec}
+
+\newcommand{\sectionbreak}{\clearpage}
+
+\setlength{\parindent}{12pt}
+%\setlength{\parskip}{1,0em}
+
+\graphicspath{ {img/} }
+
+\setcounter{tocdepth}{1}
+
+\title{Opracowanie zagadnień z obrony inżynierskiej ze specjalności: INT, INS}
+\author{Łukasz Matysiak\\Dżejkop Zgraja\\Kamil Machnicki}
+\newcommand{\University}{Politechnika Wrocławska}
+\newcommand{\Department}{Wydział Elektroniki}
+\newcommand{\Faculty}{Informatyka}
+
+
+\makeatletter
+\renewcommand{\maketitle}{
+\begin{titlepage}
+    \begin{center}
+        %\vspace*{0.5cm}
+        \huge\textsc{{\University}}\\
+        \Large\textsc{{\Department}}\\
+        \Large\textsc{{\Faculty}}\par
+        
+        \vspace{5cm}
+        \huge\textbf{\@title}\par
+        
+        \vspace{6cm}
+        \large\textit{Autorzy:}\\ 
+        \Large\textbf{\@author}\par 
+        
+        \vspace{4.5cm}
+        \small Wrocław \\
+        \small \@date \\
+    \end{center}
+\end{titlepage}
+}
+\makeatother
 
 \begin{document}
-%\tableofcontents
+\maketitle
+\tableofcontents
 \part{Pytania kierunkowe}
 \input{kierunkowe}
 
