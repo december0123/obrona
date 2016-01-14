@@ -14,7 +14,7 @@
   \usepackage[polish]{babel}
 \fi
 \usepackage{rotating}
-\usepackage{hyperref}
+\usepackage[hidelinks]{hyperref}
 \usepackage[table]{xcolor}
 \usepackage{float}
 \usepackage{hhline}
@@ -22,6 +22,8 @@
 
 \begin{document}
 %\tableofcontents
-\include{kierunkowe}
-\include{specjalnosciowe}
+\part{Pytania kierunkowe}
+\input{kierunkowe}
+
+\input{specjalnosciowe}
 \end{document}

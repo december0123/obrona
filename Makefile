@@ -15,8 +15,7 @@ specjalnosciowe.tex: $(SPECJALNOSCIOWE)
 	truncate -s0 specjalnosciowe.tex
 	for specjalnosc in $(SPECJALIZACJE); do \
 		ls $(SPECJALNOSCIOWE_DIR)/$$specjalnosc/*.tex | awk '{printf "\\input{%s}\n", $$1}' > $$specjalnosc.tex ; \
-		printf "\\input{%s}\n" $$specjalnosc | tee -a specjalnosciowe.tex ; \
+		printf "\\part{Pytania specjalnościowe -- %s}\n\\input{%s}\n" $$specjalnosc $$specjalnosc | tee -a specjalnosciowe.tex ; \
 	done
 
 F:
-
