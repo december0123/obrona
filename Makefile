@@ -9,6 +9,7 @@ SPECJALNOSCIOWE := $(wildcard $(SPECJALNOSCIOWE_DIR)/*/*.tex)
 all: kierunkowe.tex specjalnosciowe.tex F
 
 kierunkowe.tex: $(KIERUNKOWE)
+	truncate -s0 kierunkowe.tex
 	ls -v $(KIERUNKOWE_DIR)/*.tex | awk '{printf "\\input{%s}\n", $$1}' > kierunkowe.tex
 
 specjalnosciowe.tex: $(SPECJALNOSCIOWE)
