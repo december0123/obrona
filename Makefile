@@ -3,7 +3,7 @@ KIERUNKOWE := $(wildcard $(KIERUNKOWE_DIR)/*.tex)
 
 SPECJALIZACJE = INT INS
 SPECJALNOSCIOWE_DIR := Specjalnosciowe
-SPECJALNOSCIOWE := $(wildcard $(SPECJALNOSCIOWE_DIR)/*.tex)
+SPECJALNOSCIOWE := $(wildcard $(SPECJALNOSCIOWE_DIR)/*/*.tex)
 
 .PHONY: all
 all: kierunkowe.tex specjalnosciowe.tex F
