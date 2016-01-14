@@ -1,7 +1,7 @@
 \sloppy\section{K4 -- Model warstwowy TCP/IP}
 Model TCP/IP jest modelem warstwowej struktury protokołów komunikacyjnych. Dzięki niemu dokonywana jest współpraca między różnym rodzajem sprzętu, technologii sieciowych oraz oprogramowania. Funkcje sieci komputerowych są podzielone na grupy, które są realizowane na różnych warstwach.
 
-Podział na warstwy umożliwia oferowanie usług warstwom wyższym warstw niższych, przy zachowaniu izolacji między warstwą wyższą, a sposobem realizacji usług. Przez to nawiązanie połączenia między np. serwerami pocztowymi (pracują na tej samej warstwie) na dwóch komputerach w rzeczywistości odbywa się przez wykorzystanie warstw niższych.
+Stopień skomplikowania sieci komputerowych spowodował, że różne funkcje sieci należy podzielić na grupy (warstwy). Każda warstwa ma swoją określoną rolę. Nawiązanie połączenia między np. serwerami pocztowymi (pracują na tej samej warstwie) na dwóch komputerach w rzeczywistości odbywa się przez wykorzystanie warstw niższych.
 
 W latach osiemdziesiątych stworzono model ISO/OSI. Został zaprojektowany jako ,,otwarty'' model -- opublikowany za darmo, bez restrykcji patentowych bądź ograniczeń rozpowszechniania. Aktualnie model ten jest traktowany jako wzorzec dla protokołów komunikacyjnych. Posiada on siedem warstw:
 \begin{table}[H]
@@ -31,7 +31,7 @@ W latach osiemdziesiątych stworzono model ISO/OSI. Został zaprojektowany jako 
 
 \textbf{Warstwa aplikacji} zapewnia obsługę użytkowników w dostępie do usług (transmisja plików, zdalny terminal, poczta, etc.).
 
-Model TCP/IP jest podobnym modelem do OSI/ISO. Obecnie jest wykorzystywany jako struktura Internetu. W porównaniu do modelu OSI posiada mniej warstw, analogiczne warstwy zostały zaznaczone identycznym kolorem, jak w poprzedniej tabeli.
+Koncepcja modelu TCP/IP jest identyczna jak w modelu OSI/ISO. Obecnie jest wykorzystywany jako struktura Internetu. Architektura tego modelu została opracowana w celu umożliwienia komunikacji między systemami pochodzącymi od różnych dostawców. W porównaniu do modelu OSI posiada mniej warstw, analogiczne warstwy zostały zaznaczone identycznym kolorem, jak w poprzedniej tabeli.
 
 \begin{table}[H]
 \centering
