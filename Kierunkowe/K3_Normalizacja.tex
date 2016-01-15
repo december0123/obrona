@@ -16,12 +16,16 @@ Sprowadzenie schematu do którejś z postaci normalnych polega na sprawieniu, by
 Przykładowo: schemat jest w 3NF jeśli spełnia warunki 3NF, 2NF oraz 1NF.
 
 Pan Codd, który był twórcą pojęcia normalizacji, wymyślił trzy postaci normalne, z których trzecia jest przez większość uważana za wystarczającą, jest ich jednak więcej.
+
+Zanim omówimy poszczególne postaci, chciałbym wspomnieć o jednej ważnej rzeczy -- \textbf{normalizacja bazy danych jest bardzo dobrą praktyką, która nie zawsze jest jednak konieczna, a czasami może być wręcz niepożądana.}
+
+Wynika to z tego, że po rozbiciu na wiele tabel, system bazodanowy musi wykonywać złączenia przy pozyskiwaniu danych, co może niekorzystnie wpływać na wydajność systemu.
 \subsection*{1NF}
 	Określa podstawowe zasady, które musi spełnić każda dobrze zorganizowana baza danych:
 \begin{enumerate}
 	\item{Tabele nie posiadają powtarzających się kolumn.}
 	\item{Dane w każdej kolumnie są niepodzielne.}
-	\item{Każdy wiersz daje się jednoznacznie zidentyfikować.}
+	\item{Każdy wiersz daje się jednoznacznie zidentyfikować (klucz główny).}
 	\item{Kolejność wierszy i kolumn nie ma znaczenia.}
 	\item{Dane w jednej kolumnie są tego samego rodzaju.}
 \end{enumerate}
@@ -60,41 +64,91 @@ Id & Imię & Nazwisko  & Towar          & \\ \cline{1-4}
 	Druga postać normalna jeszcze bardziej zagłębia się w usuwanie redundancji:
 \begin{enumerate}
 	\item{Spełnia warunki 1NF.}
-	\item{Powiązane i powtarzające się dane zostały przeniesione do osobnej tabeli.}
+	\item{Atrybuty \textbf{niekluczowe} zależą funkcyjnie od \textbf{pełnego} klucza.}
 \end{enumerate}
 
-Po modyfikacjach otrzymujemy:
+Co to tak właściwie oznacza?
+
+Znaczy to tyle, że jeśli któraś z kolumn niekluczowych zależy tylko od części klucza, to jest to błąd.
+
+Załóżmy tabelę, w której klucz jest złożony z kolumn \textbf{id\_kursu} oraz \textbf{id\_semestru}:
 
 \begin{table}[H]
 \centering
-\caption{Klienci - 2NF}
-\begin{tabular}{|l|l|l|ll}
-\cline{1-3}
-Id & Imię & Nazwisko  &  &  \\ \cline{1-3}
-1  & Adam & Adamowski &  &  \\ \cline{1-3}
-2  & Anna & Annowska  &  &  \\ \cline{1-3}
+\caption{Kursy - 1NF}
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+\underline{id\_kursu} & \underline{id\_semestru} & sala & nazwa\_kursu  & id\_prowadzacego & nazwisko\_prowadzacego \\ \hline
+I1        & 2015-16-z    & 10   & Programowanie & 1                & Nauczycielowicz        \\ \hline
+I1        & 2015-16-l    & 10   & Programowanie & 1                & Nauczycielowicz        \\ \hline
+E1        & 2015-16-z    & 15   & Elektronika   & 2                & Prowadzącywicz         \\ \hline
+\end{tabular}
+\end{table}
+
+Widzimy, że kolumna \textit{nazwa\_kursu} zależy tylko od części klucza - \textit{id\_kursu,} ponieważ nazwa kursu zależy od jego id, ale nie ma nic wspólnego z semestrem, w którym się odbywa. Kolumny \textit{sala,} \textit{id\_prowadzacego} oraz \textit{nazwisko\_prowadzacego} nie naruszają warunków 2NF, ponieważ
+\begin{itemize}
+	\item{kolumny \textit{sala} oraz \textit{id\_prowadzacego} zależą od całości klucza -- prowadzący i sala zmienia się zarówno ze względu na przedmiot jak i na semestr,}
+	\item{kolumna \textit{nazwisko\_prowadzacego} wcale nie zależy od klucza.}
+\end{itemize}
+
+Aby sprowadzić tabelę do 2NF należy rozbić ją w następujący sposób:
+
+\begin{table}[H]
+\centering
+\caption{Kursy - 2NF}
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+\underline{id\_kursu} & \underline{id\_semestru} & sala & id\_prowadzacego & nazwisko\_prowadzacego \\ \hline
+I1        & 2015-16-z    & 10   & 1                & Nauczycielowicz        \\ \hline
+I1        & 2015-16-l    & 10   & 1                & Nauczycielowicz        \\ \hline
+E1        & 2015-16-z    & 15   & 2                & Prowadzącywicz         \\ \hline
 \end{tabular}
 \end{table}
 
 \begin{table}[H]
 \centering
-\caption{Towary - 2NF}
-\begin{tabular}{|l|l|ll}
-\cline{1-2}
-Id & Nazwa        &  &  \\ \cline{1-2}
-1  & Lalka barbie &  &  \\ \cline{1-2}
-2  & Wino grzane  &  &  \\ \cline{1-2}
+\caption{Nowa tabela wyekstrahowana z tabeli Kursy - 2NF}
+\label{my-label}
+\begin{tabular}{|l|l|}
+\hline
+\underline{id\_kursu} & nazwa\_kursu  \\ \hline
+I1              & Programowanie \\ \hline
+E1              & Elektronika   \\ \hline
+\end{tabular}
+\end{table}
+
+\subsection*{3NF}
+	Trzecia postać normalna idzie o krok dalej:
+\begin{enumerate}
+	\item{Spełnia warunki 2NF.}
+	\item{Atrybuty \textbf{niekluczowe} zależą \textbf{tylko} od \textbf{pełnego} klucza.}
+\end{enumerate}
+
+Różnica między 2NF i 3NF brzmi subtelnie, a polega na tym, że z tabeli wyciągamy wszystkie dane, które w żaden sposób nie zależą od klucza.
+
+Tabela \textit{Kursy} sprowadzona do 3NF wygląda następująco:
+
+\begin{table}[H]
+\centering
+\caption{Kursy - 3NF}
+\label{my-label}
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+\underline{id\_kursu} & \underline{id\_semestru} & sala & nazwa\_kursu  & id\_prowadzacego \\ \hline
+I1        & 2015-16-z    & 10   & Programowanie & 1                \\ \hline
+I1        & 2015-16-l    & 10   & Programowanie & 1                \\ \hline
+E1        & 2015-16-z    & 15   & Elektronika   & 2                \\ \hline
 \end{tabular}
 \end{table}
 
 \begin{table}[H]
 \centering
-\caption{Transakcje - 2NF}
-\begin{tabular}{|l|l|l|l}
-\cline{1-3}
-Id & Id\_klienta & Id\_towaru &  \\ \cline{1-3}
-1  & 1           & 1          &  \\ \cline{1-3}
-2  & 2           & 1          &  \\ \cline{1-3}
-3  & 2           & 2          &  \\ \cline{1-3}
+\caption{Nowa tabela wyekstrahowana z tabeli Kursy - 3NF}
+\label{my-label}
+\begin{tabular}{|l|l|}
+\hline
+\underline{id\_prowadzacego} & nazwisko\_prowadzacego  \\ \hline
+1              & Nauczycielowicz \\ \hline
+2              & Prowadzącywicz   \\ \hline
 \end{tabular}
 \end{table}
