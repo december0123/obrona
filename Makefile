@@ -10,12 +10,12 @@ all: kierunkowe.tex specjalnosciowe.tex F
 
 kierunkowe.tex: $(KIERUNKOWE)
 	truncate -s0 kierunkowe.tex
-	ls -v $(KIERUNKOWE_DIR)/*.tex | awk '{printf "\\input{%s}\n\\newpage\n", $$1}' > kierunkowe.tex
+	ls -v $(KIERUNKOWE_DIR)/*.tex | awk '{printf "\\input{%s}\n\\clearpage\n", $$1}' > kierunkowe.tex
 
 specjalnosciowe.tex: $(SPECJALNOSCIOWE)
 	truncate -s0 specjalnosciowe.tex
 	for specjalnosc in $(SPECJALIZACJE); do \
-		ls -v $(SPECJALNOSCIOWE_DIR)/$$specjalnosc/*.tex | awk '{printf "\\input{%s}\n\\newpage\n", $$1}' > $$specjalnosc.tex ; \
+		ls -v $(SPECJALNOSCIOWE_DIR)/$$specjalnosc/*.tex | awk '{printf "\\input{%s}\n\\clearpage\n", $$1}' > $$specjalnosc.tex ; \
 		printf "\\part{Pytania specjalnościowe -- %s}\n\\input{%s}\n" $$specjalnosc $$specjalnosc | tee -a specjalnosciowe.tex ; \
 	done
 
