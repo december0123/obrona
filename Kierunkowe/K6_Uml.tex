@@ -8,6 +8,8 @@ W jaki sposób używa się UMLa do modelowania? Korzysta się z diagramów, któ
 
 UML jest przydatnym narzędziem nie tylko w procesie modelowania, ale również podczas szybkich rozmów między programistami kiedy chce się szybko nakreślić ideę.
 
+Omówmy kilka najczęściej spotykanych diagramów.
+
 \subsection{Diagram pakietów}
 Pełni rolę organizacyjną. Zawiera w sobie inne elementy języka, zazwyczaj diagramy klas.
 
@@ -21,18 +23,25 @@ Pojedynczą klasę umieszcza się w prostokącie podzielonym na trzy części
 	\item{funkcje.}
 \end{itemize}
 
-Atrybuty oraz funkcje oznacza się modyfikatorem dostępu (np. public, private), składniki statyczne zaznacza się poprzez podkreślenie, a stereotypy -- elementy służące do doprecyzowania semantyki elementu, np. oznaczenie jako klucz główny -- umieszcza się w podwójnych nawiasach ostrych <<>>.
+Atrybuty oraz funkcje oznacza się modyfikatorem dostępu (np. + dla public, - dla private), składniki statyczne zaznacza się poprzez podkreślenie, a stereotypy -- elementy służące do doprecyzowania semantyki elementu, np. oznaczenie jako klucz główny -- umieszcza się w podwójnych nawiasach ostrych <<>>.
 
 Relacje między klasami:
 \begin{itemize}
 	\item{\textbf{Zależność -- strzałka przerywana} -- podstawowa relacja mówiąca, że obiekt może w jakiś sposób korzystać lub wpływać na inne obiekty.}
-	\item{\textbf{Asocjacja -- linia ciągła} -- obiekty wykorzystują inne obiekty przez dłuższy czas.}
-	\item{\textbf{Agregacja częściowa -- pusta strzałka z rombem} -- }
+	\item{\textbf{Asocjacja -- linia ciągła} -- obiekty wykorzystują inne obiekty (człowiek używa magazynu do przechowywania rzeczy).}
+	\item{\textbf{Agregacja częściowa -- pusta strzałka z rombem} -- obiekt posiada inne obiekty, ale nie są one do niego przypisane na wyłączność (kiedy człowiek umrze, jego samochód dalej istnieje).}
+	\item{\textbf{Agregacja całkowita -- pełna strzałka z rombem} -- obiekt posiada inne obiekty i jest za nie odpowiedzialny (kiedy człowiek umrze, jego serce umiera wraz z nim).}
 	\item{\textbf{Dziedziczenie --} pusta strzałka -- określa hierarchię dziedziczenia.}
 \end{itemize}
 \subsection{Diagram przypadków użycia}
-TODO
+Diagram umożliwia analizę oraz dokumentację wymagań co do funkcjonalności systemu -- w jasny sposób pokazuje co jest od niego wymagane i pomaga w opracowaniu projektu oraz przetestowaniu już zbudowanego systemu. Co ważne, diagram nie posiada szczegółowych informacji na temat przypadków użycia -- takie informacje są umieszczane np. na diagramie stanu czy aktywności.
 
+Diagram składa się z
+\begin{itemize}
+	\item{przypadków użycia -- ciąg akcji, z uwzględnieniem ich różnych wariantów, które mogą zostać wykonane podczas interakcji systemu z użytkownikiem,}
+	\item{aktorów -- mogą być to ludzie-użytkownicy, ale również inne systemy czy urządzenia,}
+	\item{związków -- powiązanie pomiędzy elementami diagramu.}
+\end{itemize}
 \subsection{Diagram sekwencji}
 Pokazuje w sposób zgodny z intuicją kolejność wywołanych operacji i przepływ sterowania pomiędzy obiektami.
 
