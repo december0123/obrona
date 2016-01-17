@@ -174,6 +174,43 @@ Standard również wyróżnia wyjątki:
 \item inexact --- niedokładność -- podczas operacji zaokrąglania.
 \end{itemize}
 
+\subsection{Działania}
+\subsubsection{Arytmetyka stałoprzecinkowa}
+\begin{itemize}
+\item \textbf{Dodawanie/odejmowanie}
+	\begin{itemize}
+	\item dodawanie kolejnych cyfr, z zachowaniem ich pozycji
+	\item występują przeniesienia
+	\item odejmowanie -- dodawanie liczby przeciwnej (odjętej od zera)
+	\end{itemize}
+\item \textbf{Mnożenie}
+	\begin{itemize}
+	\item mnożenie mnożnej kolejnymi cyframi mnożnika, potem dodanie kolejnych sum częściowych
+	\item w systemie uzupełnieniowym jest podobnie jak w naturalnym, gdy mnożnik ujemny wymagana jest korekcja wyniku
+	\end{itemize}
+\item \textbf{Dzielenie}
+	\begin{itemize}
+	\item wynik dzielenia jest przybliżony (nie ma gwarancji, że dla dzielnej $X$ oraz dzielnika $D$ istnieje liczba $Q$, że $X = Q * D$, można to skorygować dodając resztę z dzielenia)
+	\item właśnie ogarnąłem, że opisałem fakty, których uczyliśmy się w podstawówce
+	\end{itemize}
+\end{itemize}
+
+\subsubsection{Arytmetyka zmiennoprzecinkowa}
+\begin{itemize}
+\item \textbf{Dodawanie/odejmowanie}
+	\begin{itemize}
+	\item wymaga wyrównania wykładników (mniejszy do większego)
+	\item denormalizacja jednej liczby, następnie dodanie/odjęcie mantys, potem normalizacja wyniku
+	\item nadmiar/niedomiar może wystąpić przy normalizacji
+	\end{itemize}
+\item \textbf{Mnożenie/dzielenie}
+	\begin{itemize}
+	\item mnożenie -- przemnożenie mantys, dodanie wykładników, normalizacja
+	\item dzielenie -- podzielenie mantys, odjęcie wykładników, normalizacja
+	\item może wystąpić nadmiar/niedomiar
+	\end{itemize}
+\end{itemize}
+
 \subsection{Podsumowanie}
 \begin{table}[H]
 \centering
