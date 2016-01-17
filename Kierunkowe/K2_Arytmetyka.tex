@@ -1,6 +1,6 @@
 \sloppy\section{K2 -- Arytmetyka stało- i zmiennoprzecinkowa}
 
-Każda informacja w komputerze może zostać przedstawiona za pomocą podstawowych jednostek -- bitów. W przypadku liczb, można je reprezentować za pomocą typów \{stało-,zmienno-\}przecinkowych. Różnią się cechami takimi jak:
+Każda informacja w komputerze jest przedstawiona za pomocą podstawowych jednostek -- bitów. W przypadku liczb, można je reprezentować za pomocą typów \{stało-,zmienno-\}przecinkowych. Różnią się cechami takimi jak:
 \begin{itemize}
 \item sposób zapisu,
 \item zakres wartości,
@@ -27,10 +27,33 @@ DEC	&	BIN (NKB)	\\ \hline
 \end{table}
 
 \subsection{Kod uzupełnieniowy U2}
-W celu reprezentacji liczby całkowitej potrzebne jest zdefiniowanie znaku liczby. Wartość liczb zapisuje się podobnie jak w wypadku NKB, jednak znak liczby jest określony przez bit najbardziej znaczący (0 -- liczba dodatnia, 1 -- liczba ujemna) (liczba \textit{n-bitowa}):
+W celu reprezentacji liczby całkowitej potrzebne jest zdefiniowanie znaku liczby. Wartość liczb zapisuje się podobnie jak w wypadku NKB, jednak znak liczby jest określony przez bit najbardziej znaczący (0 -- liczba dodatnia, 1 -- liczba ujemna).
+Aby otrzymać wartość n-bitowej liczby zapisanej w kodzie U2 można skorzystać z następującego wzoru:
 \begin{equation}
 x = (-1)^{n-1}+\sum_{i=0}^{n-2}2^{i} \times x_{i}
 \end{equation}
+
+Jak wynika ze wzoru, o ile liczba dodatnia wygląda tak samo jak w NKB, to postać liczby ujemnej zapisanej w U2 wcale nie jest taka sama jak w NKB z dodaną jedynką na przodzie.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|} \hline
+DEC	&	NKB		&	U2	\\ \hline
+-3	&	---		&	101\\ \hline
+-2	&	---		&	110\\ \hline
+-1	&	---		&	111\\ \hline
+0	&	000		&	000\\ \hline
+1	&	001		&	001\\ \hline
+2	&	010		&	010\\ \hline
+3	&	011		&	011\\ \hline
+\end{tabular}
+\end{table}
+
+Dwa łatwe sposoby na odczytanie wartości liczby ujemnej w U2:
+\begin{itemize}
+	\item{Neguj wszystkie bity i dodaj 1.}
+	\item{Potraktuj najstarszy bit jak ujemną wartość na tej pozycji i dodaj do niej pozostałe bity.}
+\end{itemize}
 
 W dwójkowym systemie uzupełnieniowym porządek kodów arytmetycznych jest zachowany w całym zakresie. $\{0, x_{n-2},\ldots,x_{1},x_{0}\}$ reprezentuje dodatnią liczbę $x$, a $\{1, x_{n-2},\ldots,x_{1},x_{0}\}$ to zapis liczby \textbf{większej o $x$ od najmniejszej liczby $-2^{n-1}$}.
 
