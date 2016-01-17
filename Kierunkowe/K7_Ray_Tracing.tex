@@ -1,1 +1,46 @@
 \section{Generowanie realistycznych obrazów scen 3-D za pomocą metody śledzenia promieni}
+
+\textbf{Metoda śledzenia promieni} (ang. \textit{Ray Tracing}) jest techniką służącą do generowania fotorealistycznych scen trójwymiarowych 3-D. Opiera się na śledzeniu wyłącznie tych promieni, które docierają do obserwatora. Cechą charakterystyczną jest to, że promienie nie są analizowane normalnym torem, tj. od źródła światła, bądź światła odbitego, do obserwatora, lecz właśnie \textbf{od oka obserwatora do elementów na scenie}. Zatem dla każdego piksela obrazu wynikowego wyprowadzany jest jeden promień, od którego w następstwie zależy wartość koloru tego piksela.
+
+Wyprowadzony promień może nie trafić w żaden obiekt na scenie - piksel przyjmuje wtedy określony kolor tła. Promień może także trafić na źródło światła - piksel zyskuje kolor źródłowy światła. Promień może również trafić w jakiś obiekt na scenie. Jeśli trafi na taki obiekt, to kolor piksela obliczany jest za pomocą zaimplementowanego modelu oświetlenia, na przykład popularnego \textbf{modelu Phonga}. Po trafieniu w powierzchnię obiektu można następnie rekurencyjnie śledzić kolejne promienie odbite (zwane wtórnymi) i załamane tak, aby uzyskać efekt przedmiotów odbijających się w sobie nawzajem.
+
+Przebieg działania algorytmu zapisywany jest w postaci \textbf{drzewa} (graf nieskierowany). Skrócony przebieg algorytmu przedstawić można w kilku krokach:
+\begin{enumerate}
+	\item Dla każdego piksela obrazu wyprowadź \textbf{promień pierwotny}.
+    \item Dla każedgo napotkanego obiektu oblicz odbicia i wyprowadź \textbf{promienie wtóre}. Każde odbicie zapisz jako nowy węzeł drzewa.
+    \item Dla każdego węzła wyznacz oświetlenie lokalne korzystając z wybranego modelu oświetlenia.
+    \item Przechodząc od liści drzewa dodawaj kolejne wartości oświetlenia lokalnego ustalając tym samym ostateczną wartość piksela, od którego wyszedł promień pierwotny.
+\end{enumerate}
+
+Algorytm kończy swe działanie w momencie, gdy:
+\begin{itemize}
+	\item Promień nie trafia w żaden obiekt na scenie
+    \item Promień trafia w obiekt całkowicie rozpraszający światło
+    \item Promień trafia na obiekt, w którym następuje całkowite wewnętrzne odbicie
+\end{itemize}
+
+\textbf{Model Phonga} służy do modelowania odbić od nieidealnych kształtów. Na model ten składają się trzy wartości:
+\begin{enumerate}
+	\item \textbf{Składowa ambientowa} - światło otoczenia, jest to wartość stała przypisana do danej sceny.
+	\item \textbf{Składowa rozproszona} - kolor obiektu, wyliczany na podstawie \textit{modelu Lamberta} (Lambert, Lambert ty chuju) i służący za wyliczenie wartości oświetlenia powierzchni matowej (drewno, papier).
+	\item \textbf{Składowa odbita} - odpowiada za efekt połysku dla powierzchni śliskich, błyszczących (Passat metallic nówka nie śmigana trzy razy klepana).
+\end{enumerate}
+
+Owe składowe są mnożone przez procentowy współczynnik wpływu każdej składowej a następnie sumowane według poniższego wzoru:
+
+\begin{equation}
+I = k_{A}I_{A} + k_{D}I_{D} + k_{S}I_{S}
+\end{equation}
+
+Gdzie:
+\begin{itemize}
+	\item $I$ – natężenie światła w punkcie
+	\item $I_{A}$ – (ang. \textit{ambient}) natężenie światła otoczenia
+    \item $I_{D}$ – (ang. \textit{diffuse}) natężenie światła rozproszonego
+    \item $I_{S}$ – (ang. \textit{specular}) natężenie światła odbitego lustrzanie
+	\item $k$ – procentowy współczynnik wpływu składowych
+\end{itemize}
+
+Metoda śledzenia promieni mimo, że daje zdumiewające rezultaty to jest bardzo kosztowny obliczeniowo przez dużą liczbę obliczeń potrzebnych do wyliczenia wartości koloru każdego piksela. Ponadto, w tej metodzie niektóre małe obiekty, bądź obiekty o ostrych krawędziach mogą być niepoprawnie wyświetlane, dlatego też jeden promień pierwotny zastępowany jest \textbf{wiązką promieni}, płacąc tym samym zwiększoną złożonością obliczeniową algorytmu.
+
+Wartym zaznaczenia jest, że \textbf{śledzenie promieni dla każdego z pikseli odbywa się niezależnie} od innych pikseli, także metodę tę można \textbf{zrównoleglić} (zarówno dla grupy pikseli bądź promieni) na przykład wykorzystując zestawy instrukcji MMX oraz SSE z architektury SIMD równoleglące te same operacje arytmetyczne na liczbach całkowitych w procesorzem, bądź używając do tego celu dobrodziejstw najnowszych procesorów graficznych - na przykład technologia NVIDIA CUDA. A gumisie skaczo tam i siam.
