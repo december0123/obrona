@@ -1,8 +1,10 @@
 \section{K1 - Paradygmat programowania obiektowego}
 
-Programowanie obiektowe stanowi podejście do implementacji algorytmów, które opiera się na wykorzystaniu tak zwanych \textbf{obiektów.} Są to twory, które łączą w sobie dane oraz zachowania oraz komunikują się ze sobą w celu wykonania pewnych zadań.
+Programowanie obiektowe stanowi podejście do implementacji algorytmów, które opiera się na wykorzystaniu tak zwanych \textbf{obiektów.} Są to twory, które łączą w sobie dane i zachowania oraz komunikują się ze sobą w celu wykonania pewnych zadań.
 
-Paradygmat ten ma stanowić ułatwienie w pisaniu i utrzymywaniu kodu, który może być używany wielokrotnie w różnych projektach.
+Paradygmat ten ma stanowić ułatwienie w pisaniu i utrzymywaniu kodu, który może być używany wielokrotnie w różnych projektach jednak nie jest odpowiedzią na wszystkie problemy i oprócz swoich zalet ma również wady.
+
+Przez to, że obiekty posiadają wewnętrzny stan, programowanie współbieżne staje się o wiele trudniejsze, gdyż musimy zapobiegać wyścigom czy zagłodzeniu.
 
 Pojęciami, na których się skupię będą:
 \begin{itemize}
@@ -11,20 +13,24 @@ Pojęciami, na których się skupię będą:
 	\item Enkapsulacja
 	\item Dziedziczenie
 	\item Polimorfizm
+	\item Wzorce projektowe
 \end{itemize}
 
-\textbf{Klasa} stanowi pewien zbiór cech i zachowań danego obiektu, który jest jej instancją.
+\subsection{Klasa}
+Stanowi pewien zbiór cech i zachowań danego obiektu, który jest jej instancją.
 
 Przykładem może być klasa \textit{Pies,} która zawiera cechy takie jak oczy, pysk oraz umiejętność szczekania.
 
-\textbf{Abstrakcja,} czyli poziom ogólności, pozwala nam na upraszczanie problemu poprzez zredukowanie właściwości do jedynie tych kluczowych dla algorytmu.
+\subsection{Abstrakcja}
+Czyli poziom ogólności, pozwala nam na upraszczanie problemu poprzez zredukowanie właściwości do jedynie tych kluczowych dla algorytmu.
 
 Dla przykładu - możemy mówić o \textit{Bazie danych} jako o fragmencie kodu, który będzie stanowił interfejs do komunikacji z pewną bazą danych, jednak nie ma to dla nas większego znaczenia w jaki sposób to będzie realizowane.
 
 Przekładając to na banalny przykład z życia codziennego -- kierowca nie musi przechodzić szczegółowych szkoleń za każdym razem, gdy zmienia samochód.
 Wystarczy mu jedynie podstawowa wiedza o jego działaniu, a takie rzeczy jak znajomość budowy silnika nie są mu potrzebne.
 
-\textbf{Enkapsulacja,} inaczej hermetyzacja, polega na celowym ukrywaniu wnętrza obiektów.
+\subsection{Enkapsulacja}
+Inaczej hermetyzacja, polega na celowym ukrywaniu wnętrza obiektów.
 
 Problem pojawia się, gdy udostępnimy wersję klasy, która ma pewne pola publiczne.
 Jeśli użytkownicy zaczną z tych pól korzystać, to aktualizacja może spowodować poważne problemy.
@@ -33,11 +39,22 @@ Enkapsulacja pomaga ustrzec nas przed niepożądanym korzystaniem z mechanizmów
 
 Powracając do przykładu z samochodem -- kierowca powinien otwierać okno za pomocą guzika lub korbki, a nie poprzez wybijanie szyby.
 
-\textbf{Dziedziczenie} jest narzędziem, które dzięki odpowiednio zaprojektowanej relacji \textbf{klasa bazowa - klasa pochodna} pozwala na rozszerzanie funkcjonalności bez duplikowania kodu.
+Warto wspomnieć, że języki w różny sposób podchodzą do omawianych przeze mnie pojęć.
+Python jest językiem, w którym pojęcie enkapsulacji praktycznie nie istnieje -- wszystko jest dostępne dla wszystkich i jeśli ktoś bardzo chce użyć zmiennych, które wyraźnie oznaczyliśmy jako do użytku wewnętrznego to może to zrobić na własną odpowiedzialność.
+
+\subsection{Dziedziczenie}
+Jest narzędziem, które dzięki odpowiednio zaprojektowanej relacji \textbf{klasa bazowa - klasa pochodna} pozwala na rozszerzanie funkcjonalności bez duplikowania kodu.
 
 W odniesieniu do samochodów -- możemy dostać wersję podstawową jakiegoś pojazdu, a następnie ją rozszerzyć o stylowe neony, naklejki z ogniem i spoilery.
 
-\textbf{Polimorfizm} pozwala nam na wyabstrahowanie pewnych zachowań od konkretnych typów danych. Dzięki niemu możemy wybrać zachowanie w zależności od kontekstu.
+\subsubsection{Dziedziczenie wielokrotne}
+Tutaj znowu w zależności od języka możemy mieć możliwość skorzystania z mechanizmu dziedziczenia wielokrotnego lub nie.
+
+Polega ono na tym, że klasa pochodna może dziedziczyć po kilku klasach bazowych.
+Jest to potężny mechanizm, jednak należy go używać z głową, gdyż może powodować problemy.
+
+\subsection{Polimorfizm}
+Pozwala nam na wyabstrahowanie pewnych zachowań od konkretnych typów danych. Dzięki niemu możemy wybrać zachowanie w zależności od kontekstu.
 
 Dla odmiany rozpatrzmy przykład, w którym klasą \textbf{bazową} będzie \textbf{Zwierze,} a klasami \textbf{pochodnymi} będą \textbf{Pies} oraz \textbf{Ryba.}
 
@@ -47,12 +64,22 @@ Klasy pochodne mogą tę funkcję zdefiniować po swojemu i w ten sposób po wyw
 
 Polimorfizm można podzielić na \textbf{statyczny --} decyzja o użytym typie zostaje podjęta już na etapie kompilacji -- oraz \textbf{dynamiczny --} wybór zostaje podjęty w czasie wykonywania programu.
 
-Oczywiście języki różnie podchodzą do omówionych pojęć.
-Przykładem może być Python, w którym pojęcie enkapsulacji praktycznie nie istnieje -- wszystko jest dostępne dla wszystkich.
+\subsection{Wzorce projektowe}
+Powstały, aby spisać często napotykane podczas programowania problemy oraz sprawdzone rozwiązania.
 
-Innym przykładem może być podejście do dziedziczenia wielokrotnego, które jest dostępne w C++, a w Javie już nie.
+Jest to temat bardzo atrakcyjnych dla początkujących programistów i jest jednocześnie bardzo pomocny i bardzo niebezpieczny, ponieważ początkujący mogą chcieć korzystać ze wzorców gdzie tylko mogą, nie zważając na to czy faktycznie są one potrzebne.
 
-Warto jeszcze wspomnieć, że programowanie obiektowe nie jest odpowiedzią na wszystkie problemy i oprócz swoich zalet ma również wady.
+Należy pamiętać o antywzorcach złotym młotku oraz srebrnym pocisku -- nie wszystko co się do tej pory sprawdziło gdzie indziej sprawdzi się w naszym przypadku, a to że doskonale znamy jakąś technologię nie znaczy, że jest ona zawsze odpowiednia.
 
-Przez to, że obiekty posiadają wewnętrzny stan, programowanie współbieżne staje się o wiele trudniejsze, gdyż musimy zapobiegać wyścigom czy zagłodzeniu.
+Wzorce projektowe dzielimy wg trzech kategorii:
+\begin{itemize}
+	\item{konstrukcyjne -- opisujące proces tworzenia nowych obiektów, przykładowo \textbf{fabryka, singleton,}}
+	\item{strukturalne -- opisujące struktury powiązanych ze sobą obiektów, przykładowo \textbf{adapter, dekorator,}}
+	\item{behawioralne -- opisujące zachowanie i odpowiedzialność współpracujących ze sobą obiektów, przykładowo \textbf{strategia, null object.}}
+\end{itemize}
+
+
+
+
+
 
