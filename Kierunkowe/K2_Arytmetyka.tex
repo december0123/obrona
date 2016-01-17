@@ -73,7 +73,7 @@ W przypadku liczb zmiennoprzecinkowych ważna jest kolejność działań!
 
 Liczby zmiennoprzecinkowe zawierają zarezerwowane wartości dla liczb specjalnych.
 
-Standard IEEE754 wymaga, aby liczby były znormalizowane (oprócz wartości specjalnych). Standard wymaga również, aby wykładnik był w zakresie $1 <= |M| < 2$. Dzięki temu można ukryć najwyższy bit (mantysa jest postaci $1.bbb\ldots bb$).
+Standard IEEE754 wymaga, aby liczby były znormalizowane (oprócz wartości specjalnych). Standard wymaga również, aby mantysa była w zakresie $1 \le |M| < 2$. Dzięki temu można ukryć najwyższy bit (mantysa jest postaci $1.bbb\ldots bb$).
 
 Jeśli liczba jest ujemna, to jej pierwszy bit (znaku) przyjmuje wartość 1, w wypadku dodatniej 0. Kolejne bity przypadają na wykładnik w kodzie +N ($N = 2^{k-1}-1$), kolejnymi bitami jest mantysa. Nigdy nie będzie ona równa 0. Przyjęto, że zero oprócz bitu znaku zawiera same zera (tak więc mamy tu zero dodatnie i ujemne). $\pm\infty$ -- wszystkie bity wykładnika wynoszą 1, mantysa 0. Dla nie-liczb wykładnik również przyjmie same jedynki, natomiast mantysę $\ne$ 0.
 
