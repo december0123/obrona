@@ -6,13 +6,15 @@ Układy programowalne można podzielić ze względu na ich strukturę:
 \begin{itemize}
 \item PLD -- (programmable logic device) najprostsze,
 \item CPLD -- complex PLD,
-\item FPGA.
+\item FPGA -- field-programmable gate array.
 \end{itemize}
 
 Układy PLD mogą realizować funkcje logiczne (tworząc układy kombinacyjne bądź sekwencyjne). Programowanie takich układów bazuje na ustawieniu odpowiednich bitów, by zostały zrealizowane dane funkcje. Każde urządzenie posiada dany zbiór wejść oraz wyjść do układu.
 
 Najprostsze układy PLD pozwalają na tworzenie prostych układów. W ich skład wchodzą układy PLE, PAL, PLA. Ich budowa opiera się na matrycach funkcji AND oraz OR -- realizują funkcje postaci $(x_{1} \wedge x_{2} \wedge ...) \vee (x_{m} \wedge x_{m+1} \wedge ...) \vee ...$ lub $(x_{1} \vee x_{2} \vee ...) \wedge (x_{m} \vee x_{m+1} \vee ...) \wedge ...$ (dla sklerotyków: $\wedge$ -- AND, $\vee$ -- OR). Układy PAL posiadają programowalną matrycę bramek AND, bramki OR nie są programowalne. W układach PLE jest odwrotnie, natomiast układ PLA posiada obydwie matryce programowalne.
 
-Układy CPLD są podobne do PLD, jednak są bardziej złożone. 
+Układy CPLD są podobne do PLD, jednak są bardziej złożone. Zbudowane są z matryc układów PAL połączonych ze sobą przy pomocy matrycy połączeń, matrycy AND z makrokomórkami. Pojedyncza makrokomórka realizuje prostą funkcję logiczną, większa ich liczba może być połączona ze sobą w bloki funkcyjne, tworząc funkcje z większą liczbą zmiennych. 
 
-\textit{Dokończ mnie, nie zapominaj o mnie$\ldots$}
+Najbardziej skomplikowane są układy FPGA. Nie posiadają one matryc funkcyjnych, wyniki funkcji przechowywane są w LUT (look up table). Jest to pamięć zwracająca wynik na wyjściu dla zadanego wektora wejściowego. FPGA składa się z bloków funkcyjnych. Każdy blok zawiera kilka LUT-ów, które mogą być połączone w większe funkcje bądź pełnić rolę pamięci. Oprócz LUT-ów bloki zawierają przerzutniki. 
+
+Do programowania programowalnych układów scalonych wykorzystywane są języki opisu sprzętu, takie jak VHDL lub Verilog. Opis układu jest tworzony w sposób behawioralny. Narzędzie syntezy przetwarza taki zapis na konkretną realizację sprzętową. W porównaniu do mikrokontrolerów, takie układy są od nich szybsze. Dodatkowo potrafią przetwarzać równolegle, w przeciwieństwie do $\mu$C, które przetwarzają sekwencyjnie. Nie są one ograniczone zbiorem funkcji -- $\mu$C posiadają określony zestaw instrukcji. Wadą układów programowalnych w stosunku do nieprogramowalnych jest większy pobór mocy. Na układach programowalnych można zaprogramować procesor programowy -- PicoBlaze, MicroBlaze.
