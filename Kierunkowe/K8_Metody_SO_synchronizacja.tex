@@ -1,16 +1,26 @@
 \sloppy\section{K8 -- Mechanizmy systemu operacyjnego wspomagające synchronizację procesów}
 
-Zarządzanie procesami to ważne zadanie systemu operacyjnego. \textbf{Program} to statyczny obiekt, zbiór instrukcji dla procesora, przechowywany w postaci pliku. \textbf{Proces} natomiast to wykonujący się program. Każdy proces wymaga przydziału zasobów (czas procesora, pamięć, pliki) do wykonania swojego zadania. Obsługa procesów jest wykonywana przez jądro systemu operacyjnego.
+System operacyjny jest oprogramowaniem, którego jedną z głównych ról jest synchronizacja procesów.
+Czym jest proces?
+Jest to wykonujący się program, czyli zbiór instrukcji dla procesora przechowywany w postaci pliku.
 
-Problem synchronizacji procesów pojawia się przy procesach współbieżnych, które ze sobą współpracują. Przykłady, w których wymagana jest synchronizacja procesów to:
+Każdy proces wymaga przydziału zasobów komputera.
+Czas procesora, pamięć, dostęp do urządzeń -- w mniejszym lub większym stopniu, proces zawsze wymaga pewnych zasobów.
+
+Procesy mogą wykonywać się zupełnie niezależnie od siebie -- korzystając np. z innych urządzeń -- lub współbieżnie obok siebie korzystając z np. tych samych plików.
+
+Jak łatwo się domyślić, procesy współbieżne wymagają synchronizacji ze strony zarządcy zasobów -- systemu operacyjnego.
+
+Typowe problemy związane z procesami współbieżnymi to na przykład:
 \begin{itemize}
-\item problem sekcji krytycznej -- procesy współdzielą strukturę danych, a operacje na nich muszą być atomowe,
+\item problem sekcji krytycznej -- kiedy procesy współdzielą strukturę danych, a operacje na nich muszą być atomowe, tj. nie mogą zostać przerwane w środku wykonywania się,
 \item problem czytelników i pisarzy -- synchronizacja dostępu do zasobów dla procesów dokonujących i niedokonujących w nich zmian,
-\item problem producenta i konsumenta -- wynik działania jednego procesu wpływa na działanie drugiego procesu -- przetwarzanie danych przez drugi proces może się odbyć jedynie, gdy zostanie dane zostaną przekazane przez pierwszy proces,
+\item problem producenta i konsumenta -- przetwarzanie danych przez proces może się odbyć jedynie, po otrzymaniu ich od innego procesu,
 \item problem ucztujących filozofów -- procesy korzystają ze wspólnych zasobów, które pobierają i zwalniają wg potrzeb.
 \end{itemize}
 
-\textbf{Sekcja krytyczna} to sekwencja operacji wykonywanych na zasobie (np. pamięci, pliku), który musi być wykonywany w trybie wyłącznym przez jeden proces. Poprawnym rozwiązaniem sekcji krytycznej jest:
+\textbf{Sekcja krytyczna} to sekwencja operacji wykonywanych na zasobie (np. pamięci, pliku), które muszą zostać wykonane w trybie wyłącznym przez jeden proces, tj. podczas ich wykonywania, inny proces nie może działać na zasobach przez niego zajętych.
+Aby poprawnie rozwiązać problem sekcji krytycznej, należy zaimplementować algorytm, który będzie spełniał kilka warunków:
 \begin{itemize}
 \item instrukcje w sekcji krytycznej nie mogą być przeplatane -- może w niej być wyłącznie jeden proces,
 \item nie można zakładać w jakiej kolejności i z jaką szybkością wykonają się dane procesy,
@@ -21,14 +31,19 @@ Problem synchronizacji procesów pojawia się przy procesach współbieżnych, k
 
 Istnieją przeróżne mechanizmy synchronizacji implementowane przez jądro.
 
-\textbf{Semafory} są typem danych, które służą do kontroli dostępu zasobów przez wiele procesów. Semafory są zmienną całkowitą, która przyjmuje wartości nieujemne (tj. $\ge 0$) lub dla semaforów binarnych -- wartości logiczne. Semafor ma wartość początkową nieujemną. Na semaforach można wykonywać dwie operacje -- zmniejszenie (zajęcie, podniesienie,) oraz zwiększenie (zwolnienie, opuszczenie). Synchronizacja polega na blokowaniu procesu w operacji zajęcia semafora, gdy jego wartość po zajęciu jest ujemna, do czasu, aż wartość ta nie zostanie zwiększona do nieujemnej (np. przez inny proces, który zwolni semafor). Wyróżnia się rodzaje semaforów takie jak:
+\textbf{Semafory} są typem danych, które służą do kontroli dostępu zasobów przez wiele procesów.
+Semafory są zmienną całkowitą, która przyjmuje wartości nieujemne (tj. $\ge 0$) lub dla semaforów binarnych -- wartości logiczne.
+Na semaforach można wykonywać dwie operacje -- zmniejszenie (zajęcie, podniesienie,) oraz zwiększenie (zwolnienie, opuszczenie).
+Synchronizacja polega na blokowaniu procesu w operacji zajęcia semafora, gdy jego wartość po zajęciu jest ujemna, do czasu, aż wartość ta nie zostanie zwiększona do nieujemnej (np. przez inny proces, który zwolni semafor).
+Wyróżnia się rodzaje semaforów takie jak:
 \begin{itemize}
 \item binarne -- zmienna przyjmuje tylko wartości \textit{true} (semafor otwarty) lub \textit{false} (semafor zamknięty),
 \item zliczające -- zmienna przyjmuje wartości całkowite nieujemne, a aktualna wartość jest zwiększana/zmniejszana o 1 w wyniku zwolnienia/zajęcia semafora,
-\item uogólniony -- semafor zliczający, ale może zwiększać/zmniejszać wartość o dowolną liczbę (oczywiście, aby wartość wciąż była nieujemna).
+\item uogólnione -- semafor zliczający, ale może zwiększać/zmniejszać wartość o dowolną liczbę (oczywiście, wartość wciąż musi być nieujemna).
 \end{itemize}
 
-\textbf{Muteksy} (\texttt{\textbf{mut}ual \textbf{ex}clusion} -- wzajemne wykluczanie) są szczególnym przypadkiem semaforów. Muteks może być zablokowany lub odblokowany. Muteksy mogą być zwalniane tylko i wyłącznie przez proces, który zajął dany muteks. Dzięki temu wyeliminowane jest zjawisko zakleszczenia oraz niespójności danych.
+\textbf{Muteksy} (\texttt{\textbf{mut}ual \textbf{ex}clusion} -- wzajemne wykluczanie) są szczególnym przypadkiem semaforów. Muteks obsługują operacje blokowania i zwalniania, jednak mogą być zwolnione tylko przez proces, które je zajął.
+#FIXMEDzięki temu wyeliminowane jest zjawisko zakleszczenia oraz niespójności danych.
 
 \textbf{Spinlocki} -- podobne do semaforów, jednak oczekiwanie na zwolnienie blokady odbywa się na zasadzie aktywnego czekania, przez co zajmują czas procesora, może wystąpić zagłodzenie lub czekać w nieskończoność.
 
