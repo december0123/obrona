@@ -21,7 +21,7 @@ Problem synchronizacji procesów pojawia się przy procesach współbieżnych, k
 
 Istnieją przeróżne mechanizmy synchronizacji implementowane przez jądro.
 
-\textbf{Semafory} są typem danych, które służą do kontroli dostępu zasobów przez wiele procesów. Semafory są zmienną całkowitą, która przyjmuje wartości nieujemne (tj. $\ge 0$) lub dla semaforów binarnych -- wartości logiczne. Semafor ma wartość początkową nieujemną. Na semaforach można wykonywać dwie operacje -- zmniejszenie (zajęcie, podniesienie,) oraz zwiększenie (zwolnienie, opuszczenie). Synchronizacja polega na blokowaniu procesu w operacji zajęcia semafora do czasu, aż wartość nie zostanie zwiększona (np. przez inny proces, który zwolni semafor). Wyróżnia się rodzaje semaforów takie jak:
+\textbf{Semafory} są typem danych, które służą do kontroli dostępu zasobów przez wiele procesów. Semafory są zmienną całkowitą, która przyjmuje wartości nieujemne (tj. $\ge 0$) lub dla semaforów binarnych -- wartości logiczne. Semafor ma wartość początkową nieujemną. Na semaforach można wykonywać dwie operacje -- zmniejszenie (zajęcie, podniesienie,) oraz zwiększenie (zwolnienie, opuszczenie). Synchronizacja polega na blokowaniu procesu w operacji zajęcia semafora, gdy jego wartość po zajęciu jest ujemna, do czasu, aż wartość ta nie zostanie zwiększona do nieujemnej (np. przez inny proces, który zwolni semafor). Wyróżnia się rodzaje semaforów takie jak:
 \begin{itemize}
 \item binarne -- zmienna przyjmuje tylko wartości \textit{true} (semafor otwarty) lub \textit{false} (semafor zamknięty),
 \item zliczające -- zmienna przyjmuje wartości całkowite nieujemne, a aktualna wartość jest zwiększana/zmniejszana o 1 w wyniku zwolnienia/zajęcia semafora,
