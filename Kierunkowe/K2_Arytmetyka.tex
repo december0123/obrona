@@ -1,5 +1,12 @@
 \sloppy\section{K2 -- Arytmetyka stało- i zmiennoprzecinkowa}
 
+Ludzie spodziewają się, że komputery będą dokładne i nieomylne.
+Spodziewają się, że po wpisaniu 0.1 + 0.2 kalkulator odpowie: 0.3.
+
+Prędzej czy później każdy programista próbuje czegoś takiego i natrafia na problem: komputer twierdzi, że wynik tego dodawania to np. 0.30000001.
+Skąd takie rzeczy?
+
+
 Każda informacja w komputerze jest przedstawiona za pomocą podstawowych jednostek -- bitów. W przypadku liczb, można je reprezentować za pomocą typów \{stało-,zmienno-\}przecinkowych. Różnią się cechami takimi jak:
 \begin{itemize}
 \item sposób zapisu,
@@ -80,6 +87,16 @@ Podczas operacji z liczbami stałoprzecinkowymi można otrzymać przeniesienie w
 \end{itemize}
 
 \subsection{Typ zmiennoprzecinkowy}
+Przedstawione do tej pory systemy były \textbf{stało}przecinkowe.
+Znaczy to tyle, że miały z góry określoną precyzję i rozmiar.
+
+Jedną z wad typów stałoprzecinkowych jest ilość miejsca potrzebna do przechowywania liczb: aby przechować liczbę z zakresu <0; 4,294,967,295> potrzebujemy aż 32 bitów pamięci.
+
+Wyobraźmy sobie, że potrzebne nam są liczby rzędu rozmiaru wszechświata albo wielkości atomu.
+
+Gdybyśmy takie liczby chcieli zapisać w typie stałoprzecinkowym to musielibyśmy zmarnować ogromne ilości pamięci na przechowywanie zer.
+
+Rozwiązanie? Notacja naukowa i zmienny przecinek.
 
 Liczba zmiennoprzecinkowa jest reprezentowana przez 4 liczby ($S$, $\beta$, $M$, $E$):
 \begin{itemize}
@@ -91,6 +108,40 @@ Liczba zmiennoprzecinkowa jest reprezentowana przez 4 liczby ($S$, $\beta$, $M$,
 \begin{equation}
 x = (-1)^{S} \times \beta^{E} \times M
 \end{equation}
+
+Łatwo zauważyć, że jest to po prostu notacja naukowa, lecz jak tak właściwie taka liczba wygląda?
+
+Pierwszy bit jest bitem znaku -- 0 dla liczb dodatnich i 1 dla liczb ujemnych. Tak jest zawsze.
+
+Kolejne bity to bity wykładnika i to ile tych bitów jest zależy od typu (precyzji).
+Dla liczby pojedynczej precyzji, czyli typu 32-bitowego, liczba bitów wykładnika wynosi 8.
+
+\textbf{Ważne:} wykładnik jest zapisany w systemie obciążonym +N ($N = 2^{k-1}-1$, gdzie k to liczba bitów wykładnika) -- dla 32-bitowej liczby jest to system +127.
+
+Pozostałe bity to liczby części ułamkowej.
+Ważne jest tutaj pojęcie liczby znormalizowanej, czyli takiej, dla której przyjmujemy, że część ułamkowa ma na początku ukrytą jedynkę -- jest więc postaci 1.xxx, a nie 0.xxx.
+Więcej o tym za chwilę.
+
+Przykład:
+Liczba 17 zapisana jako 32-bitowa liczba zmiennoprzecinkowa ma postać:
+
+0|10000011|00010000000000000000000
+
+czyli
+
+\begin{itemize}
+	\item{Znak -- 0 -> liczba dodatnia}
+	\item{Wykładnik -- $10000011 == 2^{131 - 127} == 2^4$}
+	\item{Mantysa -- $00010000000000000000000 == 1.0625$}
+\end{itemize}
+
+Po złożeniu wychodzi nam:
+$(-1)^0 * 2^4 * 1.0625 == 1 * 16 * 1.0625 == 17.0$
+
+Jaka jest główna zaleta takiego zapisu?
+Ogromny wręcz zakres wartości możliwych do zapisania: korzystając z 32-bitowego typu zmiennoprzecinkowego możemy zapisać wartości z oszałamiającego zakresu <1.17549435082228750796874e-38, 3.40282346638528859811704e+38>.
+
+Kilka bardzo ważnych faktów:
 
 W przypadku liczb zmiennoprzecinkowych ważna jest kolejność działań!
 
