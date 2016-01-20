@@ -23,10 +23,10 @@ Przykładem może być klasa \textit{Pies,} która zawiera cechy takie jak oczy,
 
 Języki programowania można podzielić ze względu na to, w jaki sposób pojęcie klasy jest zrealizowane. Na przykład w językach \textit{Java}, \textit{C\#} czy \textit{Python} każda klasa zawsze ma swoją klasę bazową (zazwyczaj dziedziczona niejawnie i jest to przeważnie klasa bazowa \textit{Object}). Język \textit{C++} na przykład, można nazwać językiem hybrydowym, gdyż umożliwia tworzenie obiektów, lecz nie zmusza do tego programisty (można programować zarówno strukturalnie jak i obiektowo). Istnieją także języki, których obiektowość opiera się na \textbf{prototypach} - nowe obiekty tworzone są w oparciu na istniejące już obiekty, nie zaś na podstawie zdefiniowanej klasy. Przykładem takiego języka jest większość języków interpretowanych, np. \textit{JavaScript}.
 
-Głównym zyskiem obiektowości jest modularność - program można podzielić na mniejsze, gotowe do użycia moduły. Zwiększa to także czytelność kodu - łatwiej jest się odnaleźć w metodach przypisanych do obiektów niż w gąszczu funkcji.
+Głównym zyskiem obiektowości jest modularność - program można podzielić na mniejsze, gotowe do użycia moduły. Zwiększa to także czytelność kodu - łatwiej jest się odnaleźć w metodach przypisanych do obiektów niż w gąszczu funkcji. Łatwiejsze jest także rozbudowywanie projektów bez integracji w istniejące funkcjonalności.
 
 \subsection{Abstrakcja}
-Czyli poziom ogólności, pozwala nam na upraszczanie problemu poprzez zredukowanie właściwości do jedynie tych kluczowych dla algorytmu.
+Czyli poziom ogólności, pozwala nam na upraszczanie problemu poprzez zredukowanie właściwości do jedynie tych kluczowych dla algorytmu (ignorowanie zbędnych detali poprzez wyizolowanie kluczowych aspektów).
 
 Dla przykładu - możemy mówić o \textit{Bazie danych} jako o fragmencie kodu, który będzie stanowił interfejs do komunikacji z pewną bazą danych, jednak nie ma to dla nas większego znaczenia w jaki sposób to będzie realizowane.
 
@@ -46,6 +46,8 @@ Powracając do przykładu z samochodem -- kierowca powinien otwierać okno za po
 Warto wspomnieć, że języki w różny sposób podchodzą do omawianych przeze mnie pojęć.
 Python jest językiem, w którym pojęcie enkapsulacji praktycznie nie istnieje -- wszystko jest dostępne dla wszystkich i jeśli ktoś bardzo chce użyć zmiennych, które wyraźnie oznaczyliśmy jako do użytku wewnętrznego to może to zrobić na własną odpowiedzialność.
 
+Pełna enkapsulacja występuje wtedy, gdy wszystkie pola klasy znajdują się w sekcji prywatnej, a dostęp do nich możliwy jest tylko i wyłącznie poprzez metody.
+
 \subsection{Dziedziczenie}
 Jest narzędziem, które dzięki odpowiednio zaprojektowanej relacji \textbf{klasa bazowa - klasa pochodna} pozwala na rozszerzanie funkcjonalności bez duplikowania kodu. Dzięki temu możemy tworzyć hierarchiczne struktury przechodząc od typów najbardziej ogólnych aż do tych szczegółowo opisujących dany obiekt bądź zjawisko.
 
@@ -54,24 +56,19 @@ W odniesieniu do samochodów -- możemy dostać wersję podstawową jakiegoś po
 \subsubsection{Dziedziczenie wielokrotne}
 Tutaj znowu w zależności od języka możemy mieć możliwość skorzystania z mechanizmu dziedziczenia wielokrotnego lub nie. Językami to umożliwiającymi są na przykład \textit{C++} czy \textit{Python}. 
 
-Polega ono na tym, że klasa pochodna może dziedziczyć po kilku klasach bazowych.
-Jest to potężny mechanizm, jednak należy go używać z głową, gdyż może powodować problemy.
+Polega ono na tym, że klasa pochodna może dziedziczyć po kilku klasach bazowych. Jest to potężny mechanizm, jednak należy go używać z głową, gdyż może powodować problemy takie jak np. \textit{the diamond problem} (gdy pewna klasa X dziedziczy po dwóch klasach, które to mają wspólną klasę bazową i obie przeciążają tę samą metodę klasy bazowej, z której zatem klasy wywołana zostanie ta metoda, gdy X jej nie przeciąży?).
 
 \subsection{Polimorfizm}
-Pozwala nam na wyabstrahowanie pewnych zachowań od konkretnych typów danych. Dzięki niemu możemy wybrać zachowanie w zależności od kontekstu.
+Pozwala nam na wyabstrahowanie pewnych zachowań od konkretnych typów danych. Dzięki niemu możemy wybrać zachowanie w zależności od kontekstu. Mówiąc ściślej, do jednej referencji można przypisać obiekty różnych typów, które dziedziczą po typie referencji, i wywołując przeciążoną metodę użyta zostanie metoda przypisanego typu referencji.
 
-Dla odmiany rozpatrzmy przykład, w którym klasą \textbf{bazową} będzie \textbf{Zwierze,} a klasami \textbf{pochodnymi} będą \textbf{Pies} oraz \textbf{Ryba.}
+Dla odmiany rozpatrzmy przykład, w którym klasą \textbf{bazową} będzie \textbf{Zwierze,} a klasami \textbf{pochodnymi} będą \textbf{Pies} oraz \textbf{Ryba.} Klasa bazowa ma zadeklarowaną metodę (funkcję, którą możemy wywołać na rzecz obiektu) o nazwie \textit{dajGlos.} Klasy pochodne mogą tę funkcję zdefiniować po swojemu i w ten sposób po wywołaniu metody \textit{dajGlos} na obiekcie klasy \textit{Pies} usłyszymy szczekanie, a po wywołaniu metody na obiekcie klasy \textit{Ryba} usłyszymy tylko ciche bulgotanie, któremu towarzyszyć będzie bezgłośne osądzanie naszych wyborów życiowych.
 
-Klasa bazowa ma zadeklarowaną metodę (funkcję, którą możemy wywołać na rzecz obiektu) o nazwie \textit{dajGlos.}
-
-Klasy pochodne mogą tę funkcję zdefiniować po swojemu i w ten sposób po wywołaniu metody \textit{dajGlos} na obiekcie klasy \textit{Pies} usłyszymy szczekanie, a po wywołaniu metody na obiekcie klasy \textit{Ryba} usłyszymy tylko ciche bulgotanie, któremu towarzyszyć będzie bezgłośne osądzanie naszych wyborów życiowych.
-
-Polimorfizm można podzielić na statyczny i dynamiczny. Polimorfizm \textbf{statyczny} (inaczej zwany \textit{wczesnym wiązaniem}) -- decyzja o użytym typie zostaje podjęta już na etapie kompilacji -- w języku \textit{C++} jest to realizowane za pomocą szablonów.  Polimorfizm \textbf{dynamiczny} (\textit{późne wiązanie}) -- wybór zostaje podjęty w czasie wykonywania programu -- w języku \textit{C++} zrealizowane przy użyciu wskaźników przeciążając metody wirtualne w klasach pochodnych.
+Polimorfizm można podzielić na statyczny i dynamiczny. Polimorfizm \textbf{statyczny} (inaczej zwany \textit{wczesnym wiązaniem}) -- decyzja o użytym typie zostaje podjęta już na etapie kompilacji -- w języku \textit{C++} jest to realizowane za pomocą szablonów bądź przeciążonych operatorów.  Polimorfizm \textbf{dynamiczny} (\textit{późne wiązanie}) -- wybór zostaje podjęty w czasie wykonywania programu -- w języku \textit{C++} zrealizowane przy użyciu wskaźników przeciążając metody wirtualne w klasach pochodnych.
 
 \subsection{Wzorce projektowe}
 Powstały, aby spisać często napotykane podczas programowania problemy oraz zdefiniować sprawdzone rozwiązania.
 
-Jest to temat bardzo atrakcyjnych dla początkujących programistów i jest jednocześnie bardzo pomocny i bardzo niebezpieczny, ponieważ początkujący mogą chcieć korzystać ze wzorców gdzie tylko mogą, nie zważając na to czy faktycznie są one potrzebne.
+Jest to temat bardzo atrakcyjny dla początkujących programistów i jest jednocześnie bardzo pomocny i bardzo niebezpieczny, ponieważ początkujący mogą chcieć korzystać ze wzorców gdzie tylko mogą, nie zważając na to czy faktycznie są one potrzebne.
 
 Należy pamiętać o antywzorcach złotym młotku oraz srebrnym pocisku -- nie wszystko co się do tej pory sprawdziło gdzie indziej sprawdzi się w naszym przypadku, a to że doskonale znamy jakąś technologię nie znaczy, że jest ona zawsze odpowiednia.
 
