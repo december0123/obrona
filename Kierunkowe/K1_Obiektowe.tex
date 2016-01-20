@@ -1,8 +1,10 @@
 \section{K1 - Paradygmat programowania obiektowego}
 
-Programowanie obiektowe stanowi podejście do implementacji algorytmów, które opiera się na wykorzystaniu tak zwanych \textbf{obiektów.} Są to twory, które łączą w sobie dane i zachowania oraz komunikują się ze sobą w celu wykonania pewnych zadań.
+\textbf{Paradygmat} - zbiór mechanizmów działania, wzorów, które definiują sposób realizacji programu.
 
-Paradygmat ten ma stanowić ułatwienie w pisaniu i utrzymywaniu kodu, który może być używany wielokrotnie w różnych projektach jednak nie jest odpowiedzią na wszystkie problemy i oprócz swoich zalet ma również wady -- np. przez to że obiekty posiadają wewnętrzny stan, programowanie współbieżne staje się o wiele trudniejsze, gdyż musimy zapobiegać wyścigom czy zagłodzeniu.
+Programowanie obiektowe stanowi podejście do implementacji algorytmów, które opiera się na wykorzystaniu tak zwanych \textbf{obiektów}. Są to twory, które łączą w sobie \textit{dane} (pola obiektu) i \textit{zachowania} (metody obiektu) oraz komunikują się ze sobą w celu wykonania pewnych zadań.
+
+Paradygmat ten ma stanowić ułatwienie w pisaniu i utrzymywaniu kodu, który może być używany wielokrotnie w różnych projektach jednak nie jest odpowiedzią na wszystkie problemy i oprócz swoich zalet ma również wady -- np. przez to, że obiekty posiadają wewnętrzny stan, programowanie współbieżne staje się o wiele trudniejsze, gdyż musimy zapobiegać wyścigom czy zagłodzeniu.
 
 Pojęciami, na których się skupię będą:
 \begin{itemize}
@@ -19,6 +21,11 @@ Stanowi pewien zbiór cech i zachowań danego obiektu, który jest jej instancj�
 
 Przykładem może być klasa \textit{Pies,} która zawiera cechy takie jak oczy, pysk oraz umiejętność szczekania.
 
+Języki programowania umożliwiające definiowanie klas stanowią główny trzon języków obiektowych. Istnieje także druga grupa języków obiektowych, które oparte są na 
+Języki programowania można podzielić ze względu na to, w jaki sposób pojęcie klasy jest zrealizowane. Na przykład w językach \textit{Java}, \textit{C\#} czy \textit{Python} każda klasa zawsze ma swoją klasę bazową (zazwyczaj dziedziczona niejawnie i jest to przeważnie klasa bazowa \textit{Object}). Język \textit{C++} na przykład, można nazwać językiem hybrydowym, gdyż umożliwia tworzenie obiektów, lecz nie zmusza do tego programisty (można programować zarówno strukturalnie jak i obiektowo). Istnieją także języki, których obiektowość opiera się na \textbf{prototypach} - nowe obiekty tworzone są w oparciu na istniejące już obiekty, nie zaś na podstawie zdefiniowanej klasy. Przykładem takiego języka jest większość języków interpretowanych, np. \textit{JavaScript}.
+
+Głównym zyskiem obiektowości jest modularność - program można podzielić na mniejsze, gotowe do użycia moduły. Zwiększa to także czytelność kodu - łatwiej jest się odnaleźć w metodach przypisanych do obiektów niż w gąszczu funkcji.
+
 \subsection{Abstrakcja}
 Czyli poziom ogólności, pozwala nam na upraszczanie problemu poprzez zredukowanie właściwości do jedynie tych kluczowych dla algorytmu.
 
@@ -28,7 +35,7 @@ Przekładając to na banalny przykład z życia codziennego -- kierowca nie musi
 Wystarczy mu jedynie podstawowa wiedza o jego działaniu, a takie rzeczy jak znajomość budowy silnika nie są mu potrzebne.
 
 \subsection{Enkapsulacja}
-Inaczej hermetyzacja, polega na celowym ukrywaniu wnętrza obiektów.
+Inaczej hermetyzacja, polega na celowym ukrywaniu wnętrza obiektów tak, aby zmiany w jego stanie mogły dokonać tylko metody wewnętrzne tego obiektu. Zwiększa to bezpieczeństwo kodu oraz odporność na błędy, a także pozwala podzielić kod na mniejsze fragmenty.
 
 Problem pojawia się, gdy udostępnimy wersję klasy, która ma pewne pola publiczne.
 Jeśli użytkownicy zaczną z tych pól korzystać, to aktualizacja może spowodować poważne problemy.
@@ -41,12 +48,12 @@ Warto wspomnieć, że języki w różny sposób podchodzą do omawianych przeze 
 Python jest językiem, w którym pojęcie enkapsulacji praktycznie nie istnieje -- wszystko jest dostępne dla wszystkich i jeśli ktoś bardzo chce użyć zmiennych, które wyraźnie oznaczyliśmy jako do użytku wewnętrznego to może to zrobić na własną odpowiedzialność.
 
 \subsection{Dziedziczenie}
-Jest narzędziem, które dzięki odpowiednio zaprojektowanej relacji \textbf{klasa bazowa - klasa pochodna} pozwala na rozszerzanie funkcjonalności bez duplikowania kodu.
+Jest narzędziem, które dzięki odpowiednio zaprojektowanej relacji \textbf{klasa bazowa - klasa pochodna} pozwala na rozszerzanie funkcjonalności bez duplikowania kodu. Dzięki temu możemy tworzyć hierarchiczne struktury przechodząc od typów najbardziej ogólnych aż do tych szczegółowo opisujących dany obiekt bądź zjawisko.
 
 W odniesieniu do samochodów -- możemy dostać wersję podstawową jakiegoś pojazdu, a następnie ją rozszerzyć o stylowe neony, naklejki z ogniem i spoilery.
 
 \subsubsection{Dziedziczenie wielokrotne}
-Tutaj znowu w zależności od języka możemy mieć możliwość skorzystania z mechanizmu dziedziczenia wielokrotnego lub nie.
+Tutaj znowu w zależności od języka możemy mieć możliwość skorzystania z mechanizmu dziedziczenia wielokrotnego lub nie. Językami to umożliwiającymi są na przykład \textit{C++} czy \textit{Python}. 
 
 Polega ono na tym, że klasa pochodna może dziedziczyć po kilku klasach bazowych.
 Jest to potężny mechanizm, jednak należy go używać z głową, gdyż może powodować problemy.
@@ -60,10 +67,10 @@ Klasa bazowa ma zadeklarowaną metodę (funkcję, którą możemy wywołać na r
 
 Klasy pochodne mogą tę funkcję zdefiniować po swojemu i w ten sposób po wywołaniu metody \textit{dajGlos} na obiekcie klasy \textit{Pies} usłyszymy szczekanie, a po wywołaniu metody na obiekcie klasy \textit{Ryba} usłyszymy tylko ciche bulgotanie, któremu towarzyszyć będzie bezgłośne osądzanie naszych wyborów życiowych.
 
-Polimorfizm można podzielić na \textbf{statyczny --} decyzja o użytym typie zostaje podjęta już na etapie kompilacji -- oraz \textbf{dynamiczny --} wybór zostaje podjęty w czasie wykonywania programu.
+Polimorfizm można podzielić na statyczny i dynamiczny. Polimorfizm \textbf{statyczny} (inaczej zwany \textit{wczesnym wiązaniem}) -- decyzja o użytym typie zostaje podjęta już na etapie kompilacji -- w języku \textit{C++} jest to realizowane za pomocą szablonów.  Polimorfizm \textbf{dynamiczny} (\textit{późne wiązanie}) -- wybór zostaje podjęty w czasie wykonywania programu -- w języku \textit{C++} zrealizowane przy użyciu wskaźników przeciążając metody wirtualne w klasach pochodnych.
 
 \subsection{Wzorce projektowe}
-Powstały, aby spisać często napotykane podczas programowania problemy oraz sprawdzone rozwiązania.
+Powstały, aby spisać często napotykane podczas programowania problemy oraz zdefiniować sprawdzone rozwiązania.
 
 Jest to temat bardzo atrakcyjnych dla początkujących programistów i jest jednocześnie bardzo pomocny i bardzo niebezpieczny, ponieważ początkujący mogą chcieć korzystać ze wzorców gdzie tylko mogą, nie zważając na to czy faktycznie są one potrzebne.
 
@@ -75,9 +82,3 @@ Wzorce projektowe dzielimy wg trzech kategorii:
 	\item{strukturalne -- opisujące struktury powiązanych ze sobą obiektów, przykładowo \textbf{adapter, dekorator,}}
 	\item{behawioralne -- opisujące zachowanie i odpowiedzialność współpracujących ze sobą obiektów, przykładowo \textbf{strategia, null object.}}
 \end{itemize}
-
-
-
-
-
-
