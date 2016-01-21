@@ -1,0 +1,33 @@
+\section{S5 -- Komunikacja procesów przez pamięć dzieloną}
+
+Komunikacja międzyprocesowa jest potrzebna do poprawnego funkcjonowania systemów wieloprocesorowych. Istnieje wiele metod komunikacji między nimi. Można do nich zaliczyć metody takie jak: pliki, łącza nienazwane oraz nazwane, kolejki, gniazda, \textbf{pamięć dzieloną} i inne, np. MPI. Każda z nich zawiera charakterystyczne cechy, ma swoje wady i zalety. 
+
+W odróżnieniu od wątków, komunikacja między procesami jest trudniejsza w zrealizowaniu, ponieważ wątki dzielą zmienne globalne. Każdy proces posiada własny kontekst i przestrzeń adresową -- procesy nie mogą ingerować w pamięć innych procesów, ponieważ to mogłoby mieć katastrofalne skutki.
+
+Jak już wspominałem, istnieje wiele sposobów komunikacji międzyprocesowej. Jedną z nich jest komunikacja przez pamięć dzieloną. Jeżeli ktoś nie wie dlaczego tak to podkreślam, to zapraszam do zajrzenia na tytuł pytania egzaminacyjnego. Jest to jedna z najszybszych form komunikacji, ponieważ nie przesył danych między procesami nie jest wymagany, jądro nie jest pośrednikiem w komunikacji. Operacje odbywają się poprzez odwołanie do innych segmentów pamięci (ale pamiętajmy, że w wirtualnej przestrzeni adresowej, procesy nie operują na fizycznych adresach). Aby uzyskać taki segment, należy go najpierw odwzorować, za pomocą funkcji dostępnej w danej bibliotece (POSIX, WinAPI, Boost, etc.).
+
+Należy jednak pamiętać, że wykorzystanie pamięci dzielonej, jak to z procesami współbieżnymi bywa, niesie ze sobą wymóg jej synchronizacji między procesami, które na niej operują. Możliwe rozwiązania synchronizacyjne to semafory, muteksy, monitory, etc. (więcej w punkcie dot. synchronizacji danych).
+
+Istnieje wiele architektur, których celem jest współbieżne przetwarzanie. Jednakże, komunikacja przez pamięć dzieloną może zostać wykorzystana na systemach jedno- lub wieloprocesorowych, ze wspólną pamięcią. Niezależnie od wykorzystanej biblioteki, schemat wykorzystania pamięci współdzielonej jest podobny:
+\begin{itemize}
+\item utworzenie segmentu,
+\item ustalenie rozmiaru segmentu,
+\item odwzorowanie segmentu w przestrzeni adresowej procesu,
+\item operacje na segmencie,
+\item wycofanie odwzorowania,
+\item odłączenie segmentu (gdy licznik odwołań użycia segmentu spadnie do zera, segment jest usuwany).
+\end{itemize}
+Wymogiem jest wzajemne wykluczanie, ponieważ nie powinno dojść do sytuacji, w których procesy modyfikują ten sam fragment danych -- może to mieć niepożądane skutki.
+
+Zarówno w systemach UNIXowych oraz Windows wykorzystanie pamięci dzielonej działa na podobnej zasadzie. Standard POSIX, wykorzystywany w systemach UNIXowych udostępnia dwa zestawy funkcji do operacji na pamięci współdzielonej -- POSIX oraz System V. Nie można ich ze sobą mieszać.
+\begin{itemize}
+\item \texttt{shm\_open()/\textit{shmget()$^\star$}} - utworzenie segmentu
+\item \texttt{ftruncate()/\textit{shmget()$^\star$}} - ustalenie rozmiaru segmentu
+\item \texttt{mmap()/\textit{shmat()$^\star$}} - pobranie adresu odwzorowania segmentu
+\item \texttt{munmap()/\textit{shmdt()$^\star$}} - wycofanie odwzorowania segmentu
+\item \texttt{shm\_unlink()/\textit{shmctl()$^\star$}} - odłączenie segmentu
+\end{itemize}
+\textit{$^\star \to$ wywodzą się z \texttt{System V}};
+w standardzie POSIX w odróżnieniu od System V, odwoływanie się do segmentów pamięci dzielonej (funkcje do tworzenia, odłączania segmentów) może odbywać się przez nazwy, w drugim standardzie poprzez indeksy.
+
+Pamięć dzielona pozwala na komunikację pomiędzy różnymi procesami w jednym systemie. Jest to najszybszy sposób komunikacji, ponieważ nie wykorzystuje jądra. Wadą tego rozwiązania jest konieczność stosowania technik, które zapewniają poprawność przetwarzania danych. Oprócz tego, rozwiązanie to nie sprawdzi się w systemach sieciowych.
