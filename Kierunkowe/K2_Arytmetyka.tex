@@ -87,10 +87,11 @@ Podczas operacji z liczbami stałoprzecinkowymi można otrzymać przeniesienie w
 \end{itemize}
 
 \subsection{Typ zmiennoprzecinkowy}
+\subsubsection{Budowa}
 Przedstawione do tej pory systemy były \textbf{stało}przecinkowe.
 Znaczy to tyle, że miały z góry określoną precyzję i rozmiar.
 
-Jedną z wad typów stałoprzecinkowych jest ilość miejsca potrzebna do przechowywania liczb: aby przechować liczbę z zakresu <0; 4,294,967,295> potrzebujemy aż 32 bitów pamięci.
+Jedną z wad typów stałoprzecinkowych jest ilość miejsca potrzebna do przechowywania liczb: aby przechować liczbę z zakresu <0; 4 294 967 295> potrzebujemy aż 32 bitów pamięci.
 
 Wyobraźmy sobie, że potrzebne nam są liczby rzędu rozmiaru wszechświata albo wielkości atomu.
 
@@ -119,39 +120,10 @@ Dla liczby pojedynczej precyzji, czyli typu 32-bitowego, liczba bitów wykładni
 \textbf{Ważne:} wykładnik jest zapisany w systemie obciążonym +N ($N = 2^{k-1}-1$, gdzie k to liczba bitów wykładnika) -- dla 32-bitowej liczby jest to system +127.
 
 Pozostałe bity to liczby części ułamkowej.
-Ważne jest tutaj pojęcie liczby znormalizowanej, czyli takiej, dla której przyjmujemy, że część ułamkowa ma na początku ukrytą jedynkę -- jest więc postaci 1.xxx, a nie 0.xxx.
+Ważne jest tutaj pojęcie liczby znormalizowanej, czyli takiej, dla której przyjmujemy, że część ułamkowa ma na początku ukrytą jedynkę -- jest więc postaci 1.bb...bb, a nie 0.bb...bb.
 Więcej o tym za chwilę.
+\textbf{Ważne:} mantysa zawsze jest liczbą dodatnią.
 
-Przykład:
-Liczba 17 zapisana jako 32-bitowa liczba zmiennoprzecinkowa ma postać:
-
-0|10000011|00010000000000000000000
-
-czyli
-
-\begin{itemize}
-	\item{Znak -- 0 -> liczba dodatnia}
-	\item{Wykładnik -- $10000011 == 2^{131 - 127} == 2^4$}
-	\item{Mantysa -- $00010000000000000000000 == 1.0625$}
-\end{itemize}
-
-Po złożeniu wychodzi nam:
-$(-1)^0 * 2^4 * 1.0625 == 1 * 16 * 1.0625 == 17.0$
-
-Jaka jest główna zaleta takiego zapisu?
-Ogromny wręcz zakres wartości możliwych do zapisania: korzystając z 32-bitowego typu zmiennoprzecinkowego możemy zapisać wartości z oszałamiającego zakresu <1.17549435082228750796874e-38, 3.40282346638528859811704e+38>.
-
-Kilka bardzo ważnych faktów:
-
-W przypadku liczb zmiennoprzecinkowych ważna jest kolejność działań!
-
-Liczby zmiennoprzecinkowe zawierają zarezerwowane wartości dla liczb specjalnych.
-
-Standard IEEE754 wymaga, aby liczby były znormalizowane (oprócz wartości specjalnych). Standard wymaga również, aby mantysa była w zakresie $1 \le |M| < 2$. Dzięki temu można ukryć najwyższy bit (mantysa jest postaci $1.bbb\ldots bb$).
-
-Jeśli liczba jest ujemna, to jej pierwszy bit (znaku) przyjmuje wartość 1, w wypadku dodatniej 0. Kolejne bity przypadają na wykładnik w kodzie +N ($N = 2^{k-1}-1$), kolejnymi bitami jest mantysa. Nigdy nie będzie ona równa 0. Przyjęto, że zero oprócz bitu znaku zawiera same zera (tak więc mamy tu zero dodatnie i ujemne). $\pm\infty$ -- wszystkie bity wykładnika wynoszą 1, mantysa 0. Dla nie-liczb wykładnik również przyjmie same jedynki, natomiast mantysę $\ne$ 0.
-
-Liczby zdenormalizowane posiadają w wykładniku same zera, natomiast mantysa jest postaci $0.bbb\ldots bb$.
 
 \begin{table}[H]
 \centering
@@ -167,6 +139,58 @@ Liczby zdenormalizowane posiadają w wykładniku same zera, natomiast mantysa je
 \normalsize
 \end{table}
 
+Standard wyróżnia następujące precyzje:
+\begin{itemize}
+\item połowicza (16 bit),
+\item pojedyncza (32 bit),
+\item podwójna (64 bit),
+\item podwójna rozszerzona (80 bit).
+\end{itemize}
+
+Przykład:
+Liczba $17_{10}$ zapisana jako 32-bitowa liczba zmiennoprzecinkowa ma postać:
+
+0|10000011|00010000000000000000000
+
+czyli
+
+\begin{itemize}
+	\item{Znak -- 0 -> liczba dodatnia}
+	\item{Wykładnik -- $10000011_2 == 2^{131 - 127}_{10} == 2^4_{10}$}
+	\item{Mantysa -- $00010000000000000000000_2 == 1.0625_{10}$}
+\end{itemize}
+
+Po złożeniu wychodzi nam:
+$(-1)^0 * 2^4 * 1.0625 == 1 * 16 * 1.0625 == 17.0$
+
+Jaka jest główna zaleta takiego zapisu?
+Ogromny wręcz zakres wartości możliwych do zapisania: korzystając z 32-bitowego typu zmiennoprzecinkowego możemy zapisać wartości z oszałamiającego zakresu <-3.40282e+38, 3.40282e+38>.
+
+Powróćmy do pojęcia liczby znormalizowanej.
+
+\subsubsection{Liczby znormalizowane i zdenormalizowane}
+
+Standard IEEE754 wymaga, aby liczby były znormalizowane (oprócz wartości specjalnych) -- mantysa powinna być w zakresie $1 \le |M| < 2$. Liczbę taką można poznać po tym, że wykładnik jest \textbf{różny} od zera. Wtedy mantysa liczby jest postaci 1.bb...bb.
+
+W wypadku, gdy wykładnik liczby jest równy zero, mówimy, że liczba jest zdenormalizowana, a jej mantysa ma postać 0.bb...bb.
+
+Liczby zdenormalizowane są potrzebne do zapisania wartości tak bliskich 0, że ich ukryty bit w mantysie musi wynosić 0.
+
+Będąc przy tym temacie warto wspomnieć o wartościach specjalnych.
+
+\subsubsection{Wartości specjalne}
+
+
+Liczby zmiennoprzecinkowe zawierają zarezerwowane wartości dla liczb specjalnych.
+
+Wartości specjalne to:
+\begin{itemize}
+	\item{Zero -- oprócz bitu znaku zawiera same zera (tak więc mamy tu zero dodatnie i ujemne).}
+	\item{$\pm\infty$ -- wszystkie bity wykładnika wynoszą 1, mantysa 0.}
+	\item{Nie-liczba (NaN) -- wykładnik również przyjmie same jedynki, natomiast mantysę $\ne$ 0.}
+	\item{Liczby zdenormalizowane posiadają w wykładniku same zera, natomiast mantysa jest postaci $0.bbb\ldots bb$.}
+
+\end{itemize}
 \begin{table}[H]
 \centering
 \caption{Liczby w standardzie IEEE754}
@@ -187,7 +211,7 @@ Liczby zdenormalizowane posiadają w wykładniku same zera, natomiast mantysa je
 1 & $11\cdots11$ & 1X$\cdots$XX & QNaN \\ \hline
 \end{tabular}
 \end{table}
-N -- obciążenie wykładnika, X -- dowolna wartość.
+N -- obciążenie wykładnika, X -- dowolna wartość, QNaN -- quiet not-a-number (nie zgłaszają wyjątków), SNaN -- signaling not-a-number (zgłaszają wyjątki)
 
 \begin{table}[H]
 \centering
@@ -208,15 +232,7 @@ $\infty\pm 0$ & NaN \\ \hline
 \end{tabular}
 \end{table}
 
-Standard wyróżnia następujące precyzje:
-\begin{itemize}
-\item połowicza (16 bit),
-\item pojedyncza (32 bit),
-\item podwójna (64 bit),
-\item podwójna rozszerzona (80 bit).
-\end{itemize}
-
-Standard również wyróżnia wyjątki:
+Standard wyróżnia również wyjątki:
 \begin{itemize}
 \item invalid operation --- niewłaściwa operacja,
 \item division by zero --- dzielenie przez zero,
@@ -247,6 +263,9 @@ Standard również wyróżnia wyjątki:
 \end{itemize}
 
 \subsubsection{Arytmetyka zmiennoprzecinkowa}
+W przypadku liczb zmiennoprzecinkowych ważna jest kolejność działań!
+Wynika to z błędów precyzji i zaokrągleń.
+
 \begin{itemize}
 \item \textbf{Dodawanie/odejmowanie}
 	\begin{itemize}
@@ -261,6 +280,59 @@ Standard również wyróżnia wyjątki:
 	\item może wystąpić nadmiar/niedomiar
 	\end{itemize}
 \end{itemize}
+
+\subsubsection{Zaokrąglanie}
+Na koniec powiedzmy sobie o zaokrągleniach liczb.
+
+Są one potrzebne, ponieważ w systemie binarnym nie zawsze da się dokładnie zapisać wszystkie liczby (ten problem występuje również w innych systemach).
+
+Przykładowo, liczba dziesiętna $\frac{1}{10}_{10} == 0.1_{10}$ daje się łatwo zapisać w systemie dziesiętnym, jednak w binarnym jest ona ułamkiem okresowym $0.1(0011)_2$.
+Ze względu na naturę komputerów, pamięć jest ograniczona, a co za tym idzie nie jesteśmy w stanie zapisać liczb z nieskończoną precyzją.
+
+Kiedy komputer napotyka liczbę, której nie jest w stanie dokładnie zapisać, zaokrągla ją.
+
+Zanim przejdziemy do omawiania konkretnych zaokrągleń, porozmawiajmy o trzech bitach, które są ukryte za mantysą: G,R,S.
+
+Bity G(uard)R(ound)S(ticky) istnieją dla celów zaokrągleń i przechowywane są w nich bity niemieszczące się w mantysie. Już tłumaczę.
+
+Jeśli chcemy naszą mantysę podzielić przez np. 8, czyli przesunąć bity w prawo o 3 pozycje, to wygląda to następująco:
+
+mantysa |GRS
+ 
+000111010|000
+
+xxx000111|010
+
+001000111|010
+
+Skąd wzięło się 001 na miejscu xxx i czym w końcu są te bity GRS?
+
+Bity 001 na początku wzięły się stąd, że mieliśmy do czynienia z liczbą znormalizowaną, więc na początku stała ukryta 1, a że mantysa zawsze jest dodatnia, to przed nią stoi nieskończenie wiele zer.
+Jasne? Jasne.
+
+Bity G oraz R to po prostu dwa dodatkowe bity używane przez implementację do przechowywania dodatkowych wartości.
+
+Bit S mówi nam czy po prawej od bitów G oraz R może znajdować się jeszcze jakaś '1' -- jeśli jest możliwe, że wśród utraconych bitów była jakaś '1' to bit jest ustawiany na '1', a w przeciwnym wypadku na '0'.
+
+Dobrze, rozpatrzmy różne zaokrąglenia na przykładzie liczby $0.1(0011)_2$
+
+\textbf{Zaokrąglanie do zera}
+
+Na początku wybieramy ile miejsca możemy poświęcić na zapisanie naszej liczby, a resztę kasujemy. Bitami GRS w ogóle się nie przejmujemy.
+Wybierzmy 4 miejsca po przecinku.
+
+$0.100110011001100110011...0011_2$ => $0.1001_2$
+
+Już. Proste, prawda?
+
+\textbf{Zaokrąglanie do +$\infty$}
+
+Niezależnie od wartości, zawsze zaokrąglamy w górę.
+
+TODO
+dokonczyc zaokraglenia
+
+
 
 \subsection{Podsumowanie}
 \begin{table}[H]
