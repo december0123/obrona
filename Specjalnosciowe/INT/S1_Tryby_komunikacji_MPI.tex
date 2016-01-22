@@ -2,11 +2,11 @@
 
 \textbf{MPI} stanowi standard przesyłania komunikatów pomiędzy procesami programów równoległych działających na jednym lub więcej komputerach. Pracuje natywnie z C, C++, Fortranem. Istnieją rozwiązania dla innych języków np. Python, lecz stanowią tylko nakładki na wyżej wymienione. Dostępne wersje biblioteki:
 \begin{itemize}
-\item Wersja 1.2 (MPI-1) -– wprowadza około 150 funkcji;
-\item Wersja 2.1 (MPI-2) -– rozszerzona o nową funkcjonalność, razem ponad 500 funkcji
+\item Wersja 1.2 (MPI-1) -- wprowadza około 150 funkcji;
+\item Wersja 2.1 (MPI-2) -- rozszerzona o nową funkcjonalność, razem ponad 500 funkcji
 \end{itemize}
 
-Standard/biblioteka występują w wielu implementacjach. Najpopularniejsze z nich to:  MPICH / MPICH2, OpenMPI, Intel MPI, HP MPI. 
+Standard/biblioteka występują w wielu implementacjach. Najpopularniejsze z nich to: MPICH / MPICH2, OpenMPI, Intel MPI, HP MPI. 
 
 Informacje podstawowe: 
 \begin{itemize}
@@ -14,17 +14,17 @@ Informacje podstawowe:
 \item jednostka obliczeniowa: procesor, rdzeń procesora, wątek sprzętowy, wątek systemowy, inne;
 \item \textbf{Komunikatorem} nazywam zbiór procesów mogących się wzajemnie komunikować;
 \begin{itemize}
-\item \texttt{\textbf{MPI\_Comm\_size}(MPI\_COMM\_WORLD, \&np)} – zwraca listę procesów wewnątrz komunikatora;
+\item \texttt{\textbf{MPI\_Comm\_size}(MPI\_COMM\_WORLD, \&np)} -- zwraca listę procesów wewnątrz komunikatora;
 \end{itemize}
 \item Tak samo jak w przypadku procesów w systemie operacyjnym wewnątrz komunikatora każdy proces otrzymuje unikalny identyfikator (numer) tzw. \textbf{rank};
 \begin{itemize}
-\item \texttt{\textbf{MPI\_Comm\_rank}(MPI\_COMM\_WORLD, \&rank)} – zwraca rank aktualnego procesu;
+\item \texttt{\textbf{MPI\_Comm\_rank}(MPI\_COMM\_WORLD, \&rank)} -- zwraca rank aktualnego procesu;
 \end{itemize}
 \item W czasie inicjacji programu biblioteka tworzy domyślny komunikator o nazwie \texttt{\textbf{MPI\_COMM\_WORLD}} zawierający wszystkie dostępne procesy
 \item Programista może definiować własne komunikatory zawierające zbiory procesów.
-\item \textbf{Komunikat} -– paczka danych przesyłana pomiędzy procesami przez łącze / sieć łącząca procesory w ramach komunikatora. Paczka składa się z ustalonej liczby elementów określonego typu.
+\item \textbf{Komunikat} -- paczka danych przesyłana pomiędzy procesami przez łącze / sieć łącząca procesory w ramach komunikatora. Paczka składa się z ustalonej liczby elementów określonego typu.
 \item Wywołania wszelkich funkcji i procedur biblioteki MPI muszą znajdować się pomiędzy instrukcjami:
-\item MPI definiuje własne typy danych, które powinny być odpowiednikami typów w C, np. \texttt{MPI\_INT} – int, Dodatkowo \texttt{MPI\_BYTE} oraz \texttt{MPI\_PACKED}
+\item MPI definiuje własne typy danych, które powinny być odpowiednikami typów w C, np. \texttt{MPI\_INT} -- int, Dodatkowo \texttt{MPI\_BYTE} oraz \texttt{MPI\_PACKED}
 \begin{itemize}
 \item \texttt{\textbf{MPI\_Init(\&argc, \&argv)}} - $\lambda$ Inicjuje działanie biblioteki i domyślnego komunikatora (sesję);
 \item \texttt{\textbf{MPI\_Finalize(void)}} - $\lambda$ Kończy działanie sesji MPI;
@@ -56,7 +56,7 @@ Komunikacja \textbf{point-to-point} składa się z różnych trybów. Zależą o
 \item Asynchroniczna / buforowana - \texttt{MPI\_Bsend};
 \item Ready - \texttt{MPI\_Rsend};
 \item różnią się tym jak restrykcyjna ma być sychronizacja;
-\item Wszystkie tryby są blokujące – wysyłanie kończy się w momencie gdy użytkownik może bezpiecznie odczytać i modyfikować bufor wejściowy (tablicę zawierającą komunikat)
+\item Wszystkie tryby są blokujące -- wysyłanie kończy się w momencie gdy użytkownik może bezpiecznie odczytać i modyfikować bufor wejściowy (tablicę zawierającą komunikat)
 \begin{table}[H]
 \begin{tabularx}{\textwidth}{|l|X|}\hline
 \textbf{Tryb wysyłania} & \textbf{Działanie} \\ \hline
@@ -74,7 +74,7 @@ Komunikacja \textbf{kolektywna} to taka, w której uczestniczy grupa procesów M
 W MPI wyróżniamy następujące typy komunikacji grupowej: 
 \begin{itemize}
 \item Bariera synchronizacyjna 
-\item operacja Broadcast – nadaj wiadomość wielu procesom 
+\item operacja Broadcast -- nadaj wiadomość wielu procesom 
 \item Operacja typu rozrzuć (z ang. scatter) 
 \item Operacja typu zbierz (z ang. gather) 
 \item Operacja wszyscy do wszystkich 
@@ -91,21 +91,25 @@ Wywołanie jej w pewnym miejscu programu powoduje, będzie on czekał, aż wszys
 
 Operacja \textbf{Broadcast} polega na rozesłaniu tej samej wiadomości do wszystkich procesów grupy.
 \begin{figure}[H]
+\caption{Brodcast}
 \includegraphics[width=\linewidth]{s1_int_broadcast.png}
 \end{figure}
 
 Operacja \texttt{\textbf{MPI\_Scatter}} polega na rozesłaniu przez proces root wektora sendbuf podzielonego na kawałki sendcount do procesów w grupie (również do siebie):
 \begin{figure}[H]
+\caption{Scatter}
 \includegraphics[width=\linewidth]{s1_int_scatter.png}
 \end{figure}
 
 Operacja \texttt{\textbf{MPI\_Gather}} odwrotna do scatter, czyli zebranie kawałków wektora z procesorów w grupie i zapisanie ich w buforze wybranego procesora.
 \begin{figure}[H]
+\caption{Gather}
 \includegraphics[width=\linewidth]{s1_int_gather.png}
 \end{figure}
 
 Operacja \texttt{\textbf{MPI\_AllGather}} jest analogiczna do \texttt{\textbf{MPI\_Gather}} z tą różnicą, że wynik jest umieszczany w \texttt{\textbf{recv\_buff}} każdego procesu. Można tą funkcję traktować jako ciąg kolejnych wywołań \texttt{\textbf{MPI\_Gather}} każdorazowo z innym numerem procesu \textbf{root}
 \begin{figure}[H]
+\caption{AllGather}
 \includegraphics[width=\linewidth]{s1_int_allgather.png}
 \end{figure}
 
