@@ -1,1 +1,45 @@
 \section{S7 -- Protokoły Internetu, Ochrona danych i uwierzytelnianie w Internecie}
+
+\subsection{Protokoły Internetu}
+
+TODO
+
+\subsection{Ochrona danych}
+
+W Internecie czyha wiele niebezpieczeństw. Istnieje kilka rodzajów możliwych ataków:
+\begin{itemize}
+	\item \textbf{Złośliwe oprogramowanie} - konie trojańskie, wirusy, spyware
+    \item \textbf{Ataki na infrastrukturę informatyczną} - DoS (\textit{Denial of Service} - nieprzerwane przeładowywanie zasobów sieciowych (np. \textit{flooding}), czy też zasobów lokalnych (np. \textit{fork-bomba})), DDoS (\textit{Distributed DoS} - zorganizowany i skoordynowany DoS na daną maszynę, system maszyn czy usługę przeprowadzony najczęściej przez grupę nieświadomie zainfekowanych maszyn \textit{zombie} będących częścią \textit{botnetu}), SQL Injection, szukanie luk w oprogramowaniu czy konfiguracji
+    \item \textbf{Man in the Middle} - podsłuchiwanie i modyfikacja wiadomości pomiędzy dwoma stronami w Internecie, przykład: postawienie publicznej sieci WiFi i przepuszczenie całego nieszyfrowanego ruchu przez kontrolowane przez siebie proxy
+    \item \textbf{Phising} - podawanie się za instytucje, firmy i osoby, podmienianie stron Internetowych, preparowanie fałszywych maili, w celu zazwyczaj uzyskania dostępu do konta, wyłudzenia danych osobowych, czy kradzieży danych karty kredytowej, na przykład: Nigerian Scam (wyciągnięcie niewielkiej kwoty pieniędzy w celu umożliwienia rzekomego transferu o wiele większej kwoty), Pharming (przekierowywanie poprawnego adresu WWW na podmienioną stronę poprzez podmianę serwera DNS bądź złośliwe oprogramowanie)
+    \item \textbf{Socjotechnika} - 
+\end{itemize}
+
+Przed powyższymi atakami należy się bronić. Istnieje wiele sposobów ochrony:
+\begin{itemize}
+	\item Szkolenie pracowników - poszerzanie wiedzy z zakresu ochrony danych
+    \item Szyfrowanie połączeń przy pomocy sieci VPN, włączenie SSL w protokołach HTTP, IMAP, SMTP, używanie SSH zamaist FTP czy Telnetu
+    \item Stosowanie odpowiedniej infrastruktury technicznej - np. stosowanie światłowodów zamiast kabli miedzianych, gdyż miedziaki narażone są na podsłuchiwanie poprzez anteny skupiające wypromieniowaną energię przez kabel, światłowód będąc dielektrykiem nie wypromieniowuje energii, a sprzęt do jego podsłuchu jest o wiele droższy
+    \item Nie trzymanie haseł w postaci jawnej, zapisywanie ich jako skrót kryptograficzny uznawany jako bezpieczny (SHA512 jest o wiele bardziej bezpieczny niż MD5)
+    \item Systemy przechowujące poufne informacje w ogóle nie powinny być podłączone do Internetu
+\end{itemize}
+
+Jak działa \textit{SSL}?
+\begin{enumerate}
+	\item Przeglądarka inicjuje połączenie
+	\item Przeglądarka pobiera klucz publiczny serwera
+	\item Przeglądarka generuje jednorazowy klucz sesji
+	\item Przeglądarka szyfruje tak wygenerowany klucz sesji i wysyła go do serwera, który za pomocą klucza prywatnego jest w stanie go odszyfrować
+	\item W tym momencie tylko klient i serwer są w posiadaniu klucza sesji, który od tej pory jest wykorzystywany jako klucz symetryczny w komunikacji.
+\end{enumerate}
+
+\subsection{Uwierzytelnianie w Internecie}
+
+Uwierzytelnianie jest to sposób weryfikacji osoby, urządzenia bądź usługi. Może się odbywać za pomocą jednego systemu - uwierzytelnienie jednoetapowe (np. hasło statyczne) - badź być złożeniem dwóch, bądź kilku uwierzytelnień na raz - uwierzytelnienie wieloetapowe (np. hasło statyczne + token).
+\begin{itemize}
+	\item \textbf{Hasła statyczne} - ciąg znaków bądź samych cyfr (PIN) znany tylko przez osobę uwierzytelniającą, problemem jest trudność w zapamiętywaniu hasła (najlepiej różnego dla różnych usług) i tworzeniu bezpiecznego hasła, problematyczne jest także przechowywanie hasła po stronie serwera - nie może być przetrzymywany jako \textit{plain-text}, lecz zaszyfrowany bądź zahashowany
+    \item \textbf{Hasła jednorazowe} - lista haseł jednorazowych generowanych przez generator kodów (token), z których hasło raz użyte nie może być użyte ponownie. Do generacji wykorzystywany jest jednokierunkowy łańcuch skrótu, który wykorzystuje jednokierunkowe funkcje zwracające wynik w taki sposób, że nie ma możliwości rozpoznania danych wejściowych, a tym samym przewidzieć jakie będzie następne hasło
+    \item \textbf{Uwierzytelnianie kryptograficzne} - uwierzytelnianie za pomocą podpisanego klucza prywatnego
+    \item \textbf{Karty magnetyczne} - legitymowanie się kartą magnetyczną, czy inteligentną. Bardzo bezpieczna metoda, lecz wymaga posiadania przez użytkownika karty oraz specjalnego czytnika po stronie systemu
+    \item \textbf{Techniki biometryczne} - najbezpieczniejsze istniejące obecnie metody uwierzytelniania, polegają na porównywaniu linii papilarnych, długości palców, cech twarzy, czy też tęczówek oka. System taki jest bardzo drogi, dlatego rzadko stosowany
+\end{itemize}
