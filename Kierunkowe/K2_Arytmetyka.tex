@@ -321,18 +321,30 @@ Dobrze, rozpatrzmy różne zaokrąglenia na przykładzie liczby $0.1(0011)_2$
 Na początku wybieramy ile miejsca możemy poświęcić na zapisanie naszej liczby, a resztę kasujemy. Bitami GRS w ogóle się nie przejmujemy.
 Wybierzmy 4 miejsca po przecinku.
 
-$0.100110011001100110011...0011_2$ => $0.1001_2$
+$0.100110011001100110011...0011_2 \Rightarrow 0.1001_2$
 
 Już. Proste, prawda?
 
-\textbf{Zaokrąglanie do +$\infty$}
+\textbf{Zaokrąglanie do $+\infty$}
 
 Niezależnie od wartości, zawsze zaokrąglamy w górę.
 
-TODO
-dokonczyc zaokraglenia
+\textbf{Zaokrąglanie do $-\infty$}
 
+Niezależnie od wartości, zawsze zaokrąglamy w dół -- czyli dla ujemnych wartości, liczba będzie jeszcze mniejsza.
 
+\textbf{Zaokrąglanie do najbliższej, w kierunku parzystej}
+
+Jest to domyślny tryb zaokrąglania w IEEE-754. Przy tym zaokrąglaniu bity GRS zaczynają mieć znaczenie. Jeżeli $GRS \ge 101$ (czyli 101, 110 lub 111), to zaokrąglamy w górę -- dodajemy 1 do \textit{ulp} (ang. \textit{unit in the last place}, najmłodszy bit). Jeżeli nastąpi przepełnienie mantysy (wyjdzie poza zakres $1 \le M < 2$), to należy ją znormalizować oraz zwiększyć wykładnik. Jeśli $GRS = 100$ to mamy dwie sytuacje:
+\begin{itemize}
+\item \textit{ulp} $= 1 \Rightarrow$ zaokrąglamy w górę
+\item \textit{ulp} $= 0 \Rightarrow$ nic nie robimy
+\end{itemize}
+Zostaje jeszcze ostatnia możliwość: $GRS = 0xx$ (bity R i S nie mają znaczenia) -- wtedy nie zmieniamy mantysy.
+
+\textbf{Zaokrąglanie do najbliższej, w kierunku nieskończoności}
+
+Zaokrąglanie to działa podobnie do powyższego dla liczb dodatnich, dla liczb ujemnych zaokrąglenie w dół. Zostało stworzone dla systemu o podstawie dziesiętnej.
 
 \subsection{Podsumowanie}
 \begin{table}[H]
