@@ -2,27 +2,46 @@
 
 \subsection{Protokoły Internetu}
 
-TODO
+\textbf{Protokół Internetowy} - wyspecyfikowany zbiór zasad i reguł umożliwiających komunikację urządzeń w danej warstwie modelu.
 
-\subsection{Ochrona danych}
+Protokoły dzielą się ze względu na warstwę, w której pracują. Najważniejsze protokoły, z jakimi spotkać się można w Internecie to:
 
-W Internecie czyha wiele niebezpieczeństw. Istnieje kilka rodzajów możliwych ataków:
 \begin{itemize}
-	\item \textbf{Złośliwe oprogramowanie} - konie trojańskie, wirusy, spyware
-    \item \textbf{Ataki na infrastrukturę informatyczną} - DoS (\textit{Denial of Service} - nieprzerwane przeładowywanie zasobów sieciowych (np. \textit{flooding}), czy też zasobów lokalnych (np. \textit{fork-bomba})), DDoS (\textit{Distributed DoS} - zorganizowany i skoordynowany DoS na daną maszynę, system maszyn czy usługę przeprowadzony najczęściej przez grupę nieświadomie zainfekowanych maszyn \textit{zombie} będących częścią \textit{botnetu}), SQL Injection, szukanie luk w oprogramowaniu czy konfiguracji
-    \item \textbf{Man in the Middle} - podsłuchiwanie i modyfikacja wiadomości pomiędzy dwoma stronami w Internecie, przykład: postawienie publicznej sieci WiFi i przepuszczenie całego nieszyfrowanego ruchu przez kontrolowane przez siebie proxy
-    \item \textbf{Phising} - podawanie się za instytucje, firmy i osoby, podmienianie stron Internetowych, preparowanie fałszywych maili, w celu zazwyczaj uzyskania dostępu do konta, wyłudzenia danych osobowych, czy kradzieży danych karty kredytowej, na przykład: Nigerian Scam (wyciągnięcie niewielkiej kwoty pieniędzy w celu umożliwienia rzekomego transferu o wiele większej kwoty), Pharming (przekierowywanie poprawnego adresu WWW na podmienioną stronę poprzez podmianę serwera DNS bądź złośliwe oprogramowanie)
-    \item \textbf{Socjotechnika} - 
+	\item Warstwa dostępu do sieci
+	\begin{itemize}
+		\item \textbf{CSMA/CD} - protokół dostępowy do sieci implementujący wykrywanie kolizji w łączu oraz ponawianie transmisji, stosowany jest w technologiach Ethernet i WiFi, gdzie każde urządzenie w sieci posiada unikalny 48-bitowy heksadecymalny adres MAC przypisany do urządzenia
+	\end{itemize}
+    
+    \item Warstwa Internetu
+    \begin{itemize}
+		\item \textbf{IP} - przesyła dane w postaci pakietów, bezpołączeniowy (nie ma gwarancji dotarcia pakietów do celu, przez co niezawodność musi być zapewniana przez protokoły wyższych warstw), pierwotnie istniał podział na klasy A-E, obecnie wykorzystywane są dwie wersje adresów: 32-bitowy IPv4 oraz 128-bitowy IPv6
+        \item \textbf{ICMP} - funkcja diagnostyczna - pomoc przy znajdowaniu problemu, wykorzystywany przez ping i traceroute
+	\end{itemize}
+    
+    \item Warstwa transportowa
+    \begin{itemize}
+		\item \textbf{TCP} - połączeniowy, niezawodny (sumy kontrolne, numery sekwencyjne), gwarancja dostarczenia pakietu w całości, w odpowiedniej kolejności, bez duplikatów, wykorzystuje \textit{Three-way handshake} do nawiązania połączenia
+		\item \textbf{UDP} - bezpołączeniowy, zawodny (brak retransmisji i sum kontrolnych), możliwy multicast, szybszy od TCP dlatego stosowany przy wideokonferencjach czy grach sieciowych
+	\end{itemize}
+    
+    \item Warstwa aplikacji
+	\begin{itemize}
+    	\item \textbf{DNS} - zamienia adresy znane użytkownikowi na adres liczbowy, zrozumiały dla urządzeń tworzących sieć komputerową, posługuje się do komunikacji głównie protokołem UDP na porcie 53
+    	\item \textbf{Telnet} - służy do terminalowego połączenia ze zdalną maszyną, nie jest szyfrowany, działa na porcie 23
+    	\item \textbf{SSH} - następca protokołu Telnet rozszerzający go o możliwość przesyłania plików, zdalnej kontroli zasobów, czy tunelowania, szyfruje transfer danych najczęściej przy pomocy szyfru AES, działa na porcie 22, oparte na nim są m.in. protokoły SCP i SFTP
+    	\item \textbf{SSL} - protokół używany do zabezpieczania połączeń Internetowych, zawiera w sobie algorytmy symetryczne (przesył danych) i asymetryczne (inicjalizacja połączenia)
+		\item \textbf{TLS} - rozszerzenie SSL zwiększające bezpieczeństwo, zawiera certyfikaty potwierdzające tożsamość
+		\item \textbf{HTTP} - bezstanowy (nie zapisuje żadnych informacji o poprzednich transakcjach, przez co do zapamiętywania danych należy skorzystać z plików kolajnych Cookie), pozwalający na przesyłanie różnych zasobów, w tym dokumentów hipertekstowych, poprzez realizację zapytań (GET, PUT, POST, DELETE i inne), działający domyślnie na porcie 80 protokołu TCP
+		\item \textbf{HTTPS} - nakładka na protokół HTTP dodający szyfrowanie zrealizowany przy pomocy TLS (dawniej SSL), działa na porcie 443 TCP
+		\item \textbf{FTP} - protokół komunikacyjny klient-serwer umożliwiający dwukierunkowy transfer plików, zrealizowany przy pomocy dwóch połączeń TCP (dane - port 20, polecenia - port 21), brak szyfrowania - uwierzytelnianie odbywa się plaintextem 
+    	\item \textbf{SMTP} - tekstowy protokół poczty elektronicznej, pracuje na porcie 25
+		\item \textbf{IMAP} - protokół poczty elektronicznej, stanowi następcę protokołu POP3, jednak w przeciwieństwie do niego nie musi pobierać całej zawartości skrzynki na dysk, lecz operuje "w locie", obsługuje wielu użytkowników w tym samym czasie, system flag statusów wiadomości, zarządzanie folderami zdalnymi, pracuje na porcie 143
+	\end{itemize}
 \end{itemize}
 
-Przed powyższymi atakami należy się bronić. Istnieje wiele sposobów ochrony:
-\begin{itemize}
-	\item Szkolenie pracowników - poszerzanie wiedzy z zakresu ochrony danych
-    \item Szyfrowanie połączeń przy pomocy sieci VPN, włączenie SSL w protokołach HTTP, IMAP, SMTP, używanie SSH zamaist FTP czy Telnetu
-    \item Stosowanie odpowiedniej infrastruktury technicznej - np. stosowanie światłowodów zamiast kabli miedzianych, gdyż miedziaki narażone są na podsłuchiwanie poprzez anteny skupiające wypromieniowaną energię przez kabel, światłowód będąc dielektrykiem nie wypromieniowuje energii, a sprzęt do jego podsłuchu jest o wiele droższy
-    \item Nie trzymanie haseł w postaci jawnej, zapisywanie ich jako skrót kryptograficzny uznawany jako bezpieczny (SHA512 jest o wiele bardziej bezpieczny niż MD5)
-    \item Systemy przechowujące poufne informacje w ogóle nie powinny być podłączone do Internetu
-\end{itemize}
+Część powyższych protokołów zawiera się w zbiorze protokołów \textbf{IPSec} służący zesawianiu bezpiecznego połączenia oraz bezpiecznego przesyłania pakietów IP. Odbywa się to na zasadzie \textit{kapsułkowania} - oryginalny pakiet IP jest szyfrowany, następnie otrzymuje nowy nagłówek IPSec i w takiej formie jest przekazywany dalej. IPSec wykorzystywany jest przy tworzeniu sieci VPN.
+
+\textbf{VPN} (\textit{Virtual Private Network}) jest tunelem, w którym utworzona jest sieć prywatna będąca częścią sieci publicznej. Dane w obrębie tej sieci prywatnej są kompresowane i szyfrowane. VPN stosowane jest do zdalnego łączenia się z wewnętrzną siecią firmową, zapewniania bezpieczeństwa przy korzystaniu z niezabeczpieczonej sieci publicznej czy do omijania cenzury.
 
 Jak działa \textit{SSL}?
 \begin{enumerate}
@@ -32,6 +51,31 @@ Jak działa \textit{SSL}?
 	\item Przeglądarka szyfruje tak wygenerowany klucz sesji i wysyła go do serwera, który za pomocą klucza prywatnego jest w stanie go odszyfrować
 	\item W tym momencie tylko klient i serwer są w posiadaniu klucza sesji, który od tej pory jest wykorzystywany jako klucz symetryczny w komunikacji.
 \end{enumerate}
+
+\subsection{Ochrona danych}
+
+W Internecie czyha wiele niebezpieczeństw. Istnieje kilka rodzajów możliwych ataków:
+\begin{itemize}
+	\item \textbf{Złośliwe oprogramowanie} - konie trojańskie, wirusy, spyware
+    \item \textbf{Ataki na infrastrukturę informatyczną} - DoS (\textit{Denial of Service} - nieprzerwane przeładowywanie zasobów sieciowych (np. \textit{flooding}), czy też zasobów lokalnych (np. \textit{fork-bomba})), DDoS (\textit{Distributed DoS} - zorganizowany i skoordynowany DoS na daną maszynę, system maszyn czy usługę przeprowadzony najczęściej przez grupę nieświadomie zainfekowanych maszyn \textit{zombie} będących częścią \textit{botnetu}), SQL Injection, szukanie luk w oprogramowaniu czy konfiguracji
+    \item \textbf{Man in the Middle} - podsłuchiwanie i modyfikacja wiadomości pomiędzy dwoma stronami w Internecie, przykład: postawienie publicznej sieci WiFi i przepuszczenie całego nieszyfrowanego ruchu przez kontrolowane przez siebie proxy
+    \item \textbf{Phising} - podawanie się za instytucje, firmy i osoby, podmienianie stron Internetowych, preparowanie fałszywych maili, w celu zazwyczaj uzyskania dostępu do konta, wyłudzenia danych osobowych, czy kradzieży danych karty kredytowej, na przykład: Nigerian Scam (wyciągnięcie niewielkiej kwoty pieniędzy w celu umożliwienia rzekomego transferu o wiele większej kwoty), Pharming (przekierowywanie poprawnego adresu WWW na podmienioną stronę poprzez podmianę serwera DNS bądź złośliwe oprogramowanie)
+\end{itemize}
+
+Przed powyższymi atakami należy się bronić. Istnieje wiele sposobów ochrony:
+\begin{itemize}
+	\item Szkolenie pracowników - poszerzanie wiedzy z zakresu ochrony danych, zmniejsza się w ten sposób przede wszystkim 
+    \item Szyfrowanie połączeń przy pomocy sieci VPN, włączenie SSL w protokołach HTTP, IMAP, SMTP, używanie SSH zamaist FTP czy Telnetu
+    \item Stosowanie odpowiedniej infrastruktury technicznej - np. stosowanie światłowodów zamiast kabli miedzianych, gdyż miedziaki narażone są na podsłuchiwanie poprzez anteny skupiające wypromieniowaną energię przez kabel, światłowód będąc dielektrykiem nie wypromieniowuje energii, a sprzęt do jego podsłuchu jest o wiele droższy
+    \item Nie trzymanie haseł w postaci jawnej, zapisywanie ich jako skrót kryptograficzny uznawany jako bezpieczny (SHA512 jest o wiele bardziej bezpieczny niż MD5)
+    \item Systemy przechowujące poufne informacje w ogóle nie powinny być podłączone do Internetu
+\end{itemize}
+
+Istnieją dwa rodzaje szyfrowania z wykorzystaniem klucza:
+\begin{itemize}
+	\item \textbf{Algorytmy symetryczne} - do szyfrowania i odszyfrowywania wykorzystuje ten sam klucz, albo klucze, które w momencie gdy poznamy jednego z nich, możemy na jego podstawie wygenerować drugi, przykłady algorytmów: AES, DES, Blowfish
+	\item \textbf{Algorytmy asymetryczne} - wykorzystuje klucz publiczny, znany wszystkim odbiorcom, oraz prywatny, różny dla każdego klienta; znając tylko klucz publiczny nie ma możliwości odszyfrowania wiadomości ani wygnerowania klucza prywatnego, ponadto wykorzystywane są operacje jednokierunkowe - takie, które łątwo jest wykoać w jedną stronę, zaś trudno w drugą; przykłady użyć: RSA, GPG, SSH 
+\end{itemize}
 
 \subsection{Uwierzytelnianie w Internecie}
 
