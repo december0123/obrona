@@ -1,0 +1,67 @@
+\section{S9 -- Charakterystyka mikrokontrolerów}
+
+Mikrokontroler to układ scalony mikroprocesorowy, który zawiera elementy, takie jak: jednostkę centralną (CPU), pamięć (danych, programu) oraz układy wejścia/wyjścia. Jego nazwa pochodzi od obszaru zastosowań -- sterowanie urządzeniami elektronicznymi. Bloki funkcjonalne, jakie może zawierać to: 
+\begin{itemize}
+\item kontrolery przerwań,
+\item generator sygnału zegarowego (np. oscylator),
+\item układy licznikowe,
+\item kontrolery transmisji,
+\begin{itemize}
+\item równoległej,
+\item szeregowej,
+\end{itemize}
+\item przetworniki analogowo-cyfrowe oraz cyfrowo-analogowe,
+\item zegar czasu rzeczywistego (RTC),
+\item watchdog (układ wykrywający błędne działanie systemu, zapobiega awariom -- zabezpiecza przed zawieszeniami),
+\item etc.
+\end{itemize}
+Elementy te odróżniają mikrokontroler od mikroprocesora. Układ ten jest zdolny do autonomicznej pracy.
+
+Mikrokontrolery wykorzystują następujące rodzaje pamięci:
+\begin{itemize}
+\item EPROM -- nieulotna, można je podzielić na jednorazowo programowalne (OTP) lub wielokrotnie, z możliwością kasowania dotychczasowej zawartości (EPROM), używana jest do pamięci programu (ale rzadko)
+\item EEPROM -- nieulotna, kasowana elektrycznie, podobnie jak powyższa, stosowana jest do pamięci programu
+\item flash -- nieulotna, można ją programować bezpośrednio w mikrokontrolerze, również zawiera pamięć programu
+\item SRAM -- statyczna pamięć RAM, czyli ulotna, używana jest do pamięci danych
+\item FRAM -- nieulotne pamięci ferroelektryczne, zastosowane np. w moich ,,ulubionych'' MSP430
+\end{itemize}
+
+Architektury mikrokontrolerów można podzielić ze względu na dostęp do pamięci lub typu listy instrukcji. Zgodnie z wiedzą z Architektury Komputerów wiemy, że istnieją architektury podzielone ze względu na dostęp do pamięci jak: von Neumanna, harvardzka, mieszana.
+
+Architektura von Neumanna cechuje się tym, że ta sama pamięć przechowuje program oraz dane. Dostęp do nich odbywa się przez jedną, wspólną magistralę, a każda komórka posiada unikatowy adres. Kolejnym elementem jest jednostka sterująca, która jest odpowiedzialna za pobieranie i przetwarzanie instrukcji oraz danych trzymanych w tej pamięci.
+
+Architektura harvardzka wyróżnia dwa rodzaje pamięci -- na program oraz na dane. W odróżnieniu od poprzedniej architektury, ta pozwala na równoległą komunikację z pamięciami programu oraz danych, ponieważ występują tu osobne magistrale.
+
+Architektura mieszana wyróżnia dwa rodzaje pamięci, jak w architekturze harvardzkiej, jednak z jedną magistralą, jak w architekturze von Neumanna.
+
+Drugim podejściem do podziału na architektury jest podział na listy instrukcji. Pierwszą z nich jest CISC (\textit{Complex Instruction Set Computing}). Zbiór rozkazów jest złożony, wykonanie instrukcji wymagają od kilku do kilkunastu cykli zegara. Duża liczba trybów adresowania oraz liczba rozkazów powodują, że układy dekoderów są skomplikowane. W tej architekturze rozkazy operują bezpośrednio na pamięci.
+
+Innym podejściem jest architektura RISC (\textit{Reduced Instruction Set Computing}). Posiada ona więcej rejestrów w stosunku do CISC, aby zmniejszyć narzut komunikacji z pamięcią. Tryby adresowania zostały zredukowane, aby zmniejszyć stopień skomplikowania dekoderów. 
+
+Mikrokontrolery są zdolne do autonomicznej pracy, dzięki dostępnym peryferiom, które wspomagają kontrolę urządzeń zewnętrznych. Można do nich zaliczyć:
+\begin{itemize}
+\item układ licznika w najprostszej postaci jest rejestrem przesuwnym, ważną cechą tego układu jest jego pojemność (np. 8 bit)
+\item oscylatory generujące sygnały zegarowe, oprócz nich można podłączyć do $\mu$C zewnętrzne układy
+\item watchdog -- ważnym elementem pracy $\mu$C, ponieważ przywraca działanie układu do normalnego trybu w razie, gdy mikrokontroler przestanie działać poprawnie
+\item przetworniki analogowo-cyfrowe pozwalające na pracę z analogowymi peryferiami (np. czujnikami temperatury); przetworniki cyfrowo-analogowe pozwalają generować analogowe sygnały na podstawie cyfrowych danych
+\end{itemize}
+
+System przerwań opiera się na sygnałach, które powodują zmianę przepływu sterowania, niezależnie od wykonywanego programu. Przerwanie potrafi wstrzymać aktualnie wykonywany program i wykonać odpowiedni kod do obsługi danego przerwania. Pozwala to na interakcję z podłączonymi urządzeniami (np. przetwarzanie danych, gdy się pojawią), lub obsługę licznika.
+
+Mikrokontrolery pozwalają na komunikację z zewnętrznymi urządzeniami. Niektóre z nich mogą mieć konkretny interfejs komunikacyjny. W $\mu$C najważniejszym interfejsem są piny GPIO, które umożliwiają komunikację, ich zachowanie programowane jest przez programistę, domyślnie nie mają określonego zastosowania. Mogą być zastosowane do implementacji interfejsów -- np. USART, SPI, I$^{2}$C. 
+
+USART pozwala na szeregową komunikację z zewnętrznymi urządzeniami. Komunikacja ta może być synchroniczna lub asynchroniczna. Ta forma transmisji jest wykorzystywana w standardach RS232, RS485 (różnią się poziomami logiki). W trybie synchronicznym wykorzystywana jest dodatkowa linia zegara synchronizującego. Magistrala ta wymaga dwóch linii transmisyjnych (RX -- odbiór, TX -- wysyłanie).
+
+I$^{2}$C jest inną magistralą szeregową, pozwala na podłączenie wielu urządzeń. Urządzenia podzielone są na dwie klasy -- master oraz slave. Master generuje sygnał zegarowy, rozpoczyna komunikację z podwładnymi urządzeniami. Węzły slave odbierają sygnały zegarowe oraz odpowiadają, gdy komunikacja jest zaadresowana do nich. Magistrala ta wymaga dwóch linii sygnałowych (dane, sygnał zegara).
+
+Inną magistralą komunikacyjną jest SPI. Ona również zezwala na podłączenie wielu urządzeń. Zezwala na komunikację full-duplex, czyli urządzenia mogą się ze sobą komunikować równocześnie. Podobnie jak I$^{2}$C, posiada podział na master oraz slave. Wymaga trzech linii komunikacyjnych (sygnał zegara, wyjście danych układu master, wejście danych układu master) oraz jedną linię komunikacyjną na urządzenie (master posiada linie wyboru układu slave).
+
+Programowanie mikrokontrolerów może odbywać się:
+\begin{itemize}
+\item szeregowo w systemie (ISP), poprzez SPI
+\item przez bootloader -- w układach, które mają możliwość modyfikacji programu, przesyłanie może odbyć się np. przez UART
+\item przez JTAG -- wykorzystywane do programowania i debugowania, początkowo służył do weryfikacji poprawności montażu układów scalonych
+\end{itemize}
+Układy można skonfigurować przy pomocy lock bitów (zabezpieczają przed nieuprawnionym dostępem do pamięci programu) oraz fuse bitów (konfiguracja układu, źródeł sygnału zegarowego, watchdoga, etc.).
+
+Mikrokontrolerów zazwyczaj nie posiadają systemu operacyjnego, chociaż istnieją rozwiązania RTOS (np. uClinux, freeRTOS). Programowanie zwykle wykorzystuje asemblera bądź C ze wstawkami asemblera. Konwencja tworzenia programów na mikrokontrolery opiera się na tym, że procesor powinien wykonywać zadania, mimo wystąpienia zdarzeń losowych, czy też podczas oczekiwania na jakieś przerwanie. W niektórych zastosowaniach może być ważne również usypianie i wybudzanie mikrokontrolera w celu oszczędzania zasilania, gdy $\mu$C oczekuje na np. dane.
