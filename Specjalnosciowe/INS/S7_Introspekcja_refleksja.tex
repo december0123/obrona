@@ -1,1 +1,29 @@
 \section{S7 - Różnice pomiędzy introspekcją i odzwierciedleniem – metodami stosowanymi do rozpoznania własności klas lub zmodyfikowania zachowania się aplikacji działających na wirtualnej maszynie Java}
+
+Języki wysokiego poziomu umożliwiają tworzenie programów, które są w stanie w \textbf{czasie wykonania} dokonać inspekcji i modyfikacji innych programów, bądź też samych siebie.
+
+Pojęcia introspekcji i refleksji (odzwierciedlenia) nie są unikalne dla języka Java, jednak właśnie na tym języku się skupię (taka natura pytania).
+
+Są to pojęcia ściśle ze sobą powiązane, jednak nie są tym samym.
+
+\subsection{Introspekcja}
+
+Introspekcja umożliwia programowi inspekcję kodu programów, które już się wykonują (w tym też samego siebie).
+Dzięki niej, możemy uzyskać informacje o używanych typach i zdefiniowanych metodach.
+
+Przykładem ze środowiska Javy, gdzie jest używana introspekcja, mogą być narzędzia służące do graficznego projektowania interfejsu użytkownika.
+
+Korzystają one z mechanizmu introspekcji do prześwietlania kodu i wydobywania informacji z ziarenek Javy (JavaBeans), aby z nich skorzystać.
+
+\subsection{Refleksja}
+
+Refleksja korzysta z mechanizmu introspekcji i idzie o krok dalej.
+Oprócz samego wydobywania informacji z programu, refleksja umożliwia modyfikowanie go.
+
+Możemy więc wydobyć informacje z jakiegoś obiektu, o którym nic nie wiemy, a następnie wybrać, które metody wywołać i w jaki sposób.
+
+Przykładem, gdzie przydaje się refleksja może być testowanie.
+Za pomocą mechanizmu refleksji, framework JUnit wyszukuje metody oznaczone za pomocą adnotacji @Test i w ten sposób wie, które metody służą do testowania i może je wywołać.
+
+W odpowiednich rękach jest to potężne narzędzie, które umożliwia nam pracę z kodem, który mógł jeszcze nie zostać nawet napisany.
+Należy jednak pamiętać, że ze względu na to, że wszystko dzieje się w czasie wykonania, nadmierne wykorzystywanie mechanizmu refleksji może negatywnie wpłynąć na wydajność programu.
