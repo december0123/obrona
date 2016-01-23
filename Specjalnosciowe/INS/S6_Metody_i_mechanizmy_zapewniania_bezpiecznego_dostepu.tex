@@ -1,0 +1,62 @@
+\section{S6 -- Metody i mechanizmy zapewniania bezpiecznego dostępu i bezpiecznej komunikacji sieciowej w systemach komputerowych}
+
+Temat bezpieczeństwa systemów i sieci należy zacząć od wspomnienia o najważniejszym elemencie bezpiecznego systemu, którym jest \textbf{użytkownik.}
+
+Możemy zaprojektować najlepszy system, który będzie wykorzystywał najlepsze metody szyfrowania danych, lecz jeśli użytkownik nie będzie postępował zgodnie z zasadami, to system nigdy nie będzie bezpieczny.
+
+Przykładowo możemy wymusić na użytkownikach, by używali długich i skomplikowanych haseł, jednak najprawdopodobniej doprowadzi to do zapisania takiego hasła gdzieś przy komputerze -- w takiej sytuacji tego hasła mogłoby równie dobrze nie być.
+
+Opisane wyżej postępowanie nazywa się mianem \textit{bezpieczeństwa kosztem używalności.}
+Takie postępowanie bardzo często prowadzi do zmniejszenia bezpieczeństwa systemu, a nie do jego ulepszenia.
+
+Zanim przejdziemy dalej, powiedzmy sobie o trzech ważnych pojęciach.
+
+\begin{itemize}
+	\item{Identyfikacja -- przedstawienie systemowi swojej tożsamości, którą będzie on weryfikował w następnym kroku.}
+	\item{Uwierzytelnianie -- polega na przedstawieniu systemowi pewnych dowodów, które przekonają go, że ,,rozmawia'' z odpowiednią osobą.}
+	\item{Autoryzacja -- jest osobnym procesem i polega na otrzymaniu dostępu do zasobów lub usług systemu, a co za tym idzie, jest ściśle powiązana z uwierzytelnianiem.}
+\end{itemize}
+
+\subsection{Hasła}
+
+Podstawowym mechanizmem zabezpieczania systemów są hasła.
+
+\subsubsection{Hasła wielokrotnego użytku}
+Najczęściej są one przechowywane w postaci zaszyfrowanej, a podczas uwierzytelniania hasło podane przez użytkownika przepuszczane jest np. przez funkcję skrótu i porównywane z wersją przechowywaną w systemie.
+Jeśli system uzna, że hasła są zgodne to może udzielić dostępu.
+
+Hasła tradycyjne mają tę wadę, że można je złamać, wykraść czy zgadnąć.
+Dlatego, choć są wygodne, nie są najlepszą metodą zabezpieczania systemów.
+
+\subsubsection{Hasła jednorazowe}
+Alternatywą dla haseł tradycyjnych są hasła jednorazowe.
+
+Przykładem mogą być hasła odczytywane z listy, która zawiera wcześniej wygenerowane hasła, wygasające po jednym użyciu.
+Takie rozwiązanie obok haseł SMS często spotkać można w bankach.
+
+Również w bankach można natknąć się na hasła generowane za pomocą tokenów.
+Takie hasła zmieniają się automatycznie np. co 5 minut i ich ważność wygasa w momencie użycia.
+
+\subsection{Szyfrowanie}
+Równie ważnym tematem jest szyfrowanie danych.
+
+Polega ono na zamianie danych z postaci jawnej do postaci zaszyfrowanej przy pomocy pewnego algorytmu szyfrującego i klucza, który będzie służył do odkodowania danych.
+
+Metody szyfrowania możemy podzielić na symetryczne oraz asymetryczne.
+
+\begin{itemize}
+	\item{Symetryczne -- istnieje jeden klucz używany zarówno do szyfrowania i odszyfrowania.}
+	\item{Asymetryczne -- istnieje para kluczy, z których jeden służy do szyfrowania, a drugi do odszyfrowania.}
+\end{itemize}
+
+Rozwiązanie asymetryczne stosuje się między innymi w GPG (Gnu Privacy Guard), które służy między innymi do szyfrowania i podpisywania korespondencji.
+Kiedy dwie osoby chcą się komunikować za pomocą tej metody, generują dla siebie po parze kluczy, z których jeden jest określany mianem \textit{prywatnego} i jest znany tylko właścicielowi, a drugi jest kluczem \textit{publicznym,} który zostaje udostępniony.
+Gdy ktoś zaczyna tworzyć maila, szyfruje go za pomocą klucza publicznego adresata.
+Dzięki temu tylko osoba posiadająca klucz prywatny, pasujący do klucza publicznego, którym podpisana zostałą wiadomość, będzie w stanie ją  odczytać.
+
+\subsection{Podpis}
+Podpis cyfrowy ściśle wiąże się z opisanym wcześniej szyfrowaniem asymetrycznym.
+
+Wykorzystuje się tutaj fakt, że wiadomość, którą da się odszyfrować kluczem publicznym, musiała zostać zaszyfrowana pasującym kluczem prywatnym. Co za tym idzie, została wysłana przez osobę posiadającą właśnie ten klucz prywatny.
+
+Podpis cyfrowy służy do potwierdzania autentyczności pochodzenia wiadomości, ale także pozwala wykryć nieautoryzowane próby zmiany dokumentu.
