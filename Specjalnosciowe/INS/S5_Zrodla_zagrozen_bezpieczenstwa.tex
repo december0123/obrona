@@ -1,0 +1,44 @@
+\section{S5 -- Źródła zagrożeń bezpieczeństwa systemów i usług informatycznych}
+
+\subsection{Natura}
+Jednym z zagrożeń dla systemów, które istnieje, a nie zawsze się o nim myśli jest natura.
+Woda może zalać sprzęt, piorun uszkodzić instalacje, a zwierzątka poprzegryzać kable i należy się przed tym zabezpieczać.
+
+\subsection{Użytkownicy}
+Jednak głównym źródłem zagrożeń dla systemów są ludzie.
+Nawet jeśli zaprojektujemy system, który w naszej opinii jest wyjątkowo dobrze zabezpieczony, to ktoś zawsze znajdzie sposób, by nam udowodnić, że się mylimy (czy to przez przypadek, czy umyślnie).
+
+Użytkownicy ustawiają słabe hasła, które łatwo złamać, bądź też udostępniają je na lewo i prawo.
+Robią coś i nie pomyślą nawet, że ich działania mogą przyczynić się do ujawnienia tajnych danych czy zakażenia komputera wirusem.
+
+\subsection{Socjotechniki}
+Ludzie są łatwowierni.
+Jeśli wejdziemy do jakiegoś miejsca odpowiednio ubrani i będziemy sprawiać wrażenie, że dokładnie wiemy co robimy to nikt nas nie zatrzyma.
+Można więc w okolice firmy podrzucić odpowiednio zakażony pendrive lub wysłać wiadomość podając się za przedstawiciela banku i poprosić o udostępnienie danych.
+
+\subsection{Haksy}
+Również ludzie w postaci programistów są odpowiedzialni za błędy w oprogramowaniu, które mogą pozwalać na nieautoryzowany dostęp do systemu.
+Programiści mogą chcieć ułatwić sobie pracę tworząc tak zwane \textit{backdoory} i później ich nie usuwają (ponownie, specjalnie bądź przez przypadek).
+
+Oczywiście poza przyczynami losowymi i czynionymi nieumyślnie mamy też do czynienia z niebezpieczeństwem ze strony ludzi, którzy umyślnie chcą spowodować szkody.
+Do zagrożeń ze strony takich osób należą
+
+\subsubsection{Sniffery}
+Oprogramowanie podsłuchujące dane przepływające w sieci korzystając z faktu, że niestety internet był projektowany w czasach, gdy bezpieczeństwo w sieci nie było wielkim tematem i dane w niższych warstwach są przesyłane w postaci jawnej.
+Wykrywanie ich polega na wykorzystaniu zasady działania snifferów -- wykorzystują one kartę sieciową przełączoną w tryb \textit{promiscuous,} aby przechwytywać pakiety, które nie są do nich adresowane.
+
+Można więc taką kartę wykryć wysyłając do podejrzanego hosta pakiet ICMP ECHO z jego adresem IP, ale cudzym adresem MAC.
+Praworządna karta nie powinna takiego pakietu przyjąć, lecz karta podsłuchująca wyśle odpowiedź i w ten sposób można poznać kto jest kto.
+
+\subsubsection{Denial of Service}
+Atak typu DoS polega na zajęciu zasobów systemowych (czas CPU, miejsce na dysku) w taki sposób, że inne procesy i użytkownicy nie są w stanie z nich korzystać.
+Atak taki można również przeprowadzić z sieci, np. poprzez zasypywanie serwera pakietami.
+
+Walczyć z takim atakiem można poprzez ustawienie limitów w systemie, np. limit na miejsce przeznaczone dla jednego użytkownika, czy liczbę procesów mogących operować jednocześnie.
+
+\subsubsection{Spoofing}
+Podszywanie się pod kogoś innego.
+\begin{itemize}
+	\item{DNS -- wysłanie do serwera DNS fałszywej informacji kojarzącej domenę z adresem IP.}
+	\item{ARP -- rozsyłanie w sieci spreparowanych pakietów ARP zawierających fałszywe adresy MAC, co powoduje przesłanie danych w złe miejsce.}
+\end{itemize}
