@@ -1,1 +1,38 @@
 \section{S1 -- Konfiguracja sieciowa systemów operacyjnych (sterowniki urządzeń sieciowych, ustawienia parametrów sieci lokalnej i TPC, automatyzacja konfiguracji)}
+
+Sieciowy system operacyjny to system, którego jądro ma zintegrowany stos sieciowy.
+Mądrze brzmi, ale co to znaczy?
+Znaczy to tyle, że jądro takiego systemu posiada
+\begin{itemize}
+	\item{sterowniki obsługujące karty sieciowe,}
+	\item{oprogramowanie obsługi co najmniej trzech najniższych warstw, tj. łącza danych, sieciowej i transportowej}
+	\item{funkcje biblioteczne wspierające gniazdka Berkeley, Windows bądź interfejs TLI.}
+\end{itemize}
+
+\subsection{Urządzenia}
+W systemie możemy wyróżnić między innymi następujące trzy rodzaje urządzeń.
+
+\begin{itemize}
+	\item{Znakowe -- są to urządzenia, które obsługują odczyt i zapis znak po znaku. Nie są buforowane i interakcja jest natychmiastowa. Przykład: drukarka.}
+	\item{Blokowe -- urządzenia te umożliwiają odczyt i zapis całych bloków. Są buforowane i umożliwiają dostęp do danych w nich przechowywanych. Przykład: dysk, plik.}
+	\item{Interfejsy sieciowe -- zamiast znaków czy bloków, obsługują pakiety.}
+\end{itemize}
+
+Każde z tych urządzeń jest obsługiwane przez odpowiedni sterownik -- część jądra systemu, odpowiedzialną za obsługę urządzeń.
+Sterowniki można dołączać do jądra \textbf{statycznie -- } w trakcje kompilacji -- oraz \textbf{dynamicznie -- } w formie ładowalnych modułów.
+
+Interfejsy można konfigurować lokalnie, za pomocą plików konfiguracyjnych i narzędzi typu ifconfig.
+Jednak istnieją również rozwiązania pozwalające na automatyczną konfigurację systemu w momencie jego uruchomienia i włączenia do sieci.
+
+\subsection{BOOTP}
+Jest to protokół służący do konfiguracji komputerów.
+Taki komputer po uruchomieniu rozsyła na adres rozgłoszeniowy zapytanie BOOTP.
+Kiedy serwer odbierze to zapytanie, wysyła klientowi odpowiedź BOOTREPLY zawierającą konfigurację.
+
+Tego protokołu używano również do pobierania obrazu systemu operacyjnego.
+Pozwalało to na używanie prostych terminali, które nie posiadały własnych dysków, a całość konfiguracji ściągały z sieci i ładowały do pamięci operacyjnej.
+
+\subsection{DHCP}
+Następcą BOOTP, jest protokół DHCP (Dynamic Host Configuration Protocol).
+W odróżnieniu do BOOTP, protokół ten jest przeznaczony dla maszyn posiadające własne dyski i skupia się na automatycznej konfiguracji komputerów, które często mogą zmieniać swoją fizyczną lokalizację.
+Potrafi komunikować się z komputerem również po uruchomieniu się systemu, a nie tylko przed, dzięki czemu łatwiejsze staje się odnawianie dzierżawy adresu -- komputera nie trzeba uruchamiać ponownie.
