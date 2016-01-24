@@ -32,7 +32,16 @@ Kiedy serwer odbierze to zapytanie, wysyła klientowi odpowiedź BOOTREPLY zawie
 Tego protokołu używano również do pobierania obrazu systemu operacyjnego.
 Pozwalało to na używanie prostych terminali, które nie posiadały własnych dysków, a całość konfiguracji ściągały z sieci i ładowały do pamięci operacyjnej.
 
-\subsection{DHCP}
-Następcą BOOTP, jest protokół DHCP (Dynamic Host Configuration Protocol).
+\subsection{DHCP -- Dynamic Host Configuration Protocol}
+Następcą BOOTP, jest protokół DHCP.
 W odróżnieniu do BOOTP, protokół ten jest przeznaczony dla maszyn posiadające własne dyski i skupia się na automatycznej konfiguracji komputerów, które często mogą zmieniać swoją fizyczną lokalizację.
 Potrafi komunikować się z komputerem również po uruchomieniu się systemu, a nie tylko przed, dzięki czemu łatwiejsze staje się odnawianie dzierżawy adresu -- komputera nie trzeba uruchamiać ponownie.
+
+\subsection{PXE -- Preboot eXecution Environment}
+Protokół ten jest następcą BOOTP jeśli chodzi o bootowanie systemu z sieci.
+Jest on zbudowany na bazie DHCP (do uzyskania adresu i maski) oraz TFTP (do transferu danych).
+Gdy komputer uzyska konfigurację sieciową, zaczyna odpytywać sieć w poszukiwaniu serwera TFTP.
+Gdy go znajdzie to pobiera z niego obraz systemu.
+Protokół ten jest aktualnie standardem pozwalającym na szybkie i proste skonfigurowanie komputerów, np. pracowników dużych firm, których komputery powinny posiadać pewną określoną polityką firmy konfigurację.
+
+Ze względu na konieczność bycia łatwymi do zaimplementowania, podane wyżej protokoły opierają się na UDP, a nie TCP.
