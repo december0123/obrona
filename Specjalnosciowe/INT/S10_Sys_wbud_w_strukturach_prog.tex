@@ -1,0 +1,63 @@
+\section{S10 -- Systemy wbudowane w strukturach programowalnych}
+
+Przypomnienie -- \textbf{struktury programowalne} to układy elektroniczne, które mają programowalną strukturę, mogą działać jak dowolny układ cyfrowy (o ile zasoby na to zezwalają). Funkcjonalność jest definiowana przez programistę, a nie producenta, co pozwala zmniejszyć koszty, bo z punktu widzenia producenta, produkowane układy są identyczne. PLD są programowane za pomocą języków opisu sprzętu (najpopularniejsze -- Verilog, VHDL), a narzędzie syntezy przetwarza kod programu na fizyczne połączenia. Wyróżnia się układy PLD takie jak: 
+\begin{itemize}
+\item SPLD -- PLA, PLE, PAL; najprostsze, mają ograniczone możliwości funkcjonalne i logiczne,
+\item CPLD -- koncepcyjnie podobne do SPLD, ich architektura opiera się na makrokomórkach, które tworzą bloki funkcyjne, łączone są przez matrycę połączeń,
+\item FPGA -- najbardziej zaawansowane, składają się z CLB łączonych w bloki, łączone są przez linie traktów połączeniowych.
+\end{itemize}
+Więcej informacji można znaleźć w punkcie K9, nie ma się co tu rozpisywać więcej, bo ileż tu można upchnąć ciekawych informacji \texttt{:-)))}.
+
+\textbf{System wbudowany} -- system komputerowy o specjalnym przeznaczeniu, jest integralną częścią obsługiwanego przez niego sprzętu. System ten spełnia wymagania, które zostały określone do zadań, które ma wykonywać. Tak więc zgodnie z tą definicją komputer osobisty nie jest systemem wbudowanym. Systemy wbudowane wykorzystują mikroprocesory bądź mikrokontrolery, które są zaprogramowane do wykonywania tylko i wyłącznie tychże zadań (mają dedykowane oprogramowanie) -- dlatego są nazwane systemami szczególnego przeznaczenia. Systemy te można także oprzeć na strukturach programowalnych. Dzięki wyspecjalizowaniu tych systemów, pobierają one mniej energii, mają mniejsze rozmiary w stosunku do systemów ogólnego przeznaczenia. Systemy te także cechują się wysoką niezawodnością -- są odporne na awarie i zakłócenia.
+
+Z systemami wbudowanymi można się spotkać na każdym kroku. Występują one m.in. w:
+\begin{itemize}
+\item komputerach pokładowych (w aucie, samolocie, etc.), 
+\item systemach naprowadzania rakiet (\texttt{;-)}),
+\item sprzęcie medyczny,
+\item bankomatach,
+\item ,,yntelygentnych'' urządzeniach (telewizory, lodówki, boję się pomyśleć co jeszcze),
+\item routerach,
+\item systemach alarmowych,
+\item drukarkach,
+\item odtwarzaczach DVD/Blu-Ray/etc.,
+\item można tak wymieniać do wieczora, ale chyba komisji to się zbytnio nie spodoba.
+\end{itemize} 
+
+System wbudowany składa się z trzech głównych części:
+\begin{itemize}
+\item obwody wejściowe (czujniki, przetworniki A/C lub C/A, etc.) -- zbierają dane,
+\item jednostka centralna -- pobiera dane, przetwarza je przez swój algorytm oraz przekazuje na obwody wyjściowe,
+\item obwody wyjściowe -- mogą to być porty komunikacyjne, czy też wyjścia sterujące.
+\end{itemize}
+
+Realizacja systemów wbudowanych na strukturach programowalnych może się odbyć na CPLD lub FPGA (SPLD nie są wystarczająco duże).
+
+Układy CPLD oraz FPGA można zaprogramować programowymi procesorami. Jednym z nich, dosyć popularnym jest PicoBlaze, (8-bitowy). Jest on stworzony w HDLu. Posiada on cechy podobne do istniejących na rynku mikrokontrolerach (takich jak: 8051, ATtiny13, ST6215). W odróżnieniu od nich, pozwala na dowolną liczbę peryferii, ograniczeniem jest liczba bloków wybranego PLD.
+
+Istnieją także inne mikroprocesory, którymi można zaprogramować układy PLD, jednakże wymagają one FPGA (nie CPLD). Są to: MicroBlaze, OpenRISC, ARM Cortex-M1 (oczywiście, jest ich więcej). MicroBlaze jest podobny do PicoBlaze, jednak jest to procesor programowy 32-bitowy, posiada większą liczbę zasobów, oraz wyposażony w jednostkę FPU (czyli obsługuje nasze ulubione liczby zmiennoprzecinkowe). Z ciekawostek, obsługa MicroBlaze jest zawarta w kodzie źródłowym jądra Linuksa.
+
+Programowanie takich procesorów programowych odbywa się w dwóch etapach. Pierwszy z nich polega na definicji układu przy pomocy HDLa -- tutaj jest ustalana ,,budowa'' procesora. Następnie jest to przekształcane na sprzętową implementację jako układy kombinacyjne lub sekwencyjne. Kolejny krok to stworzenie kodu programu w Asemblerze bądź C/C++, a następnie zaprogramowanie procesora.
+
+Łączenie mikroprocesorów i układów programowalnych może się odbyć na cztery sposoby:
+\begin{enumerate}
+\item \textbf{Mikroprocesor/mikrokontroler}
+
+Połączenie mikroprocesora z peryferiami w jeden lub kilka układów scalonych.
+\item \textbf{$\mu$procesor/$\mu$kontroler + PLD}
+
+Rozwiązanie to pozwala rozszerzać systemy procesorowe o dodatkowe możliwości, które dają układy programowalne.
+\item \textbf{PLD zintegrowane z $\mu$procesorem / inaczej: $\mu$kontroler z wbudowaną częścią FPGA w jednym układzie scalonym}
+
+Układy PLD z wbudowanym procesorem, np. Xilinx Virtex II + PowerPC. Rozwiązanie to nie przyjęło się ze względu na wysoką cenę.
+
+\item \textbf{Układy PLD z zaimplementowanym $\mu$procesorem}
+
+Rozwiązanie używane do projektowania i weryfikacji projektów przez firmy produkujące układy scalone. Wraz ze wzrostem wydajności i pojemności tańszych układów ta konfiguracja zaczyna być konkurencyjna dla mikrokontrolerów. Rozwiązanie to wydaje się być optymalne dla sprzętowych procesorów (PicoBlaze, MicroBlaze, etc.).
+\end{enumerate}
+
+Układy programowalne dają elastyczność, struktura systemu wbudowanego o taki układ może być dostosowana ściśle do potrzeb oraz może być w prosty sposób zmieniona. Gotowe mikroprocesory nie pozwalają na manipulację liczbą portów czy możliwych peryferii do podłączenia. Można zbudować system oparty o wiele procesorów, gdzie każdy ma przydzielone inne zadanie do wykonania. 
+
+Wadą takiego rozwiązania jest większy pobór mocy.
+
+Układy programowalne pozwalają na zrealizowanie dowolnych peryferii wewnątrz układu, np. układy DVB, szyfrujące, bloki przetwarzania sygnałów, porty szeregowe i równoległe, magistrale, etc.
