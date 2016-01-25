@@ -1,0 +1,67 @@
+\section{S3 -- Metody rozwiązywania problemu martwego punktu (impasu) w systemach i sieciach komputerowych}
+
+Impas, inaczej zakleszczenie, jest pojęciem znanym z programowania współbieżnego.
+Jest to sytuacja, w której procesy, bądź wątki czekają na siebie nawzajem i żadna z tych operacji nie może zostać ukończona.
+
+Do takiej sytuacji może dojść np. w przypadku, gdy proces A żąda zasobu, który jest zajęty przez proces B, a proces B żąda zasobu zajętego przez proces A.
+Wychodzi wtedy cykliczna zależność, która blokuje system.
+
+Pojęciem powiązanym z zakleszczeniem jest \textit{zagłodzenie.}
+Przykładem jest \textit{problem ucztujących filozofów.}
+Problem polega na tym, że procesy wymagają do działania dwóch zasobów -- widelców.
+Jeśli jeden filozof zacznie jeść, to dwaj obok niego automatycznie nie mogą jeść.
+
+Metody walki z tym problemem dzielą się na
+\begin{itemize}
+	\item{wykrywanie i likwidację,}
+	\item{zapobieganie,}
+	\item{unikanie.}
+\end{itemize}
+
+\subsection{Wykrywanie i likwidacja}
+Polega na cyklicznym sprawdzaniu stanu systemu i wykrywaniu czy nie pojawiły się w nim blokady.
+W przypadku ich wykrycia, system może odłączać poszczególne zasoby od puli zasobów zajętych, aż do momentu usunięcia blokady.
+Takie podejście jest oczywiście zarezerwowane dla systemów, w których istnieje możliwość wywłaszczenia zasobów.
+
+\subsection{Zapobieganie (statyczne)}
+Do wystąpienia blokady, konieczne jest spełnienie czterech warunków
+\begin{itemize}
+	\item{wyłączność -- zasoby nie mogą być współdzielone (w danej chwili zasób może być wykorzystywany tylko przez jeden proces,}
+	\item{niewywłaszczalność -- zasób nie może zostać odebrany procesowi przed zakończeniem operacji,}
+	\item{przetrzymywanie i czekanie -- procesy zajmują zasób i oczekują na kolejny,}
+	\item{cykliczne oczekiwanie -- istnieje cykl procesów oczekujących na siebie wzajemnie.}
+\end{itemize}
+
+Aby zapobiegać blokadom, należy tak projektować system, by przynajmniej jeden z tych warunków nie został spełniony, tj.
+
+\begin{itemize}
+	\item{pozwolić na jednoczesny dostęp do zasobów lub sprawić, by procesy nie korzystały z tych samych zasobów,}
+	\item{pozwolić na wywłaszczenie zasobów,}
+	\item{wymuszenie, by proces zajął wszystkie potrzebne mu zasoby albo nic,}
+	\item{}
+\end{itemize}
+
+\subsection{Unikanie (dynamiczne)}
+Podczas gdy zapobieganie blokadom opiera się na rozwiązaniach statycznych, tj. implementowanych przy projekcie systemu, unikanie blokad wykorzystuje aktualne dane o stanie systemu, co pozwala odpowiednio zareagować.
+
+\subsubsection{Algorytm bankiera}
+Pozwalamy procesowi na zajęcie zasobu, jeśli po jego zajęciu będzie istniała możliwość uporządkowania procesów tak, by uniknąć blokady.
+
+Porządkowanie zasobów dla procesów w ogólnym przypadku jest problemem \textbf{NP-zupełnym,} co znaczy, że nie jest to łatwe zadanie, a heurystyczne algorytmy mogą odrzucać część prawidłowych stanów.
+
+\subsection{Scentralizowane i rozproszone}
+Algorytmy można dzielić ze względu na różne kryteria.
+Jednym z takich podziałów jest podział na algorytmy scentralizowane oraz rozproszone.
+
+\subsubsection{Scentralizowane}
+Są to algorytmy opierające się na znajomości stanu globalnego systemu.
+\subsubsection{Rozproszone}
+Są to algorytmy opierające 
+
+\subsection{Optymalne i suboptymalne}
+Algorytmy można również dzielić na
+\begin{itemize}
+	\item{optymalne -- algorytm doskonale sobie radzi i odrzuca jedynie stany niebezpieczne,}
+	\item{suboptymalne -- jest możliwe, że algorytm odrzuci część stanów bezpiecznych.}
+\end{itemize}
+
