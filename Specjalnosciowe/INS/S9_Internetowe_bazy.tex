@@ -1,0 +1,45 @@
+\section{S9 -- Dostęp do internetowych baz danych na przykładzie wybranej technologii}
+Internetowa baza danych to oczywiście baza danych dostępna w Internecie.
+Bazy danych istnieją po to, by przechowywać dane w celu ich późniejszego wykorzystania.
+
+\subsection{ORM}
+Pojęciem niezwykle ważnym w tym temacie jest Mapowanie Obiektowo Relacyjne.
+Pozwala ono na przetworzenie danych z postaci przechowywanej w bazie relacyjnej do postaci obiektów w wybranym języku programowania.
+
+Pozwala to na dostęp do danych z zachowaniem wysokiego poziomu abstrakcji przy użyciu języka, z którym programiści są najlepiej obeznani.
+Nie musimy więc pisać skomplikowanych zapytań SQLowych.
+Wystarczy jedynie odwołać się do zmapowanych obiektów i ich metod, co jest wyjątkowo wygodne i pozwala na znaczne przyśpieszenie pisania aplikacji.
+
+Ma to również tę zaletę, że odpowiedzialność za takie rzeczy jak odporność na SQL Injection przynajmniej częściowo zrzucamy na bibliotekę i jednocześnie w pewien sposób uniezależniamy się od konkretnej implementacji bazy danych -- to biblioteka dba o to, by odpowiednio przetłumaczyć nasze polecenia.
+
+Jako że pytanie wyraźnie mówi o dostępie na przykładzie wybranej technologii, wypowiem się o tym jak to wygląda w Pythonie.
+
+\subsection{DjangoORM}
+Jednym z dostępnych rozwiązań w świecie Pythona jest DjangoORM.
+Jest to system mapowania stworzony na potrzeby Frameworka webowego Django jednak po odpowiedniej konfiguracji można go używać bez części webowej.
+
+Działa on w taki sposób, że po skonfigurowaniu, komunikacja z bazą danych odbywa się za pośrednictwem obiektów utworzonych w Pythonie.
+Stworzenie tabeli jest tak proste jak zdefiniowanie klasy.
+Tworzymy więc klasę o takiej nazwie jak nowa tabela i umieszczamy w niej pola, które odpowiadają kolumnom.
+
+Możemy zatem napisać
+\begin{lstlisting}
+class Person(models.Model):
+	first_name = models.CharField(max_length=30)
+\end{lstlisting}
+
+i po przeprowadzeniu migracji -- operacji uaktualnienia schematu bazy danych -- na podstawie tej klasy zostanie utworzona nowa tabela.
+
+Wykonywanie zapytań jest równie łatwe.
+Wystarczy wywołać odpowiednią metodę jak \textit{all()}, a stworzenie nowego rekordu jest tak proste jak utworzenie nowego obiektu i zapisanie go.
+
+\subsection{Inne}
+Poza DjangoORM istnieją również inne rozwiązania takie jak Peewee czy SQLAlchemy.
+
+\subsection{Wady}
+Jednak żadna technologia nie jest idealna.
+Mimo swoich niewątpliwych zalet, tj. przyśpieszenie pisania i praca na wyższym poziomie abstrakcji, ORM posiada kilka wad.
+
+System nie zawsze jest w stanie wygenerować optymalne zapytania -- dla aplikacji, dla których kluczowa jest szybkość działania warto zastanowić się nad ręcznym pisaniem SQL.
+
+Tak jak w każdym przypadku -- przede wszystkim należy zastanowić się czy technologia pasuje do naszych wymagań, a nie traktować jej jak \textit{srebrny pocisk.}
