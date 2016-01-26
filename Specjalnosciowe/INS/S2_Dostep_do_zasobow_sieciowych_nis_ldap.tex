@@ -1,8 +1,38 @@
 \section{S2 -- Mechanizmy  zdalnego  dostępu  do  zasobów  sieciowych (dyski  sieciowe,  mapowanie  uprawnień  dostępu,  sieciowe zarządzania użytkownikami NIS/LDAP) }
 
 \subsection{NFS}
+Uniksowy system plików wykorzystujący protokoły TCP, UDP lub SCTP (Stream Control Transmission Protocol). Jest otwartym standardem RFC.
+Typowa implementacja:
+\begin{enumerate}
+	\item Aplikacja serwera \texttt{nfsd} nasłuchuje na porcie 2049 (port standardowy). Konfiguracja pobierana jest z pliku /etc/exports (lista udziałów, uprawnienia, ustawienia połączenia - zapis synchroniczny lub asynchroniczny). Program \texttt{exportfs} umożliwia zarządzanie tabelą udostępnianych katalogów.
+	\item Klient uzyskuje dostęp do katalogów za pomocą polecenia mount (serwer jest odpytywany poprzez rpcbind na jakim porcie działa nfsd)
+\end{enumerate}
+
+Główne zmiany w kolejnych wersjach:
+\begin{enumerate}
+	\item NFSv1 - przeznaczony tylko do eksperymentalnego wykorzystania
+	\item NFSv2 (RFC 1094, March 1989) - wykorzystywał protokół UDP, ograniczenie rozmiaru plików do 2GB, ze względu na 32 reprezentacje rozmiaru plików.
+	\item NFSv3 (RFC 1813, June 1995) - wykorzystanie liczb 64 bitowych do przechowywania rozmiarów plików, zwiększona wydajność ze względu na wsparcie dla zapisu asynchronicznego (brak oczekiwania na potwierdzenie zapisu na dysku po stronie serwera), 
+	\item NFSv4 (RFC 3010, 2000; zmodyfikowany RFC 3530, 2003) - wykorzystanie kerberosa do uwierzytelniania użytkowników. Dodano wsparcie dla ACL w modelu podobnym dla windowsa. Możliwości są większe niż w klasycznej implementacji POSIX. Każdna reguła POSIX ma odzwierciedlenie w NFSv4 ACL - domyślnie są one w locie tłumaczone. Oczywiście nie wszystkie reguły NFSv4 ACL zostaną obsłużone przez obsługujący serwer wspierający tylko POSIX ACL.
+	\item NFSv4.1 (RFC 5661, January 2010) - dodano mechanizmy równoległego dostępu do zasobów na wielu serwerach - rozszerzenie pNFS.
+\end{enumerate}
+
+NFSv4 jest zaimplementowany z myślą o uwierzytelnianiu poszczególnych użytkowników. NFSv2 i NFSv3 weryfikowały tylko komputer!
+
+\subsection{NFSv4 mapowanie uprawnień dostępu}
+Jak wspomniano wcześniej NFSv4 obsługuje reguły ACL, które wykraczają poza możliwości POSIX ACL. Dlatego systemy wspierające POSIX muszą dokonać odpowiedniego mapowania.
+
+\begin{enumerate}
+	\item mapowanie dokładne - dokonywane w locie przez klienta i serwer linuksowy. Kończy się niepowodzeniem jeśli reguła POSIX nie jest całkowicie zgodna z NFSv4 ACL. Wadami jest duże skomplikowanie wygenerowanych reguł NFSv4 ACL oraz mały zakres wspieranych reguł przez linuksowy serwer przy mapowaniu odwrotnym.
+	\item mapowanie stratne
+\end{enumerate}
 
 \subsection{SMB}
+Rozwija się jako Server Message Block. Początkowo zaprojektowany przez IBM, a obecnie rozwijany przez Microsoft. Znany także pod nazwą CIFS (Common Internet File System). Powszechnie wykorzystywany przez systemy z rodziny Windows. Może być uruchomiony w oparciu o TCP (port 445) lub NetBIOS - Network Basic Input / Output Protocol, czyli działający w warstwie sesji modelu OSI interfejs łączenia się aplikacji na komputerach w tej samej sieci lokalnej (porty UDP 137, 138  oraz TCP 137 i 139).
+
+Od Windows 8 (SMB 3.0) wspiera szyfrowanie transmisji.
+
+Istnieje otwarta implementacja utworzona w oparciu o inżynierię wsteczną - Samba.
 
 \subsection{DFS}
 Rozproszony system plików - Distributed File System
@@ -16,12 +46,13 @@ Rozwiązanie takie pozwala na:
 	\item dla dużych sieci pozwala kierować użytkowników do najbliższego serwera - tzn. tego w Polsce, a nie w Indiach
 \end{enumerate}
 
-\subsubsection{Microsoft DFS}
+\subsubsection{Przykładowe implementacje}
+\textbf{Microsoft DFS}
 Implementacja rozwijana od czasów Windows NT 4.0. Pozwala organizacji na połączenie wielu udziałów SMB w jeden rozproszony system plików. Dla zwiększenia niezawodności stosowana jest przejrzystość lokalizacji oraz nadmiarowość. Możliwa jest konfiguracja w dwóch trybach:
 \begin{itemize}
 \item Standalone DFS - struktura przechowywana i dostępna tylko na jednym komputerze. Obecnie rzadko spotykany.
 \item Domain Based DFS - opiera się o usługę Active Directory. Możliwa jest replikacja danych pomiędzy serwerami.
 \end{itemize}
 
-\subsubsection{GlusterFS}
+\textbf{GlusterFS}
 Otwarto źródłowy rozproszony system plików. Początkowo rozwijany przez firmę Gluster, następnie przez Red Hat po wykupieniu tej pierwszej w 2011 roku. Automatyczna redundancja, możliwy jest dostęp za pomocą klientów NFS, SMB lub natywnego klienta.
