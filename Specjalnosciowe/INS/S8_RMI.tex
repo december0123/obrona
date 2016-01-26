@@ -1,0 +1,25 @@
+\section{S8 -- Sposoby budowy i zarządzania aplikacjami rozproszonymi za pomocą pakietów należących do standardowej dystrybucji Javy}
+
+Aplikacje rozproszone to takie, które są wykonywane na wielu maszynach celem rozłożenia obciążenia.
+
+Takie aplikacje można zrealizować za pomocą zdalnego wywoływania metod obiektów, bądź przesyłania komunikatów.
+
+\subsection{Gniazda}
+Przesyłanie komunikatów wiąże się z wykorzystaniem gniazd sieciowych, a budowa aplikacji opiera się na architekturze klient-serwer.
+Samą komunikację można podzielić na strumieniową (TCP) oraz datagramową (UDP).
+
+Wygląda to tak, że zarówno klient jak i serwer otwierają gniazda sieciowe.
+Następnie serwer oczekuje na nadejście nowych połączeń.
+Klient podaje z jakim adresem IP chce się połączyć, a konkretna usługa jest rozpoznawana po numerze portu.
+Gdy serwer odbierze połączenie, otwiera nowe gniazdo, przez które jest kontynuowana wymiana, a stare gniazdo istnieje w celach odbierania nowych połączeń.
+
+\subsection{RMI}
+Innym sposobem realizacji takiej aplikacji, który poznaliśmy w czasie studiów jest RMI.
+RMI dostarcza mechanizmy pozwalające na udostępnianie oraz wywoływanie metod zdalnych obiektów.
+
+Obiekty, których metody będą wywoływane zdalnie, przede wszystkim muszą implementować pewien konkretny interfejs.
+Następnie, namiastka tych obiektów musi zostać zarejestrowana w rejestrze RMI.
+Będzie ona służyła do wywoływania ich metod.
+
+Kiedy klient chce wywołać metodę zdalnie, komunikuje się z rejestrem RMI i pobiera informacje o namiastkach i ich metodach.
+Po pobraniu namiastek, może on działać na nich tak jakby to były zwyczajne obiekty lokalne -- komunikacja jest więc dla użytkownika niewidoczna.
