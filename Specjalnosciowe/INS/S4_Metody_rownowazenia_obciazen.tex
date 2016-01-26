@@ -17,7 +17,7 @@ Wyróżniamy planistów
 \subsection{Algorytmy planowania}
 Same algorytmy, wg. których działać może planista możemy podzielić na wywłaszczeniowe oraz niewywłaszczeniowe.
 
-\subsubsection{Algorytmy wywłaszczeniowe}
+\subsubsection{Algorytmy niewywłaszczeniowe}
 To takie, które nie dopuszczają sytuacji, w której proces, który jest aktualnie obsługiwany, zostaje wywłaszczony -- przestaje się go obsługiwać przed zakończeniem.
 
 Do takich algorytmów można zaliczyć kolejkowanie
@@ -27,12 +27,12 @@ Do takich algorytmów można zaliczyć kolejkowanie
 	\item{LIFO - Last In First Out.}
 \end{itemize}
 
-\subsubsection{Algorytmy niewywłaszczeniowe}
+\subsubsection{Algorytmy wywłaszczeniowe}
 Te algorytmy pozwalają, a nawet opierają się na tym, że proces zostaje wywłaszczony.
 Można tutaj wspomnieć między innymi o
 \begin{itemize}
 	\item{Round-robin -- każdy proces dostaje kwant czasu, po którego upływie zostaje wywłaszczony,}
-	\item{Shortest Remaining Time,}
+	\item{Shortest Remaining Time -- proces zostaje wywłaszczony kiedy zjawi się proces, o krótszym czasie obsługiwania}
 	\item{Podejście priorytetowe -- obsługiwany jest proces o najwyższym priorytecie.}
 \end{itemize}
 
