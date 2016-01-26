@@ -1,0 +1,27 @@
+\section{S2 -- Mechanizmy  zdalnego  dostępu  do  zasobów  sieciowych (dyski  sieciowe,  mapowanie  uprawnień  dostępu,  sieciowe zarządzania użytkownikami NIS/LDAP) }
+
+\subsection{NFS}
+
+\subsection{SMB}
+
+\subsection{DFS}
+Rozproszony system plików - Distributed File System
+
+Dane przechowywane są na wielu maszynach jednocześnie przy zintegrowaniu lokalizacji logicznej (ładnie ta wikipedia prawi... czyż nie?). W każdym razie użytkownik końcowy widzi wszystko w jednym miejscu, tyle że np. w wielu katalogach. Często stosowana jest replikacja danych pomiędzy maszynami, co dodatkowo zwiększa niezawodność systemu plików.
+
+Rozwiązanie takie pozwala na:
+\begin{enumerate}
+	\item zmniejszenie ryzyka utraty danych i zwiększenie ich dostępności w przypadku awarii jednego serwera
+	\item podział obciążenia pomiędzy serwerami
+	\item dla dużych sieci pozwala kierować użytkowników do najbliższego serwera - tzn. tego w Polsce, a nie w Indiach
+\end{enumerate}
+
+\subsubsection{Microsoft DFS}
+Implementacja rozwijana od czasów Windows NT 4.0. Pozwala organizacji na połączenie wielu udziałów SMB w jeden rozproszony system plików. Dla zwiększenia niezawodności stosowana jest przejrzystość lokalizacji oraz nadmiarowość. Możliwa jest konfiguracja w dwóch trybach:
+\begin{itemize}
+\item Standalone DFS - struktura przechowywana i dostępna tylko na jednym komputerze. Obecnie rzadko spotykany.
+\item Domain Based DFS - opiera się o usługę Active Directory. Możliwa jest replikacja danych pomiędzy serwerami.
+\end{itemize}
+
+\subsubsection{GlusterFS}
+Otwarto źródłowy rozproszony system plików. Początkowo rozwijany przez firmę Gluster, następnie przez Red Hat po wykupieniu tej pierwszej w 2011 roku. Automatyczna redundancja, możliwy jest dostęp za pomocą klientów NFS, SMB lub natywnego klienta.
