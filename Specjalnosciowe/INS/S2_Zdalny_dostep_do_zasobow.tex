@@ -1,0 +1,50 @@
+\section{S2 -- Mechanizmy zdalnego dostępu do zasobów sieciowych (dyski sieciowe, mapowanie uprawnień dostępu, sieciowe zarządzania użytkownikami NIS/LDAP)}
+
+Udostępnianie zasobów w sieci jest bardzo wygodnym rozwiązaniem.
+Zwalnia nas z potrzeby wymieniania się nośnikami danych i kopiowania danych między komputerami.
+Rozwiązań jest wiele i od naszych wymagań czy możliwości zależy to, które wybierzemy.
+
+\subsection{FTP}
+Jedną z najbardziej rozpowszechnionych usług tego typu są serwery FTP oraz ich bezpieczne odpowiedniki SFTP (tunelowanie ssh) oraz FTPS (ssl/tls).
+
+FTP (File Transfer Protocol) jest to usługa, która pozwala nam na udostępnienie miejsca na serwerze, z którego ludzie mogą pobierać lub wysyłać dane.
+Może ona działać w dwóch trybach, z których oba potrzebują dwóch połączeń -- do przesyłania poleceń oraz danych.
+Tryby te to
+\begin{itemize}
+	\item{aktywny -- gdy klient łączy się do serwera i wymienia polecenia, a dopiero później ustanawia nowe połączenie na porcie N+1 w celu przesłania danych,}
+	\item{pasywny -- gdy klient od samego początku ustanawia oba połączenia.}
+\end{itemize}
+
+\subsection{NAS}
+Będąc w temacie zasobów sieciowych nie można oczywiście pominąć dysków sieciowych.
+Są to urządzenia wpinane do sieci -- zazwyczaj kablem ethernetowym -- lecz dla użytkowników są widoczne jak zasoby lokalne.
+Daje nam to możliwość udostępnienia zasobów raz -- nie musimy wymieniać się nośnikami i kopiować danych.
+
+\subsection{NFS}
+Jednak nie trzeba w celach udostępniania danych w sieci kupować dedykowanych urządzeń. 
+Można skorzystać z protokołu NFS, który umożliwia udostępnienie swoich danych w sieci.
+Udostępnione pliki można zamontować w swoim systemie i operować jak na zasobach lokalnych.
+
+\subsection{SMB}
+Innym protokołem jest SMB.
+
+\subsection{Uprawnienia}
+NFS musi oczywiście sprawdzić, czy mamy uprawnienia dostępu do zasobów, co sprowadza nas do tematu uprawnień i zarządzania użytkownikami.
+W przypadku NFSa, system sprawdza czy nasz użytkownik i jego uprawnienia zgadzają się z tym co jest na serwerze -- jeśli spróbujemy odczytać coś do czego nasz użytkownik nie ma dostępu to się nam to nie uda.
+Konfigurację przeprowadza się za pomocą pliku /etc/exports.
+
+\subsection{Zarządzanie użytkownikami}
+Dla zarządzania użytkownikami również istnieją różne rozwiązania, m.in. \textit{NIS, LDAP} czy \textit{Active Directory.}
+
+NIS (Yellow Pages) jest protokołem umożliwiającym współdzielenie informacji o użytkownikach.
+Działa on w architekturze serwer-klient, gdzie serwer posiada bazę z informacjami na temat użytkowników, a klient z tej bazy może skorzystać.
+Można więc tak ustawić sieć, że gdy użytkownik próbuje się zalogować do komputera, a w lokalnym systemie nie widzimy takiego użytkownika, komputer odpytuje serwer z bazą danych i na tej podstawie weryfikuje czy użytkownik może uzyskać dostęp.
+
+NIS ma jednak tę wadę, że klient może pobrać całą bazę, a następnie przeprowadzić atak siłowy celem złamania haseł.
+
+Następnikiem NISa jest LDAP.
+LDAP podobnie jak NIS działa w architekturze serwer-klient, jednak różnica polega na tym, że weryfikacja odbywa się po stronie serwera.
+
+Przykładem, gdzie takie rozwiązanie jest wdrożone może być sama politechnika.
+Studenci posiadają konta na poczcie, którego można użyć do zalogowania się do sieci Eduroam.
+Takie rozwiązanie jest również wdrożone w niektórych laboratoriach.
