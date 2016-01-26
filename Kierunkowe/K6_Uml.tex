@@ -12,7 +12,7 @@ Omówmy kilka najczęściej spotykanych diagramów.
 
 \subsection{Diagramy strukturalne}
 \subsubsection{Diagram pakietów}
-Pełni rolę organizacyjną. Zawiera w sobie inne elementy języka, zazwyczaj diagramy klas.
+Pełni rolę organizacyjną. Zawiera w sobie inne elementy języka, zazwyczaj diagramy klas. Jest to ogólna wizualizacja systemu, z przedstawieniem zależności pomiędzy jego częściami.
 
 \subsubsection{Diagram klas}
 Składa się z zamodelowanych klas oraz relacji między nimi.
@@ -32,8 +32,11 @@ Relacje między klasami:
 	\item{\textbf{Asocjacja -- linia ciągła} -- obiekty wykorzystują inne obiekty (człowiek używa magazynu do przechowywania rzeczy).}
 	\item{\textbf{Agregacja częściowa -- pusta strzałka z rombem} -- obiekt posiada inne obiekty, ale nie są one do niego przypisane na wyłączność (kiedy człowiek umrze, jego samochód dalej istnieje).}
 	\item{\textbf{Agregacja całkowita -- pełna strzałka z rombem} -- obiekt posiada inne obiekty i jest za nie odpowiedzialny (kiedy człowiek umrze, jego serce umiera wraz z nim).}
-	\item{\textbf{Dziedziczenie --} pusta strzałka -- określa hierarchię dziedziczenia.}
+	\item{\textbf{Dziedziczenie -- pusta strzałka} -- określa hierarchię dziedziczenia.}
 \end{itemize}
+
+\subsubsection{Diagram wdrożenia}
+Pokazuje on strukturę fizyczną systemu, z uwzględnieniem obiektów systemu oraz elementami zewnętrznymi (np. maszyna obliczeniowa, czy też baza danych). Diagram ten jest przydatny przy wdrażaniu dużych systemów.
 
 \subsection{Diagramy behawioralne}
 \subsubsection{Diagram przypadków użycia}
@@ -64,7 +67,7 @@ Do komunikatów wymienianych między obiektami zalicza się między innymi
 	\item{wywołanie asynchroniczne.}
 \end{itemize}
 
+Na tym diagramie można również umieścić bloki, które przedstawiają specjalne interakcje (np. pętle, alternatywne przejście, sekcję krytyczną).
 
-
-
-
+\subsubsection{Diagram komunikacji}
+Jest to diagram podobny do diagramu sekwencji, jednak skupia się on na obiektach, które są składnikiem interakcji oraz komunikatów, które przesyłają. W odróżnieniu od diagramu sekwencji, nie skupia się na aspekcie czasowym. Rozmieszczenie obiektów jest kluczowe, aby w jasny sposób przedstawić relacje między sobą. Komunikacja jest przedstawiona za pomocą linii łączącej obiekty, natomiast przesyłane dane znajdują się ponad nimi (np. student zalicza egzamin).
