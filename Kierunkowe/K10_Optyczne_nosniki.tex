@@ -35,7 +35,13 @@ Dostęp do drugiej warstwy możliwy jest przez przepuszczenie lasera przez pierw
 
 \textbf{HVD} (Holographic Versatile Disc) -- technologia dysków optycznej nowej generacji, teoretycznie pozwala pomieścić do 6 TB na jednej warstwie. Zapis danych odbywa się w trójwymiarowej przestrzeni dysku. Wykorzystywane są dwa lasery -- zielony oraz czerwony.
 
-Stany logiczne na płycie CD są reprezentowane przez pity (wgłębienia, reprezentują 0) oraz landy (przerwy między wgłębieniami, reprezentują 1). Gdy wiązka trafia na land, to jest rozpraszana i nie wraca do czytnika. Przy picie wiązka jest odbijana i trafia z powrotem do czujnika. Dane zapisywane są od środka na zewnątrz płyty.
+Stany logiczne na płycie CD są reprezentowane przez pity (wgłębienia) oraz landy (płaskie powierzchnie, przerwy między wgłębieniami). Gdy wiązka trafia na pit, to jest rozpraszana i nie wraca do czytnika. Przy landzie wiązka jest odbijana i trafia z powrotem do czujnika. Każda przejście z landu na pit o odwrotnie powoduje zmianę stanu (logiczne 0 lub 1). Dane zapisywane są od środka na zewnątrz płyty.
+
+\begin{figure}[H]
+\caption{Stany logiczne odczytywane z powierzchni płyty}
+\centering
+\includegraphics[width=\linewidth]{K10_pits.jpg}
+\end{figure}
 
 Kodowanie wykorzystywane w płytach to EFM (eight to fourteen modulation). Jest wykorzystywane ze względu na ograniczenia technologiczne (szybkości światła i odpowiedzi modulatora). Przez to długości pitów i landów muszą znajdować się w przedziale od 3 do 11 bitów kanałowych (ciąg kilku pitów/landów nie może być krótszy niż 3 bity kanałowe oraz dłuższy niż 11). Dlatego każde 8 bitów jest zapisywane za pomocą 14 bitów kanałowych. Do konwersji jest wykorzystywana tabela, która jest zapisana w firmware napędu. 
 
