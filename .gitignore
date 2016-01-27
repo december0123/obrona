@@ -34,9 +34,6 @@ main.pdf
 *.vrb
 *.xdy
 *.tdo
-specjalnosciowe.tex
-INT.tex
-INS.tex
 [._]*.s[a-w][a-z]
 [._]s[a-w][a-z]
 *.un~
