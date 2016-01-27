@@ -60,10 +60,10 @@ Komunikacja \textbf{point-to-point} składa się z różnych trybów. Zależą o
 \begin{table}[H]
 \begin{tabularx}{\textwidth}{|l|X|}\hline
 \textbf{Tryb wysyłania} & \textbf{Działanie} \\ \hline
-Synchroniczny \texttt{MPI\_Send} & Pełna synchronizacja, nie zakłada wcześniejszego wywołania \texttt{MPI\_Recv}, zakończy wykonanie, gdy odbiorca rozpocznie odbieranie \\ \hline
 Standardowy \texttt{MPI\_Send} & Wysyłanie blokujące, biblioteka decyduje o użyciu wewnętrznego bufora \\ \hline
-Buforowany \texttt{MPI\_Bsend} & Korzysta z bufora użytkownika, nie wymaga wcześniejszego wywołanie \texttt{MPI\_Recv}, zakończy wykonanie po umieszczeniu wiadomości w buforze. Wymaga zapewnienia przez użytkownika bufora odpowiedniej wielkości. \texttt{MPI\_Buffer\_attach} tworzy bufor, \texttt{MPI\_Buffer\_detach} zwalnia bufor. W przypadku przepełnienia bufora nastąpi błąd. \\ \hline
-Ready send \texttt{MPI\_Rsend} & Zakłada wcześniejsze wywołanie \texttt{MPI\_Recv}. Zakończy się błędem, jeżeli nie wystąpi wczesniej odpowiednie wywołanie \texttt{MPI\_Recv}. Potencjalnie niebezpieczne, niezalecane do użycia. \\ \hline
+Synchroniczny \texttt{MPI\_SSend} & Pełna synchronizacja, nie zakłada wcześniejszego wywołania \texttt{MPI\_Recv}, zakończy wykonanie, gdy odbiorca rozpocznie odbieranie \\ \hline
+Buforowany \texttt{MPI\_BSend} & Korzysta z bufora użytkownika, nie wymaga wcześniejszego wywołanie \texttt{MPI\_Recv}, zakończy wykonanie po umieszczeniu wiadomości w buforze. Wymaga zapewnienia przez użytkownika bufora odpowiedniej wielkości. \texttt{MPI\_Buffer\_attach} tworzy bufor, \texttt{MPI\_Buffer\_detach} zwalnia bufor. W przypadku przepełnienia bufora nastąpi błąd. \\ \hline
+Ready send \texttt{MPI\_RSend} & Zakłada wcześniejsze wywołanie \texttt{MPI\_Recv}. Zakończy się błędem, jeżeli nie wystąpi wczesniej odpowiednie wywołanie \texttt{MPI\_Recv}. Potencjalnie niebezpieczne, niezalecane do użycia. \\ \hline
 \end{tabularx}
 \end{table}
 \item \underline{Odbieranie \texttt{MPI\_Recv} działa ze wszystkimi trybami wysyłania}
@@ -115,4 +115,4 @@ Operacja \texttt{\textbf{MPI\_AllGather}} jest analogiczna do \texttt{\textbf{MP
 
 Operacja wszyscy do wszystkich (\texttt{\textbf{MPI\_Alltoall}}). Każdy z procesów wysyła do procesu i-tego sendcount kolejnych elementów typu sendtype, poczynając od elementu i*sendtype tablicy sendbuf.
  
-Operacja redukcji (\texttt{\textbf{MPI\_Reduce}}) służy do wykonywania globalnej operacji na elementach procesów należących do grupy. Pozwala wykonać na przykład sumowanie wszystkich częściowych wyników otrzymanych w procesach i umieszczenie wyniku w zmiennej. Przykładowe operatory to \textbf{MPI\_MAX}, \texttt{\textbf{MPI\_MIN}}, \texttt{\textbf{MPI\_SUM}} - kompletna lista znajduje się w dokumentacji. Istnieje również możliwość definiowania własnych operatorów dla funkcji \texttt{\textbf{MPI\_Reduce()}}.Warto wspomnieć o funkcji \textbf{MPI\_AllReduce}. Funkcja identyczna z poprzednią, różniąca się jedynie tym, że po jej wykonaniu wynik agregacji z użyciem operatora \textbf{op} znajduje się w zmiennej \textbf{result} we \underline{wszystkich} procesach.
+Operacja redukcji (\texttt{\textbf{MPI\_Reduce}}) służy do wykonywania globalnej operacji na elementach procesów należących do grupy. Pozwala wykonać na przykład sumowanie wszystkich częściowych wyników otrzymanych w procesach i umieszczenie wyniku w zmiennej. Przykładowe operatory to \texttt{\textbf{MPI\_MAX}}, \texttt{\textbf{MPI\_MIN}}, \texttt{\textbf{MPI\_SUM}} - kompletna lista znajduje się w dokumentacji. Istnieje również możliwość definiowania własnych operatorów dla funkcji \texttt{\textbf{MPI\_Reduce()}}.Warto wspomnieć o funkcji \texttt{\textbf{MPI\_AllReduce}}. Funkcja identyczna z poprzednią, różniąca się jedynie tym, że po jej wykonaniu wynik agregacji z użyciem operatora \texttt{\textbf{op}} znajduje się w zmiennej \texttt{\textbf{result}} we \underline{wszystkich} procesach.
