@@ -21,7 +21,7 @@ Do dysków optycznych zaliczamy:
 \item CD-RW -- płyta do zapisu wielokrotnego, kasowanie danych odbywa się za pomocą lasera (następuje topnienie stopu, traci swoją strukturę polikrystaliczną).
 \end{itemize}
 
-\textbf{DVD} -- medium do przechowywania różnego typu danych, zazwyczaj do oprogramowania oraz filmów. Nośniki posiadają takie same wymiary jak płyty CD, jednak można na nich zapisać więcej danych. Zwiększenie danych jest możliwe dzięki zwiększeniu gęstości zapisu danych (użyto lasera o krótszej długości fali). Powstały również płyty dwustronne oraz dwuwarstwowe. Podobnie jak w przypadku płyt CD, istnieją tutaj płyty jednokrotnego oraz wielokrotnego zapisu. W przeciwieństwie do CD, płyty DVD muszą zawierać system plików. Płyty DVD również posiadają formaty Audio oraz Video. Płyty audio posiadają dużą możliwość konfiguracji kanałów, z różnym próbkowaniem (nawet do 24-bit, 192 kHz). W porównaniu do CD-Audio pozwala zapisać więcej dźwięku w lepszej jakości. Zapis wideo na płytach DVD-Video wykorzystuje kodek MPEG-2. Najczęściej stosowane rozdzielczości to 720x576 oraz 720x480. Następcą DVD jest HD DVD, który zawierał gęstszy zapis danych, jednakże został porzucony na rzecz płyt Blu-Ray (wykorzystują tę samą długość fali lasera).
+\textbf{DVD} -- medium do przechowywania różnego typu danych, zazwyczaj do oprogramowania oraz filmów. Nośniki posiadają takie same wymiary jak płyty CD, jednak można na nich zapisać więcej danych. Zwiększenie danych jest możliwe dzięki zwiększeniu gęstości zapisu danych (użyto lasera o krótszej długości fali). Powstały również płyty dwustronne oraz dwuwarstwowe. Podobnie jak w przypadku płyt CD, istnieją tutaj płyty jednokrotnego oraz wielokrotnego zapisu. Płyty DVD również posiadają formaty Audio oraz Video. Płyty audio posiadają dużą możliwość konfiguracji kanałów, z różnym próbkowaniem (nawet do 24-bit, 192 kHz). W porównaniu do CD-Audio pozwala zapisać więcej dźwięku w lepszej jakości. Zapis wideo na płytach DVD-Video wykorzystuje kodek MPEG-2. Najczęściej stosowane rozdzielczości to 720x576 oraz 720x480. Następcą DVD jest HD DVD, który zawierał gęstszy zapis danych, jednakże został porzucony na rzecz płyt Blu-Ray (wykorzystują tę samą długość fali lasera).
 
 Dostęp do drugiej warstwy możliwy jest przez przepuszczenie lasera przez pierwszą, częściowo przepuszczalną warstwę. Zmiana ścieżki może potrwać kilka sekund, przez co może spowodować chwilowe zatrzymanie pracy napędu.
 
@@ -34,6 +34,8 @@ Dostęp do drugiej warstwy możliwy jest przez przepuszczenie lasera przez pierw
 \end{figure}
 
 \textbf{HVD} (Holographic Versatile Disc) -- technologia dysków optycznej nowej generacji, teoretycznie pozwala pomieścić do 6 TB na jednej warstwie. Zapis danych odbywa się w trójwymiarowej przestrzeni dysku. Wykorzystywane są dwa lasery -- zielony oraz czerwony.
+
+NRZI -- metoda odwzorowania sygnału binarnego, bez powrotów do zera. Wykorzystuje dwa stany logiczne. Przejście między nimi następuje, gdy transmitowany bit wynosi 1, w przypadku bitu 0 zmiana nie następuje.
 
 Stany logiczne na płycie CD są reprezentowane przez pity (wgłębienia) oraz landy (płaskie powierzchnie, przerwy między wgłębieniami). Gdy wiązka trafia na pit, to jest rozpraszana i nie wraca do czytnika. Przy landzie wiązka jest odbijana i trafia z powrotem do czujnika. Każda przejście z landu na pit o odwrotnie powoduje zmianę stanu (logiczne 0 lub 1). Dane zapisywane są od środka na zewnątrz płyty.
 
@@ -48,8 +50,6 @@ Kodowanie wykorzystywane w płytach to EFM (eight to fourteen modulation). Jest 
 Dla płyt DVD, ze względu na mniejsze odległości stosowany jest zapis bajtów na 16 bitowych sekwencjach. Długości pitów i landów muszą być w przedziale od 3 do 14 bitów kanałowych.
 
 Płyty Blu-ray wykorzystują kodowanie podobne do EFM, 17PP (one seven parity preserving). Wykorzystuje kodowanie, w którym każde 2 bity są zapisywane na 3 bitach, a samo kodowanie odbywa się w grupach po 2 albo 4 bity. Dodatkowo występują bity kontrolne (DC), po których wystąpieniu (jeśli DC == 1), zmieniana jest polaryzacja strumienia NRZI.
-
-NRZI -- metoda odwzorowania sygnału binarnego, bez powrotów do zera. Wykorzystuje dwa stany logiczne. Przejście między nimi następuje, gdy transmitowany bit wynosi 1, w przypadku bitu 0 zmiana nie następuje.
 
 A teraz z innej beczki... Innym optycznym nośnikiem informacji są \textbf{kody kreskowe}. Skanery odczytują zapisane dane. Mogą być wydrukowane na różnych powierzchniach. Składają się z jasnych oraz ciemnych elementów. Istnieje wiele rodzajów kodów kreskowych, można je pogrupować według zastosowania, np. identyfikacja towarów (EAN, Code 11), kody pocztowe (POSTNET, PLANET, etc.). Istnieją również dwuwymiarowe kody kreskowe -- składają się one z macierzy elementów (jasnych/ciemnych). Do nich można zaliczyć kody takie jak: kody QR, czy Aztec Code (wykorzystywany w polskich dowodach rejestracyjnych).
 
