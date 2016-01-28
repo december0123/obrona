@@ -37,7 +37,7 @@ DEC	&	BIN (NKB)	\\ \hline
 W celu reprezentacji liczby całkowitej potrzebne jest zdefiniowanie znaku liczby. Wartość liczb zapisuje się podobnie jak w wypadku NKB, jednak znak liczby jest określony przez bit najbardziej znaczący (0 -- liczba dodatnia, 1 -- liczba ujemna).
 Aby otrzymać wartość n-bitowej liczby zapisanej w kodzie U2 można skorzystać z następującego wzoru:
 \begin{equation}
-x = (-1)^{n-1}+\sum_{i=0}^{n-2}2^{i} \times x_{i}
+x = -x_{n-1}\times 2^{n-1}+\sum_{i=0}^{n-2}2^{i} \times x_{i}
 \end{equation}
 
 Jak wynika ze wzoru, o ile liczba dodatnia wygląda tak samo jak w NKB, to postać liczby ujemnej zapisanej w U2 wcale nie jest taka sama jak w NKB z dodaną jedynką na przodzie.
