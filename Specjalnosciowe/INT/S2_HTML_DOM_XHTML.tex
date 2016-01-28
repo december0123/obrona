@@ -1,10 +1,10 @@
 \section{S2 -- HTML DOM i XHTML -- cel i charakterystyka}
 
-\subsection{HTML (HyperTextMarkup Language)}
+\subsection{HTML -- HyperTextMarkup Language}
 
 \textbf{Cel:}
 \begin{itemize}
-\item Zapewnienie uniwersalnego, przenaszalnego, niezależnego od platformy sprzętowej i systemu operacyjnego standardu opisującego struktury strony internetowej;
+\item Zapewnienie uniwersalnego, przenośnego, niezależnego od platformy sprzętowej i systemu operacyjnego standardu opisującego struktury strony internetowej;
 \item Nadanie elementom strony odpowiedniego znaczenia semantycznego strony w zależności od ich zawartości np. tag \texttt{<em>};
 \item Umożliwienie pozycjonowania strony w wyszukiwarkach internetowych w zależności od zawartości strony np. tag \texttt{<article>}
 \end{itemize}
@@ -13,11 +13,11 @@
 
 Mianem HTML określamy standard języka znaczników używanego do tworzenia stron internetowych. Znaczniki są interpretowane przez przeglądarkę internetową i na ich podstawie w połączeniu ze stylami CSS oraz skryptami najczęściej napisanymi w języku JavaScript renderowana jest strona internetowa. Język jest niezależny od platformy sprzętowej oraz systemu operacyjnego, natomiast wymaga posiadania przeglądarki internetowej wspierającej standard w, którym napisano stronę. Znaczniki są słowami kluczowymi otoczonymi nawiasami ostrokątnymi. Zazwyczaj występują parami tzn. Istnieje tag otwierający i zamykający np.
 
-\texttt{<p>This is some text in a paragraph.</p>}
+\begin{verbatim}<p>This is some text in a paragraph.</p>\end{verbatim}
 
 Tag zamykający zawiera / po otwarciu < . Występują, także tagi nie wymagające zamknięcia np. 
 
-\texttt{<img src="smiley.gif" alt="Smiley face" height="42" width="42">}
+\begin{verbatim}<img src="smiley.gif" alt="Smiley face" height="42" width="42">\end{verbatim}
 
 Tagi mogą posiadać atrybuty np. src w przykładzie wyżej. Atrybuty dzielą się na obowiązkowe i nieobowiązkowe. Atrybut obowiązkowy jest wymagany do prawidłowego działania danego tagu. Przykładowo, jeżeli nie podamy atrybutu src tagowi img nasz obraz nie wyświetli się. Natomiast atrybuty nieobowiązkowe nie są wymagane do prawidłowego działania tagu np. kiedy nie podamy atrybutu height zostanie on zastąpiony wartością domyślną. Często atrybuty zastępowane są wartościami ustawianymi dla danego tagu w języku CSS. Przyjmuje się konwencje, że nazwy znaczników pisane są małymi literami. Co ciekawe jeżeli spojrzymy na pierwszą stronę napisaną w tym języku były one pisane wielkimi literami.
 
@@ -40,12 +40,12 @@ Typowa struktura znaczników strony HTML:
 
 Stronę otacza tag \texttt{html} w nim zawarte są dwa podstawowe tagi \texttt{head} i \texttt{body}. \texttt{Head} zawiera metadane dotyczące strony: język, kodowanie, tytuł. Często umieszcza się dam odwołania do plików ze stylami css i skryptami js. W tagu body zawarte są wszystkie tagi związane z zawartością strony.
 
-\subsection{DRZEWO DOM (DOKUMENT OBJECT MODEL)}
+\subsection{Drzewo DOM -- Document Object Model}
 
 \textbf{Cel:}
 \begin{itemize}
 \item Dostarczenie prostej reprezentacji hierarchii znaczników strony HTML.
-\item Dostarczenie modelu umożliwiającego programiście modyfikować, dodawać, usuwać elementy dokumentu .html korzystając z własności drzewa (jego przesukiwania)
+\item Dostarczenie modelu umożliwiającego programiście modyfikować, dodawać, usuwać elementy dokumentu .html korzystając z własności drzewa (jego przeszukiwania)
 \end{itemize}
 
 \textbf{Charakterystyka:}
@@ -59,7 +59,7 @@ Dokument HTML możemy przedstawić w postaci drzewa, które rozpoczyna się od t
 
 Korzeniem jest tag \texttt{<html>}. Kolejne węzły stanowią tagi zawarte wewnątrz znacznika \texttt{<html>}. Dzieckiem węzła jest tag bezpośrednio zawarty wewnątrz danego tagu. 
 
-\subsection{XHTML extensible Hyper Text Markup Language}
+\subsection{XHTML -- extensible Hyper Text Markup Language}
 
 \textbf{Cel:}
 
@@ -75,7 +75,7 @@ Jak już zostało wcześniej wspomniane w języku HTML, gdy programista popełni
 \item Element główny (html) musi zawierać atrybut xmlns określający przestrzeń nazw XHTML: \url{http://www.w3.org/1999/xhtml};
 \item Znacznikowi otwierającemu każdego niepustego elementu powinien odpowiadać znacznik zamykający (np. \texttt{<li> ... </li>});
 \item Puste elementy muszą także być zamykane (np. zamiast \texttt{<br>} musi być \texttt{<br/>}, albo \texttt{<br></br>});
-\item Elementy muszą być zagnieżdżane w odpowiedni sposób (np. zamiast \texttt{<p>Tekst z <em>wyróżnieniem</p></em>} -- \texttt{<p>Tekst z <em>wyróżnieniem</em></p>}); wprawdzie w HTML także istniał taki wymóg, lecz nie był egzekwowany przez przeglądarki;
+\item Elementy muszą być zagnieżdżone w odpowiedni sposób (np. zamiast \texttt{<p>Tekst z <em>wyróżnieniem</p></em>} -- \texttt{<p>Tekst z <em>wyróżnieniem</em></p>}); wprawdzie w HTML także istniał taki wymóg, lecz nie był egzekwowany przez przeglądarki;
 \item Nazwy elementów i atrybutów XHTML muszą być pisane małymi literami;
 \item Wszystkie wartości atrybutów muszą być ujęte w cudzysłów (podwójny, np. \texttt{<td rowspan="3">}, albo apostrof, np. \texttt{<td rowspan='3'>});
 \item Niedozwolona jest minimalizacja atrybutów (np. zamiast \texttt{<textarea readonly>} musi być \texttt{<textarea readonly="readonly">});
