@@ -4,41 +4,79 @@
 
 System sieciowy składa się z wielu stacji roboczych i serwerów połączonych siecią. System sieciowy zawiera komponenty pozwalające na współdziałanie pomiędzy stacjami roboczymi a serwerami. Użytkownik jest świadomy że pracuje w sieci złożonej z wielu komputerów. Stosowana jest wspólna struktura komunikacji. Sieciowy system operacyjny tworzy środowisko w którym użytkownicy mają dostęp do wspólnych zasobów.
  
-Właściwości:
+\textbf{Właściwości:}
+
 \begin{itemize}
-\item Luźno powiązany sprzęt - różnego typu stacje robocze i serwery połączone siecią LAN.
-\item Różne systemy operacyjne - UNIX, Windows
-\item Obliczenia wykonywane przeważnie na maszynie lokalnej
-\item Pewien zbiór wspólnych usług i protokołów współpracy – wspólne serwery plików, poczta elektroniczna, TCP/IP
+	\item Luźno powiązany sprzęt - różnego typu stacje robocze i serwery połączone siecią LAN.
+	\item Różne systemy operacyjne - UNIX, Windows
+	\item Obliczenia wykonywane przeważnie na maszynie lokalnej
+	\item Pewien zbiór wspólnych usług i protokołów współpracy – wspólne serwery plików, poczta elektroniczna, TCP/IP
 \end{itemize}
  
-Zastosowane mechanizmy:
+Komunikacja sieciowa w oparciu o sieć magistrali, pierścienia lub gwiazdy. Obsługa komunikacji
+zgodnie z modelem ISO/OSI (siedem warstw) przy użyciu TCP/IP. Większość komunikacji odbywa
+się w modelu klient-serwer. 
+
+\textbf{Stosowane mechanizmy:}
+
 \begin{itemize}
-\item Sieciowy system plików NFS – pozwala on użytkownikom na współdzielenie katalogów oraz plików, poprzez sieć. Dane znajdują się na jednym lub wielu serwerach, a dostęp do nich uzyskać może wiele komputerów – hostów – naraz. Sieciowe systemy plików mogą działać według architektury klient-serwer lub w formie rozproszonej (DFS, Distributed File System).
-\item DFS – Pozwalają na rozproszenie danych po wielu lokalizacjach fizycznych (serwerach) przy zintegrowaniu lokalizacji logicznej. Mimo że pliki są rozrzucone po wielu serwerach plików, dla użytkownika otoczenia sieciowego mogą być one widoczne na jednym serwerze plików tyle, że np. w wielu katalogach. Dzięki temu:
-\begin{itemize}
-\item   zmniejsza się ryzyko utraty i zwiększa dostępność danych przy awarii jednego serwera,
-\item   dzieli się obciążenie na wiele różnych maszyn,
-\item  przy użytkownikach rozproszonych w wielu lokalizacjach można skierować ruch od nich do najbliższych im serwerów (odległość interpretując jako np. czas dostępu czy przepustowość sieci).
-\end{itemize}
-\item Zdalne wywoływanie procedur RPC (ang. Remote Procedures Calls) – mechanizm pozwalający programiście na wysyłanie pytań do serwera i otrzymywani od niego odpowiedzi. Protokoły realizujące tę procedurę, same realizują całość komunikacji, na którą składa się serwer (nasłuchuje na danym porcie i czeka na pytanie od klienta, odpowiada klientowi żądanymi danymi bądź kodem błędu), klient (nawiązuje połączenie z klientem i wysyła zapytanie do serwera pytanie w wcześniej zdefiniowanym formacie). Z punktu widzenia programisty, proces ten wygląda tak jakby wywoływał procedurę lokalnie.
-\item Komunikacja sieciowa w oparciu o sieć magistrali, pierścienia lub gwiazdy. Obsługa komunikacji zgodnie z modelem ISO/OSI (siedem warstw) przy użyciu TCP/IP. Większość komunikacji odbywa się w modelu klient-serwer.
+    \item NFS -- protokół oparty na UDP lub TCP. Jest standardowym sieciowym systemem plików w systemach uniksowych. Z NFS wiąże się wiele problemów -– przede wszystkim bardzo trudno zapewnić, że dana operacja została wykonana.
+    \item SMB --  protokół służący udostępnianiu zasobów komputerowych, m.in. drukarek czy plików. SMB jest protokołem typu klient-serwer, a więc opiera się na systemie zapytań generowanych przez klienta i odpowiedzi od serwera. 
+    \item Microsoft DFS -- implementacja rozproszonego systemu plików firmy Microsoft. Do wymiany danych korzysta on z protokołu SMB. DFS był już obecny w Windows NT 4.0, obecnie jest dostępny też w Windows Server 2000/2003/2008 oraz Samba 3.0.
+	\item DFS – Pozwalają na rozproszenie danych po wielu lokalizacjach fizycznych (serwerach) przy zintegrowaniu lokalizacji logicznej. Mimo że pliki są rozrzucone po wielu serwerach plików, dla użytkownika otoczenia sieciowego mogą być one widoczne na jednym serwerze plików tyle, że np. w wielu katalogach. Dzięki temu:
+	\begin{itemize}
+		\item   zmniejsza się ryzyko utraty i zwiększa dostępność danych przy awarii jednego serwera,
+		\item   dzieli się obciążenie na wiele różnych maszyn,
+		\item  przy użytkownikach rozproszonych w wielu lokalizacjach można skierować ruch od nich do najbliższych im serwerów (odległość interpretując jako np. czas dostępu czy przepustowość sieci).
+		\item Zalety DFS
+		\begin{itemize}
+			\item Zwielokrotnienie -- (z ang. replication) wiele kopii danych.
+			\item Niezawodność -- wielokrotność egzemplarzy może uchronić przed ich zaginięciem.
+			\item Efektywność -- szybszy i łatwiejszy dostęp do danych.
+		\end{itemize}
+		\item Wady DFS:
+		\begin{itemize}
+			\item Problemy ze spójnością.
+			\item Edycja danych na jednym serwerze nie gwarantuje ich zmiany na pozostałych.
+			\item Konieczny jest mechanizm zapewniający aktualizację na pozostałych serwerach.
+			\item Optymalne rozmieszczenie serwerów sprzyja spójności danych.
+		\end{itemize}
+	\end{itemize}
+	\item Zdalne wywoływanie procedur RPC (ang. Remote Procedures Calls) – mechanizm pozwalający programiście na wysyłanie pytań do serwera i otrzymywani od niego odpowiedzi. Protokoły realizujące tę procedurę, same realizują całość komunikacji, na którą składa się serwer (nasłuchuje na danym porcie i czeka na pytanie od klienta, odpowiada klientowi żądanymi danymi bądź kodem błędu), klient (nawiązuje połączenie z klientem i wysyła zapytanie do serwera pytanie w wcześniej zdefiniowanym formacie). Z punktu widzenia programisty, proces ten wygląda tak jakby wywoływał procedurę lokalnie.
+	\item Komunikacja sieciowa w oparciu o sieć magistrali, pierścienia lub gwiazdy. Obsługa komunikacji zgodnie z modelem ISO/OSI (siedem warstw) przy użyciu TCP/IP. Większość komunikacji odbywa się w modelu klient-serwer.
+
 \end{itemize}
 
-Pamięć podręczna
+\textbf{Pamięć podręczna:}
+
 Po otwarciu pliku znajdującego się na serwerze, na komputerze klienta, kopia tego pliku trafia do pamięci podręcznej na maszynie lokalnej. Dzieje się tak ze względu na oszczędność komunikacji sieciowej, która w tym przypadku mogłaby być „wąskim gardłem” w korzystaniu z SSO. Takie rozwiązanie problemu generuje inne problemy, tzn.: jak aktualizować plik na serwerze i czy plik aktualnie przez nas używany jest aktualny (gdyż do danego pliku może mieć dostęp więcej niż jeden użytkownik).
  
-Aktualizacja danych na serwerze
+\textbf{Aktualizacja danych na serwerze:}
+
 Podczas pracy z plikiem często należy zapisywać ten plik aby w razie awarii maszyny, nie utracić swojej pracy, dlatego wyróżnia się kilka sposobów aktualizacji pliku po stronie serwera:
 \begin{itemize}
-\item pisanie natychmiastowe – rozwiązanie polegające na ciągłym zapisywaniu każdej kolejnej zmiany od razu na serwerze. Rozwiązanie te jest bardzo nieefektywne, gdyż powoduje, że komunikacją przez sieć jest praktycznie ciągła, ale jest najbezpieczniejszą metodą
-\item pisanie opóźnione – zmiany zapisywane są najpierw w pamięci podręcznej, zaś później na serwerze (zazwyczaj po kliknięciu „Zapisz”). Rozwiązanie o wiele lepsze pod względem wydajności, aczkolwiek mniej niezawodne niż pisanie natychmiastowe
-\item okresowy przegląd – zapisywanie zmian na serwerze po upłynięciu jakiegoś ustalonego czasu (np. 1 minuty)
-\item pisanie przy zamknięciu – zapisywanie zmian na serwerze dopiero po zamknięciu pliku
- \end{itemize}
-Spójność pamięci podręcznej
+	\item pisanie natychmiastowe – rozwiązanie polegające na ciągłym zapisywaniu każdej kolejnej zmiany od razu na serwerze. Rozwiązanie te jest bardzo nieefektywne, gdyż powoduje, że komunikacją przez sieć jest praktycznie ciągła, ale jest najbezpieczniejszą metodą
+	\item pisanie opóźnione – zmiany zapisywane są najpierw w pamięci podręcznej, zaś później na serwerze (zazwyczaj po kliknięciu „Zapisz”). Rozwiązanie o wiele lepsze pod względem wydajności, aczkolwiek mniej niezawodne niż pisanie natychmiastowe
+	\item okresowy przegląd – zapisywanie zmian na serwerze po upłynięciu jakiegoś ustalonego czasu (np. 1 minuty)
+	\item pisanie przy zamknięciu – zapisywanie zmian na serwerze dopiero po zamknięciu pliku
+\end{itemize}
+
+\textbf{Spójność pamięci podręcznej:}
+
 Pracując w systemie gdzie do jednego pliku dostęp może mieć więcej niż jeden użytkownik, może generować problem z tym czy nasza aktualna kopia pliku na którym pracujemy jest aktualna. Jest kilka sposobów zapewniających omawianą spójność pamięci podręcznej:
+
 \begin{itemize}
-\item odpowiedzialność po stronie serwera klienta – technika polegająca na czasowym odpytywaniu serwera czy nasza wersja pliku jest aktualna. Im większa częstotliwość tych zapytań, tym większa niezawodność, ale mniejsza wydajność
-\item odpowiedzialność po stronie serwera – w tym wypadku to serwer pamięta z których plików i którzy użytkownicy aktualnie z nich korzystają. Po każdej aktualizacji pliku, serwer powiadamia o tym klientów o tym, że ich kopie są nieaktualne
+	\item odpowiedzialność po stronie serwera klienta – technika polegająca na czasowym odpytywaniu serwera czy nasza wersja pliku jest aktualna. Im większa częstotliwość tych zapytań, tym większa niezawodność, ale mniejsza wydajność
+	\begin{itemize}
+		\item Przy każdym dostępie do danych lub co stały okres czasu.
+		\item Klient wysyła dużo komunikatów do serwera -- skutkuje zwiększeniem się ruchu sieciowego.
+		\item Możliwe obciążenia serwera.
+	\end{itemize}
+	\item odpowiedzialność po stronie serwera – w tym wypadku to serwer pamięta z których plików i którzy użytkownicy aktualnie z nich korzystają. Po każdej aktualizacji pliku, serwer powiadamia o tym klientów o tym, że ich kopie są nieaktualne
+	\begin{itemize}
+		\item Serwer monitoruje stan wszystkich plików.
+		\item Klient informuje o zmianach w plikach.
+		\item Wszystkie kopie można odczytywać w tym samym czasie.
+		\item Tylko jedna kopia może być modyfikowalna.
+	\end{itemize}
 \end{itemize}
