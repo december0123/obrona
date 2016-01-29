@@ -159,26 +159,80 @@ Przykłady funkcji System V:
 
 \begin{figure}[!h]
 \centering
-\includegraphics[width=0.8\textwidth]{s6_int_kolejka.png}
+\includegraphics[width=0.7\textwidth]{s6_int_kolejka.png}
 \caption{Kolejka komunikatów}
 \end{figure}
 
-\subsection{Funkcja select}
+\subsection{Pamięć współdzielona}
+
+Jest to specjalnie utworzony segment wirtualnej przestrzeni adresowej, do której dostęp może mieć wiele procesów. Jeden z procesów tworzy obszar wydzielony obszar przestrzeni pamięci operacyjnej RAM i pozostałe mogą z niego korzystać. Przestrzeń ta w procesach odwzorowana jest jako własny obszar pamięci logicznej. Aby skorzystać z pamięci dzielonej należy najpierw utworzyć bądź odnaleźć istniejący obszar pamięci współdzielonej, a następnie przypisać do swojej przestrzeni adresowej. Przy korzystaniu z pamięci współdzielonej należy zadbać o zachowanie spójności danych tam zawartych poprzez synchronizację dostępu np. dzięki semaforom.
+
+Przykłady funkcji System V:
+\begin{itemize}
+	\item \texttt{shmget()} -- utworzenie segmentu pamięci bądź odnalezienie istniejącego
+    \item \texttt{shmctl()} -- zmiana parametrów segmentu (usunięcie gdy ustawiona flaga IPC\_RMID)
+    \item \texttt{shmat()} -- dołączenie segmentu do przestrzeni adresowej procesu
+    \item \texttt{shmdt()} -- odłączenie segmentu
+\end{itemize}
+
+Przykłady funkcji POSIX:
+\begin{itemize}
+	\item \texttt{shm\_open()} -- utworzenie segmentu pamięci
+    \item \texttt{ftruncate()} -- ustalenie rozmiaru segmentu
+    \item \texttt{map()} -- odwzorowanie pamięci we własnej przestrzeni adresowej
+    \item \texttt{munmap()} -- usunięcie odwzorowania
+    \item \texttt{mprotect()} -- zmiana trybu dostępu
+    \item \texttt{shm\_unlink()} -- usunięcie segmentu pamięci
+\end{itemize}
 
 \subsection{Semafory}
 
-chroniona zmienna systemowa, operacje atomowe V (inc), P (dec), nie może być < 0, synchronizacja procesów
+Semafory to abstrakcyjne obiekty wymyślone przez Dijkstrę, bedące mechanizmem ochrony dostępu do zasobu współdzielonego, szczególnie pamięci dzielonej. Wyróżnić możemy semafory nazwane (widniejące pod postacią plików, do których odwołać się możemy za pomocą nazwy) oraz nienazwane (zwykłe, znajdujące się w pamięci zmienne, dzięki czemu można je związać z obiektem, który mają chronić). Semafor ma w sobie zmienną kontrolną, określającą status semafora. Ze względu na implementację zmiennej, wyróznić możemy semafory binarne (zmienna może przyjąć wartości 0 lub 1) oraz ogólne (przyjmujące dowolne, nieujemne wartości). Na semaforze możemy wykonać dwa typy operacji:
+\begin{itemize}
+	\item Zajmij -- dekrementuj wartość semafora, a gdy wartość jest równa 0 to umieść proces w kolejce procesów oczekujących na zwolnienie
+    \item Zwolnij -- inkrementuj wartość semafora, a gdy kolejka procesów nie jest pusta, to nie inkrementuj, lecz zdejmij z kolejki jeden proces
+\end{itemize}
+Powyższe operacje są niepodzielne, atomowe. Aby zapobiec zagłodzeniom procesów, zamiast zwykłego zbioru procesów oczekujących, zastosować można kolejkę FIFO, która zapewnia, że każdy z procesów w kolejce zostanie kiedyś obsłużony.
 
-\subsection{Pamięć współdzielona}
+Przykłady funkcji System V:
+\begin{itemize}
+	\item \texttt{semget()} -- utworzenie semafora
+    \item \texttt{semctl()} -- zmiana parametrów semafora (usunięcie gdy ustawiona flaga IPC\_RMID)
+    \item \texttt{semop()} -- zajęcie i zwolnienie semafora, zależnie od przesłanego do funkcji parametru:
+	\begin{enumerate}
+		\item sem\_op < 0 -- zajęcie semafora
+        \item sem\_op > 0 -- zwolnienie semafora
+        \item sem\_op = 0 -- synchronizacja z semaforem (czekanie aż osiągnie 0)
+	\end{enumerate}
+\end{itemize}
 
-jeden proces tworzy obszar pamięci RAM, pozostałe mają do niego dostęp -- wspólny segment pamięci, odwzorowana jako własny obszar pamięci logicznej, wymaga dodatkowej synchronizacji
+Przykłady funkcji POSIX:
+\begin{itemize}
+	\item \texttt{sem\_open()} -- utworzenie nazwanego semafora
+    \item \texttt{sem\_init()} -- inicjalizacja semafora wartością
+    \item \texttt{sem\_wait()} -- zajęcie semafora
+    \item \texttt{sem\_trywait()} -- nieblokujące zajęcie semafora
+    \item \texttt{sem\_post()} -- sygnalizacja procesów czekających
+    \item \texttt{sem\_close()} -- zamknięcie semafora
+    \item \texttt{sem\_unlink()} -- usunięcie semafora gdy wszystkie procesy z niego korzystające zamknęły go
+\end{itemize}
 
 \subsection{Zmapowany plik w pamięci}
 
+Możliwy jest dostęp do otwartych plików tak, jakby znajdowały się one w pamięci operacyjnej RAM. Zamiast czytać/pisać i poruszać się po pliku za pomocą funkcji do operacji na plikach, można użyć wskaźników i zwykłych operacji przypisania. Pozwala na to funkcja \texttt{mmap()}.
+
 \subsection{Przekazywanie komunikatów}
+
+Jest to zbiór technik umożliwiających jednej maszynie zlecanie realizacji zadań na innej maszynie i otrzymania wyniku tychże operacji. Wyróżnić możemy kilka technik:
 \begin{itemize}
-\item RPC -- zdalne wywoływanie procedur
-\item RMI -- technologia Java, stub
-\item COBRA -- komunikacja między różnymi językami
-\item MPI -- obliczenia wielowątkowe
+	\item \textbf{RPC} -- (\textit{Remote Procedure Call}) -- polega na komunikacji klient - serwer, gdzie klient wywołuje procedurę znajdującą się po stronie serwera. RPC stanowi tutaj rolę swego rodzaju łącznika, który niweluje problemy wynikające z różnic reprezentacji danych na różnych maszynach czy lokalizacji procedur, dzięki czemu ma się wrażenie jakby polecenie wykonywane było na maszynie lokalnej
+    \item \textbf{RMI} -- (\textit{Remote Method Invocation}) -- standard opracowany przez firmę Sun, który wykorzystywany jest w języku Java. Zasada działania jest podobna do RPC, zdalne obiekty wpisywane są do rejestru, z którego na maszynie klienckiej pobierany jest \textit{stub} obiektu i wykonywany jakby znajdował się na maszynie lokalnej
+    \item \textbf{COBRA} -- standard opracowany przez \textit{Object Management Group} umożliwiający współpracę procedur napisanych w różnych językach programowania i znajdujących się na różnych maszynach. Każdy obiekt ma swój adres referencyjny, w którym zapisane są dane o maszynie, lokalizacja procedury czy typ obiektu. Wadą jest brak standardowego i szeroko zaimplementowanego mechanizmu bezpieczeństwa
+    \item \textbf{MPI} -- (\textit{Message Passing Interface}) protokół komunikacyjny umożliwiający synchronizację wielowątkową na różnych maszynach. Wykorzystywany jest w wielu klastrach obliczeniowych oraz superkomputerach. Ma swoją implementację w wielu językach programowania
 \end{itemize}
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=0.7\textwidth]{s6_int_rpc.jpg}
+\caption{Przekazywanie komunikatów}
+\end{figure}
