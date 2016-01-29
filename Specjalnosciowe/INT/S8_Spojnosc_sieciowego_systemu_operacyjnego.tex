@@ -53,7 +53,7 @@ Komunikacja sieciowa w sieciowym systemie operacyjnym jest oparciu o sieć magis
 
 \end{itemize}
 
-\textbf{Pamięć podręczna:}
+\textbf{Sposoby dostępu do danych, organizacja pamięci podręcznej w SSO:}
 
 Po otwarciu pliku znajdującego się na serwerze, na komputerze klienta, kopia tego pliku trafia do pamięci podręcznej na maszynie lokalnej. Dzieje się tak ze względu na oszczędność komunikacji sieciowej, która w tym przypadku mogłaby być „wąskim gardłem” w korzystaniu z SSO. Takie rozwiązanie problemu generuje inne problemy, tzn.: jak aktualizować plik na serwerze i czy plik aktualnie przez nas używany jest aktualny (gdyż do danego pliku może mieć dostęp więcej niż jeden użytkownik).
  
@@ -67,9 +67,9 @@ Podczas pracy z plikiem często należy zapisywać ten plik aby w razie awarii m
 	\item pisanie przy zamknięciu – zapisywanie zmian na serwerze dopiero po zamknięciu pliku
 \end{itemize}
 
-\textbf{Spójność pamięci podręcznej:}
+\textbf{Spójność plików:}
 
-Pracując w systemie gdzie do jednego pliku dostęp może mieć więcej niż jeden użytkownik, może generować problem z tym czy nasza aktualna kopia pliku na którym pracujemy jest aktualna. Jest kilka sposobów zapewniających omawianą spójność pamięci podręcznej:
+Pracując w systemie gdzie do jednego pliku dostęp może mieć więcej niż jeden użytkownik, może generować problem z tym czy nasza aktualna kopia pliku na którym pracujemy jest aktualna. Jest kilka sposobów zapewniających omawianą spójność plików w sieciowym systemie operacyjnym:
 
 \begin{itemize}
 	\item odpowiedzialność po stronie serwera klienta – technika polegająca na czasowym odpytywaniu serwera czy nasza wersja pliku jest aktualna. Im większa częstotliwość tych zapytań, tym większa niezawodność, ale mniejsza wydajność
