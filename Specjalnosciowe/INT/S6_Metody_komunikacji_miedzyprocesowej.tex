@@ -140,7 +140,7 @@ Jest to lista o określonej pojemności zawierająca komunikaty o zadanym maksym
     \item Można testować status kolejki, np. liczbę komunikatów (kolejki FIFO tego nie umożliwiają)
 \end{itemize}
 
-Przykłady funkcji POSIX:
+Przykłady funkcji System V:
 \begin{itemize}
 	\item \texttt{msgget()} -- tworzy kolejkę
     \item \texttt{msgsnd()} -- wysyła komunikat
@@ -148,7 +148,7 @@ Przykłady funkcji POSIX:
     \item \texttt{msgctl()} -- modyfikuje parametry kolejki (usunięcie poprzez ustawienie parametru IPC\_RMID)
 \end{itemize}
 
-Przykłady funkcji System V:
+Przykłady funkcji POSIX:
 \begin{itemize}
 	\item \texttt{mq\_open()} - tworzy kolejkę
     \item \texttt{mq\_send()} - wysyła komunikat
