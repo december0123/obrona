@@ -2,14 +2,17 @@
 
 %nie ma spójności, tylko halucynacje i śmierć z niedożywienia
 
-\textbf{Sieciowy system operacyjny (NOS -- Network Operating System)} -- umożliwia komunikacje miedzy wieloma urządzeniami a także zasobami sieci. Sieciowy system operacyjny tworzy środowisko, w którym użytkownicy maszyn mają dostęp zasobów sieciowych. Ma on zastosowanie zarówno na serwerach jak i stacjach roboczych.
+System sieciowy składa się z wielu stacji roboczych i serwerów połączonych siecią. System sieciowy zawiera komponenty pozwalające na współdziałanie pomiędzy stacjami roboczymi a serwerami. Użytkownik jest świadomy że pracuje w sieci złożonej z wielu komputerów. Stosowana jest wspólna struktura komunikacji. Sieciowy system operacyjny tworzy środowisko w którym użytkownicy mają dostęp do wspólnych zasobów.
+ 
+\textbf{Właściwości:}
 
-Do najważniejszych funkcji sieciowego systemu operacyjnego jest zapewnienie komunikacji, poprzez wykorzystanie protokołów komunikacyjnych takich jak:
 \begin{itemize}
-    \item TCP/IP - sieć Internet
-    \item IPX/SPX - sieć Novell 
+	\item Luźno powiązany sprzęt - różnego typu stacje robocze i serwery połączone siecią LAN.
+	\item Różne systemy operacyjne - UNIX, Windows
+	\item Obliczenia wykonywane przeważnie na maszynie lokalnej
+	\item Pewien zbiór wspólnych usług i protokołów współpracy – wspólne serwery plików, poczta elektroniczna, TCP/IP
 \end{itemize}
-
+ 
 Popularne sieciowe systemy dostępne na rynku to:
 \begin{itemize}
     \item Windows Server 2012 R2
@@ -18,102 +21,68 @@ Popularne sieciowe systemy dostępne na rynku to:
     \item Linux
 \end{itemize}
 
-Sieciowy system operacyjny można opisywać na podstawie systemu UNIX oraz zgodnych. 
+Komunikacja sieciowa w sieciowym systemie operacyjnym jest oparciu o sieć magistrali, pierścienia lub gwiazdy. Obsługa komunikacji zgodnie z modelem ISO/OSI (siedem warstw) przy użyciu TCP/IP. Większość komunikacji odbywa się w modelu klient-serwer. 
 
-Cechy systemu unixowego:
-\begin{itemize}
-    \item wieloużytkownikowy,
-    \item wielozadaniowy,
-    \item podział czasu,
-    \item wywłaszczanie procesów,
-    \item podsystem plików,
-    \item zarządzanie pamięcią,
-    \item biblioteki systemowe,
-    \item urządzenia dostępne jako pliki specjalne.
-\end{itemize}
+\textbf{Stosowane mechanizmy:}
 
-System powinien posiadać interfejsy programistyczne zgodne z ANSI/C lub Posix:
-\begin{itemize}
-    \item Procesy tworzone przez funkcję fork(), kończone przez wait() i exit().
-    \item Komunikacja między procesami przy użyciu sygnałów.
-    \item Obsługa strumieni FIFO i pipe.
-    \item Komunikacja przy użyciu pamięci dzielonej.
-\end{itemize}
-
-Komunikacja sieciowa w oparciu o sieć magistrali, pierścienia lub gwiazdy. Obsługa komunikacji
-zgodnie z modelem ISO/OSI (siedem warstw) przy użyciu TCP/IP. Większość komunikacji odbywa
-się w modelu klient-serwer. 
-
-Ważnym z punktu widzenia spójności jest system plików używany w takim systemie. Zakłada on model rozproszony -- DFS (Distributed File System), który przechowuje pliki na wielu serwerach.
-
-Zalety DFS to:
-\begin{itemize}
-    \item Zwielokrotnienie -- (z ang. replication) wiele kopii danych.
-    \item Niezawodność -- wielokrotność egzemplarzy może uchronić przed ich zaginięciem.
-    \item Efektywność -- szybszy i łatwiejszy dostęp do danych.
-\end{itemize}
-
-Wady DFS:
-\begin{itemize}
-    \item Problemy ze spójnością.
-    \item Edycja danych na jednym serwerze nie gwarantuje ich zmiany na pozostałych.
-    \item Konieczny jest mechanizm zapewniający aktualizację na pozostałych serwerach.
-    \item Optymalne rozmieszczenie serwerów sprzyja spójności danych.
-\end{itemize}
-
-Sposoby dostępu do danych w systemach rozproszonych:
-
-\textbf{Dostęp zdalny:}
-\begin{itemize}
-    \item Współdzielony plik zlokalizowany jest na serwerze.
-    \item Regularne przesyłanie komunikatów pomiędzy klientem a serwerem -- możliwe opóźnienia.
-    \item Prosty sposób, brak problemów ze spójnością.
-\end{itemize}
-
-\textbf{Relokacja:}
-\begin{itemize}
-    \item Przeniesienie pliku do pamięci lokalnej hosta.
-    \item Zmniejszenie ruchu w sieci.
-    \item Pozostałe hosty odwołują się do nowej lokalizacji pliku.
-\end{itemize}
-
-\textbf{Powielanie:}
-\begin{itemize}
-    \item Kopiowanie pliku do pamięci lokalnej klienta.
-    \item Lokalne odwołanie do pliku -- pełna prędkość.
-    \item Potencjalna niespójność danych.
-\end{itemize}
-
-Metody propagowania zmian do serwera:
-\begin{itemize}
-    \item Natychmiastowe przepisywanie.
-    \item Opóźnione przepisywanie.
-    \begin{itemize}
-        \item Zastosowanie polityki aktualizacji.
-        \item Okresowa aktualizacja.
-        \item Aktualizowanie przy zamykaniu pliku.
-    \end{itemize}
-\end{itemize}
-
-Walidacja danych pomiędzy serwerem a klientem może zostać zrealizowana na 2 sposoby. 
-Pierwszy z nich polega na zainicjalizowaniu tego procesu przez klienta:
-\begin{itemize}
-    \item Przy każdym dostępie do danych lub co stały okres czasu.
-    \item Klient wysyła dużo komunikatów do serwera -- skutkuje zwiększeniem się ruchu sieciowego.
-    \item Możliwe obciążenia serwera.
-\end{itemize}
-
-Drugi sposób polega na zainicjalizowaniu procesu walidacji przez serwer:
-\begin{itemize}
-    \item Serwer monitoruje stan wszystkich plików.
-    \item Klient informuje o zmianach w plikach.
-    \item Wszystkie kopie można odczytywać w tym samym czasie.
-    \item Tylko jedna kopia może być modyfikowalna.
-\end{itemize}
-
-Przykłady sieciowych systemów plików:
 \begin{itemize}
     \item NFS -- protokół oparty na UDP lub TCP. Jest standardowym sieciowym systemem plików w systemach uniksowych. Z NFS wiąże się wiele problemów -– przede wszystkim bardzo trudno zapewnić, że dana operacja została wykonana.
     \item SMB --  protokół służący udostępnianiu zasobów komputerowych, m.in. drukarek czy plików. SMB jest protokołem typu klient-serwer, a więc opiera się na systemie zapytań generowanych przez klienta i odpowiedzi od serwera. 
     \item Microsoft DFS -- implementacja rozproszonego systemu plików firmy Microsoft. Do wymiany danych korzysta on z protokołu SMB. DFS był już obecny w Windows NT 4.0, obecnie jest dostępny też w Windows Server 2000/2003/2008 oraz Samba 3.0.
+	\item DFS – Pozwalają na rozproszenie danych po wielu lokalizacjach fizycznych (serwerach) przy zintegrowaniu lokalizacji logicznej. Mimo że pliki są rozrzucone po wielu serwerach plików, dla użytkownika otoczenia sieciowego mogą być one widoczne na jednym serwerze plików tyle, że np. w wielu katalogach. Dzięki temu:
+	\begin{itemize}
+		\item   zmniejsza się ryzyko utraty i zwiększa dostępność danych przy awarii jednego serwera,
+		\item   dzieli się obciążenie na wiele różnych maszyn,
+		\item  przy użytkownikach rozproszonych w wielu lokalizacjach można skierować ruch od nich do najbliższych im serwerów (odległość interpretując jako np. czas dostępu czy przepustowość sieci).
+		\item Zalety DFS
+		\begin{itemize}
+			\item Zwielokrotnienie -- (z ang. replication) wiele kopii danych.
+			\item Niezawodność -- wielokrotność egzemplarzy może uchronić przed ich zaginięciem.
+			\item Efektywność -- szybszy i łatwiejszy dostęp do danych.
+		\end{itemize}
+		\item Wady DFS:
+		\begin{itemize}
+			\item Problemy ze spójnością.
+			\item Edycja danych na jednym serwerze nie gwarantuje ich zmiany na pozostałych.
+			\item Konieczny jest mechanizm zapewniający aktualizację na pozostałych serwerach.
+			\item Optymalne rozmieszczenie serwerów sprzyja spójności danych.
+		\end{itemize}
+	\end{itemize}
+	\item Zdalne wywoływanie procedur RPC (ang. Remote Procedures Calls) – mechanizm pozwalający programiście na wysyłanie pytań do serwera i otrzymywani od niego odpowiedzi. Protokoły realizujące tę procedurę, same realizują całość komunikacji, na którą składa się serwer (nasłuchuje na danym porcie i czeka na pytanie od klienta, odpowiada klientowi żądanymi danymi bądź kodem błędu), klient (nawiązuje połączenie z klientem i wysyła zapytanie do serwera pytanie w wcześniej zdefiniowanym formacie). Z punktu widzenia programisty, proces ten wygląda tak jakby wywoływał procedurę lokalnie.
+	\item Komunikacja sieciowa w oparciu o sieć magistrali, pierścienia lub gwiazdy. Obsługa komunikacji zgodnie z modelem ISO/OSI (siedem warstw) przy użyciu TCP/IP. Większość komunikacji odbywa się w modelu klient-serwer.
+
+\end{itemize}
+
+\textbf{Sposoby dostępu do danych, organizacja pamięci podręcznej w SSO:}
+
+Po otwarciu pliku znajdującego się na serwerze, na komputerze klienta, kopia tego pliku trafia do pamięci podręcznej na maszynie lokalnej. Dzieje się tak ze względu na oszczędność komunikacji sieciowej, która w tym przypadku mogłaby być „wąskim gardłem” w korzystaniu z SSO. Takie rozwiązanie problemu generuje inne problemy, tzn.: jak aktualizować plik na serwerze i czy plik aktualnie przez nas używany jest aktualny (gdyż do danego pliku może mieć dostęp więcej niż jeden użytkownik).
+ 
+\textbf{Aktualizacja danych na serwerze:}
+
+Podczas pracy z plikiem często należy zapisywać ten plik aby w razie awarii maszyny, nie utracić swojej pracy, dlatego wyróżnia się kilka sposobów aktualizacji pliku po stronie serwera:
+\begin{itemize}
+	\item pisanie natychmiastowe – rozwiązanie polegające na ciągłym zapisywaniu każdej kolejnej zmiany od razu na serwerze. Rozwiązanie te jest bardzo nieefektywne, gdyż powoduje, że komunikacją przez sieć jest praktycznie ciągła, ale jest najbezpieczniejszą metodą
+	\item pisanie opóźnione – zmiany zapisywane są najpierw w pamięci podręcznej, zaś później na serwerze (zazwyczaj po kliknięciu „Zapisz”). Rozwiązanie o wiele lepsze pod względem wydajności, aczkolwiek mniej niezawodne niż pisanie natychmiastowe
+	\item okresowy przegląd – zapisywanie zmian na serwerze po upłynięciu jakiegoś ustalonego czasu (np. 1 minuty)
+	\item pisanie przy zamknięciu – zapisywanie zmian na serwerze dopiero po zamknięciu pliku
+\end{itemize}
+
+\textbf{Spójność plików:}
+
+Pracując w systemie gdzie do jednego pliku dostęp może mieć więcej niż jeden użytkownik, może generować problem z tym czy nasza aktualna kopia pliku na którym pracujemy jest aktualna. Jest kilka sposobów zapewniających omawianą spójność plików w sieciowym systemie operacyjnym:
+
+\begin{itemize}
+	\item odpowiedzialność po stronie serwera klienta – technika polegająca na czasowym odpytywaniu serwera czy nasza wersja pliku jest aktualna. Im większa częstotliwość tych zapytań, tym większa niezawodność, ale mniejsza wydajność
+	\begin{itemize}
+		\item Przy każdym dostępie do danych lub co stały okres czasu.
+		\item Klient wysyła dużo komunikatów do serwera -- skutkuje zwiększeniem się ruchu sieciowego.
+		\item Możliwe obciążenia serwera.
+	\end{itemize}
+	\item odpowiedzialność po stronie serwera – w tym wypadku to serwer pamięta z których plików i którzy użytkownicy aktualnie z nich korzystają. Po każdej aktualizacji pliku, serwer powiadamia o tym klientów o tym, że ich kopie są nieaktualne
+	\begin{itemize}
+		\item Serwer monitoruje stan wszystkich plików.
+		\item Klient informuje o zmianach w plikach.
+		\item Wszystkie kopie można odczytywać w tym samym czasie.
+		\item Tylko jedna kopia może być modyfikowalna.
+	\end{itemize}
 \end{itemize}
