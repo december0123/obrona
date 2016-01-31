@@ -34,7 +34,7 @@ Kolejki komunikatów & POSIX, Windows & tak & nie \\ \hline
 Semafory & POSIX, Windows & tak & nie \\ \hline
 Pamięć współdzielona & POSIX, Windows & tak & nie \\ \hline
 Zmapowany plik & POSIX, Windows & tak & tak \\ \hline
-\begin{tabular}[c]{@{}l@{}}Przekazywanie\\ komunikatów\end{tabular} & \begin{tabular}[c]{@{}l@{}}Systemy z MPI, RPC,\\ COBRA, Java RMI\end{tabular} & tak & tak \\ \hline
+\begin{tabular}[c]{@{}l@{}}Przekazywanie\\ komunikatów\end{tabular} & \begin{tabular}[c]{@{}l@{}}Systemy z MPI, RPC,\\ CORBA, Java RMI\end{tabular} & tak & tak \\ \hline
 \end{tabular}
 \end{table}
 
@@ -110,7 +110,7 @@ Inaczej strumienie FIFO, mogą być używane przez procesy w żaden sposób ze s
 
 Przykłady funkcji POSIX:
 \begin{itemize}
-	\item \texttt{mknod()} -- tworzy łącze nazwane
+	\item \texttt{mkfifo()} -- tworzy łącze nazwane (lub \texttt{mknod()} z argumentem S\_IFIFO)
     \item \texttt{open()} -- otwiera łącze do pisania lub czytania
     \item \texttt{write()} -- zapisuje do łącza
     \item \texttt{read()} -- odczytuje z łącza
@@ -227,7 +227,7 @@ Jest to zbiór technik umożliwiających jednej maszynie zlecanie realizacji zad
 \begin{itemize}
 	\item \textbf{RPC} -- (\textit{Remote Procedure Call}) -- polega na komunikacji klient - serwer, gdzie klient wywołuje procedurę znajdującą się po stronie serwera. RPC stanowi tutaj rolę swego rodzaju łącznika, który niweluje problemy wynikające z różnic reprezentacji danych na różnych maszynach czy lokalizacji procedur, dzięki czemu ma się wrażenie jakby polecenie wykonywane było na maszynie lokalnej
     \item \textbf{RMI} -- (\textit{Remote Method Invocation}) -- standard opracowany przez firmę Sun, który wykorzystywany jest w języku Java. Zasada działania jest podobna do RPC, zdalne obiekty wpisywane są do rejestru, z którego na maszynie klienckiej pobierany jest \textit{stub} obiektu i wykonywany jakby znajdował się na maszynie lokalnej
-    \item \textbf{COBRA} -- standard opracowany przez \textit{Object Management Group} umożliwiający współpracę procedur napisanych w różnych językach programowania i znajdujących się na różnych maszynach. Każdy obiekt ma swój adres referencyjny, w którym zapisane są dane o maszynie, lokalizacja procedury czy typ obiektu. Wadą jest brak standardowego i szeroko zaimplementowanego mechanizmu bezpieczeństwa
+    \item \textbf{CORBA} -- standard opracowany przez \textit{Object Management Group} umożliwiający współpracę procedur napisanych w różnych językach programowania i znajdujących się na różnych maszynach. Każdy obiekt ma swój adres referencyjny, w którym zapisane są dane o maszynie, lokalizacja procedury czy typ obiektu. Wadą jest brak standardowego i szeroko zaimplementowanego mechanizmu bezpieczeństwa
     \item \textbf{MPI} -- (\textit{Message Passing Interface}) protokół komunikacyjny umożliwiający synchronizację wielowątkową na różnych maszynach. Wykorzystywany jest w wielu klastrach obliczeniowych oraz superkomputerach. Ma swoją implementację w wielu językach programowania
 \end{itemize}
 
